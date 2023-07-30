@@ -34,3 +34,8 @@
 2. `cd projects`で１階層おり、 `python manage.py runserver`で起動
 
 3. `http://127.0.0.1:8000/` で開ける
+
+
+## pip 
+`social-auth-app-django`
+`django`

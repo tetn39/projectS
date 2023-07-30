@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
@@ -11,5 +11,33 @@
     {% for i in number %}
         <li>{{ i }}</li>
     {% endfor %}
+
+
+    <h1>spotify login</h1>
+
+    <a href="{% url "social:begin" "spotify" %}">Spotify</a><a href=""></a>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    
+    <h1>spotify login</h1>
+
+    {% if user.is_authenticated %}
+        <p>ログイン済み</p>
+    {% else %}
+        <p>ログアウトしてます</p>
+
+    {% endif %} 
+    <p><a href="{% url 'social:begin' 'spotify' %}">spotify login</a></p>
+    <p><a href="{% url 'logout' %}">Log out</a></p>
+
 </body>
 </html>

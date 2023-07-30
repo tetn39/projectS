@@ -5,15 +5,17 @@ from django.shortcuts import render
 import json
 
 
-def index(request):
-    with open('projects/static/json/data.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
+# def index(request):
+#     with open('projects/static/json/data.json', 'r', encoding='utf-8') as f:
+#         data = json.load(f)
 
 
-    return render(request, 'index.html', data)
+#     return render(request, 'index.html', data)
 
 
 
 def test(request):
     return HttpResponse('testだよ')
 
+def index(request):
+    return render(request, 'index.html')

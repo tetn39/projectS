@@ -1,2 +1,5 @@
 # venvフォルダはgithubに入れない
 venv/
+
+# pycache対象外にする
+__pycache__

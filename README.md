@@ -13,10 +13,27 @@
 
 
 
-## ブランチについてはまた後日書きます
-(お楽しみに)
+## ブランチ(branch)
+### 作成
+1. [githubのレポジトリ](https://github.com/tetn39/projectS) からbranchを新しく作る。それっぽい名前を付ける
+
+2. 作ったらvs code で`git checkout branch名`で新しく作ったbranchに移動する
+
+3. あとは普通にコミットとかする(ただしbranch内でしか更新されない)
 
 
+### マージ/プルリクエスト
+作ったbranchをmainに合成する（branchでの更新内容をmainに反映する）
+
+1. [github pullrequest](https://github.com/tetn39/projectS/pulls) からプルリクエストを作る `New pull request` 押す
+
+2. マージするブランチを選ぶ
+
+3. `Create pull request` 押す
+
+4. 題名と内容を入力する
+
+5. `Create pull request` 押す
 ## サーバー起動方法
 
 ### 初回だけやること
@@ -34,3 +51,8 @@
 2. `cd projects`で１階層おり、 `python manage.py runserver`で起動
 
 3. `http://127.0.0.1:8000/` で開ける
+
+
+## pip 
+`social-auth-app-django`
+`django`

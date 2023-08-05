@@ -28,7 +28,7 @@
 </head>
 <body>
     
-    <h1>spotify login index.html</h1>
+    <h1>spotify login login.html</h1>
 
     {% if user.is_authenticated %}
         <p>ログイン済み</p>
@@ -39,12 +39,11 @@
     <p><a href="{% url 'social:begin' 'spotify' %}">spotify login</a></p>
     <p><a href="{% url 'logout' %}">Log out</a></p>
 
-
-    
-
-        
-
-    
+    {% if user.is_authenticated %}
+    <h1>ユーザー情報</h1>
+    <p><a href="{{ user_url }}", target="_blank">{{ user_name }}</a></p>
+    <p><img src="{{ user_image }}" alt=""></p>
+    {% endif %} 
 
 </body>
 </html>

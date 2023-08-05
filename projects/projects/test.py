@@ -1,35 +1,35 @@
-# import sqlite3
+import sqlite3
 
-# def print_table_contents(connection):
-#     cursor = connection.cursor()
-#     # cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-#     # tables = cursor.fetchall()
+def print_table_contents(connection):
+    cursor = connection.cursor()
+    # cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+    # tables = cursor.fetchall()
 
-#     # for table in tables:
-#     #     table_name = table[0]
-#     #     print(f"Table: {table_name}")
-#     #     cursor.execute(f"SELECT * FROM {table_name};")
-#     #     rows = cursor.fetchall()
-#     #     for row in rows:
-#     #         print(row)
-#     #     print()
+    # for table in tables:
+    #     table_name = table[0]
+    #     print(f"Table: {table_name}")
+    #     cursor.execute(f"SELECT * FROM {table_name};")
+    #     rows = cursor.fetchall()
+    #     for row in rows:
+    #         print(row)
+    #     print()
     
-#     cursor.execute("PRAGMA table_info(social_auth_usersocialauth);")
-#     rows = cursor.fetchall()
-#     for row in rows:
-#         print(row)
-#     print()
-#     cursor.execute("SELECT * FROM social_auth_usersocialauth;")
-#     rows = cursor.fetchall()
-#     for row in rows:
-#         print(row)
-#     print()
+    cursor.execute("PRAGMA table_info(social_auth_usersocialauth);")
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
+    print()
+    cursor.execute("SELECT * FROM social_auth_usersocialauth;")
+    rows = cursor.fetchall()
+    for row in rows:
+        print(row)
+    print()
 
-# if __name__ == "__main__":
-#     db_path = "./projects/db.sqlite3"  # あなたのSQLite3データベースファイルへのパスを指定します
-#     connection = sqlite3.connect(db_path)
-#     print_table_contents(connection)
-#     connection.close()
+if __name__ == "__main__":
+    db_path = "./projects/db.sqlite3"  # あなたのSQLite3データベースファイルへのパスを指定します
+    connection = sqlite3.connect(db_path)
+    print_table_contents(connection)
+    connection.close()
 
 
 

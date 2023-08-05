@@ -21,8 +21,12 @@ def test(request):
     return HttpResponse('testだよ')
 
 def index(request):
+    return render(request, 'index.html')
+
+def login(request):
+    requested_user_id = request.user.id
     print(UserSocialAuth.objects.all())
-    token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
+    token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
     header_params = {
         'Authorization': 'Bearer ' + token,
     }
@@ -41,6 +45,4 @@ def index(request):
         'user_url': data['external_urls']['spotify'],
         'user_image': data['images'][0]['url'],
     }
-    return render(request, 'index.html', context)
-
-
+    return render(request, 'login.html', context)

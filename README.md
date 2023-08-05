@@ -34,6 +34,13 @@
 4. 題名と内容を入力する
 
 5. `Create pull request` 押す
+
+6. ほかの人に確認してもらう。何かあったらコメントを書ける
+
+7. `Merge pull request` と `Confirm merge` 押してmainとマージ(結合,合成)する
+
+
+
 ## サーバー起動方法
 
 ### 初回だけやること

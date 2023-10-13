@@ -56,7 +56,7 @@ def playlist(request):
     res = requests.get(END_POINT, headers=header_params)
     data = res.json()
     context = {
-        'all_data': data['items'][0]['album']['external_urls'],
+        'all_data': data['items'][0]['album'],
     }
     return render(request, 'playlist.html', context)
     

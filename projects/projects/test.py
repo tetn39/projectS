@@ -26,7 +26,7 @@ def print_table_contents(connection):
     print()
 
 if __name__ == "__main__":
-    db_path = "./projects/db.sqlite3"  # あなたのSQLite3データベースファイルへのパスを指定します
+    db_path = "./projects/db/db.sqlite3"  
     connection = sqlite3.connect(db_path)
     print_table_contents(connection)
     connection.close()

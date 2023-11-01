@@ -6,13 +6,14 @@
 main{
     width: 100%;
     min-width: 600px;
-    background-color: black;
+    background-color: #121212;
 }
 
 header{
-    width: 300px;
-    min-width: 300px ;
-    background-color: red;
+    width: 250px;
+    min-width: 250px ;
+    margin-left: 16px;
+    background-color: #242424;
     /* margin-left: 10px; */
 }
 
@@ -24,16 +25,64 @@ img{
 .body-wrap{
     display: flex;
     width: 100%;
-    background-color: black;
+    background-color: #121212;
 }
 
 .nav__background{
-    background-color: blue;
+    background-color: #121212;
     margin: 10px;
+    border-radius: 10px;
+
+    & li a{
+        display: flex;
+        color: #fff;
+    }
+    & li img {
+        width: 30px;
+        margin: 10px;
+    }
+    & li {
+        vertical-align: middle;
+    }
+    & p {
+        height: 50px;
+        line-height: 50px;
+        font-weight: bold;
+    }
+}
+
+.nav__top a{
+    margin-left: 45px;
+}
+
+.nav__bottom {
+    background-color: #1A1A1A;
+
+    & a{
+        margin-left: 30px;
+    }
+}
+
+.nav__diagnosis{
+    display: flex;
+    padding-left: 30px;
+    background-color: #1A1A1A;
+    border-radius: 10px 10px 00px 0px;
+    & h2{
+        height: 60px;
+        line-height: 60px;
+        color: #00ff5c;
+    }
+
+    & img {
+        width: 40px;
+        margin: 10px;
+    }
 }
 
 .header__logo{
     width: 200px;
+    margin:30px auto 30px auto ;
 }
 
 

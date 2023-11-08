@@ -22,7 +22,7 @@
 .top__logo {
     width: 100%;
     margin-top: 20vh;
-    margin-bottom: ;
+    margin-bottom: 50px;
 
     & img {
         width: 500px;
@@ -31,17 +31,33 @@
 }
 
 /* トップボタンセクション */
-.top__btn__wrap {
-    width: 50%;
+.top__btn__spotify__wrap {
+    width:20%;
     margin: 0 auto;
     background-color: var(--primary-color);
+    border-radius: 40px;
+    padding: 15px 0 15px 0;
+    margin-bottom: 20px;
+}
 
-    & a {
-        background-color: #fff; /* ボタンの背景色 */
-    }
+.top__btn__guest__wrap {
+    width:20%;
+    margin: 0 auto;
+    padding: 20px 0 20px 0;
+    margin-bottom: 20px;
 }
 
 /* テキストセンタリング */
-.a {
+.top__btn__spotify {
     text-align: center;
+    color: #121212;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.top__btn__guest{
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 24px;
 }

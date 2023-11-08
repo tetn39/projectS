@@ -1,8 +1,9 @@
+/* 全体のフォント設定 */
 * {
     font-family: 'Zen Kaku Gothic New', sans-serif;
 }
 
-
+/* カラーバリエーション */
 :root {
     --bg-primary-color: #121212;
     --bg-secondary-color: #242424;
@@ -11,29 +12,35 @@
     --txt-color: #fff;
 }
 
-.top__wrap{
+/* トップセクション */
+.top__wrap {
     height: 80vh;
     background-color: var(--bg-primary-color);
 }
 
-.top__logo{
+/* トップロゴ */
+.top__logo {
     width: 100%;
     margin-top: 20vh;
-    & img{
+
+    & img {
         width: 500px;
         margin: auto;
     }
 }
 
-.top__btn__wrap{
+/* トップボタンセクション */
+.top__btn__wrap {
     width: 50%;
     margin: 0 auto;
-    background-color: #00FF5C;
-    & a{
-        background-color: #fff;
+    background-color: var(--primary-color);
+
+    & a {
+        background-color: #fff; /* ボタンの背景色 */
     }
 }
 
-.a{
+/* テキストセンタリング */
+.a {
     text-align: center;
 }

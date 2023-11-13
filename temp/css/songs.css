@@ -122,6 +122,7 @@ img {
 
 
 /* 検索窓 */
+
 /* .main__content {
     width: 100%;
 } */
@@ -133,7 +134,7 @@ img {
     /* border: 1px solid #767d83; */
     border-radius: 24px;
     background-color: #1A1A1A;
-    width: 700px;
+    width: 100%;
 }
 
 .search-form-011 input {
@@ -170,3 +171,58 @@ img {
     content: '';
 }
 
+
+
+/* 曲一覧テーブル */
+table{
+  border-collapse: collapse;
+  border-spacing: 0;
+  width: 80%;
+}
+
+table tr{
+    /* border-bottom: solid 1px #eee; */
+    cursor: pointer;
+    border-radius: 30px;
+    display: flex;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+table tr:nth-child(even){
+  background-color:var(--bg-secondary-color);
+}
+
+/* table tr:hover{
+  background-color: #d4f0fd;
+} */
+
+table th,table td{
+  text-align: center;
+  width: 20%;
+  padding: 15px 0;
+  align-items: center;
+}
+
+table td.icon{
+  background-size: 35px;
+  background-position: left 5px center;
+  background-repeat: no-repeat;
+  padding-left: 30px;
+}
+
+table td.icon.bird{
+  background-image: url(icon-bird.png)
+}
+
+table td.icon.whale{
+  background-image: url(icon-whale.png)
+}
+
+table td.icon.crab{
+  background-image: url(icon-crab.png)
+}
+
+.table__tr__sapn{
+    font-size: 14px;
+}

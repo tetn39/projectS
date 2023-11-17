@@ -63,3 +63,4 @@
 ## pip 
 `social-auth-app-django`
 `django`
+`pages`

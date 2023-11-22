@@ -3,3 +3,6 @@ venv/
 
 # pycache対象外にする
 __pycache__
+
+# dbを除外
+projects/db/

@@ -1,20 +1,12 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-# Create your views here.
-from django.shortcuts import render
+
+from django.shortcuts import render, redirect
 import json
 from social_django.models import UserSocialAuth
+
 import requests
 from django.conf import settings
-
-
-# def index(request):
-#     with open('projects/static/json/data.json', 'r', encoding='utf-8') as f:
-#         data = json.load(f)
-
-
-#     return render(request, 'index.html', data)
-
 
 
 def test(request):
@@ -24,6 +16,9 @@ def index(request):
     return render(request, 'index.html')
 
 def login(request):
+    print('-------------------')
+    print(request.user.id)
+    print('-------------------')
     requested_user_id = request.user.id
     print(UserSocialAuth.objects.all())
     token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
@@ -41,6 +36,12 @@ def login(request):
         'user_url': data['external_urls']['spotify'],
         'user_image': data['images'][0]['url'],
     }
+    # debug contect
+    # context = {
+    #     'user_name': 'test',
+    #     'user_url': 'test',
+    #     'user_image': 'test',
+    # }
     return render(request, 'login.html', context)
 
 
@@ -59,4 +60,3 @@ def playlist(request):
         'all_data': data['items'][0]['album'],
     }
     return render(request, 'playlist.html', context)
-    

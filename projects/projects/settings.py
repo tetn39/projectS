@@ -161,5 +161,5 @@ SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_SPOTIFY_KEY = '1afc34a37c8a46abaf1b26cbeabf9875'
 SOCIAL_AUTH_SPOTIFY_SECRET = 'f3788fc3e2024b7a95d9f5a4c7b72053'
 SOCIAL_AUTH_SPOTIFY_SCOPE = ['user-read-email', 'user-library-read', 'playlist-read-private']
-LOGIN_REDIRECT_URL = '/melotus/login/'
+LOGIN_REDIRECT_URL = '/melotus/songs/'
 LOGOUT_REDIRECT_URL = '/melotus/'

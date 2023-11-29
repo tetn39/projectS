@@ -21,6 +21,6 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('melotus/', include('melotus.urls')),
+    path('', include('melotus.urls')),
     path('admin/', admin.site.urls),
 ]

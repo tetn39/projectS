@@ -15,7 +15,7 @@ def test(request):
 def index(request):
     return render(request, 'index.html')
 
-def login(request):
+def songs(request):
     print('-------------------')
     print(request.user.id)
     print('-------------------')
@@ -42,7 +42,7 @@ def login(request):
     #     'user_url': 'test',
     #     'user_image': 'test',
     # }
-    return render(request, 'login.html', context)
+    return render(request, 'songs.html', context)
 
 
 

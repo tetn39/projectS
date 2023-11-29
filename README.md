@@ -12,7 +12,6 @@
 3. `git push` これで実際に更新
 
 
-
 ## ブランチ(branch)
 ### 作成
 1. [githubのレポジトリ](https://github.com/tetn39/projectS) からbranchを新しく作る。それっぽい名前を付ける

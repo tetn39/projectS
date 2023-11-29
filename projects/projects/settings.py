@@ -28,15 +28,28 @@ SECRET_KEY = 'django-insecure-f0xlx)**si+9c1%lvu)%6fu0+3cyo23@0(vjy84+pq=&1pls*^
 # 本番
 # DEBUG = False
 # ALLOWED_HOSTS = ['melotus.xsrv.jp', 'localhost', '127.0.0.1']
+# ALLOWED_HOSTS = ['melodystatus.xsrv.jp', 'localhost', '127.0.0.1']
+# STATIC_ROOT = '/var/www/static/' の可能性(修正する)
 
 # debug
 DEBUG = True
 ALLOWED_HOSTS = []
 
-# 共通
+# おためしdebug
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static') <- これはdebugだといらない？
+
 MEDIA_ROOT =  BASE_DIR / 'media'
+
+# # 共通
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+# MEDIA_ROOT =  BASE_DIR / 'media'
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
 
 # Application definition
 

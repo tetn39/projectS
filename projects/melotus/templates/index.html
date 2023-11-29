@@ -1,50 +1,35 @@
-<!-- <!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>てんぷれーとだよ</title>
-</head>
-<body>
-    <h1>テンプレートだよ</h1>
-
-    {% for i in number %}
-        <li>{{ i }}</li>
-    {% endfor %}
-
-
-    <h1>spotify login</h1>
-
-    <a href="{% url "social:begin" "spotify" %}">Spotify</a><a href=""></a>
-</body>
-</html> -->
-
-
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-</head>
-<body>
-    
-    <h1>spotify login index.html</h1>
 
-    {% if user.is_authenticated %}
-        <p>ログイン済み</p>
-    {% else %}
-        <p>ログアウトしてます</p>
+	<head>
+		<meta charset="utf-8">
+		<title>メロタス</title>
+		<meta name="description" content="サイトキャプションを入力">
+		<meta name="keywords" content="サイトキーワードを,で区切って入力">
 
-    {% endif %} 
-    <p><a href="{% url 'social:begin' 'spotify' %}">spotify login</a></p>
-    <p><a href="{% url 'logout' %}">Log out</a></p>
+		{% load static %}
+		<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+		<link rel="stylesheet" href="{% static 'css/index.css' %}">
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap"
+			rel="stylesheet">
+		<!-- <script src="js/index.js"></script> -->
+		<script src="{% static 'js/index.js' %}"></script>
+	</head>
+	
 
+	<body class="top__wrap">
+		<div class="top__logo"><img src="{% static './images/logos/logo.svg' %}" alt="画像"></div>
+		<!----- メインコンテンツ ----->
+		<main>
+			<div class="top__btn__spotify__wrap"><a href="" ><p class="top__btn__spotify">Spotifyで始める</p></a></div>
+			<div class="top__btn__guest__wrap"><a href="" ><p class="top__btn__guest">ゲストで始める</p></a></div>
+			<!----- フッター ----->
+			<footer>フッター</footer>
+			<!----- フッター END ----->
+		</main>
+		<!----- メインコンテンツ END ----->
+	</body>
 
-    
-
-        
-
-    
-
-</body>
 </html>

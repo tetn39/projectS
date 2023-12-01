@@ -69,24 +69,29 @@
 
 1. teraterm をダウンロード
 
-2. host に `melotus.xsrv.jp`
+2. host に `melotus6.xsrv.jp`
 
 3. TCP port に `10022`
 
 4. OK で次に
 
-5. User name に `melotus`
+5. User name に `melotus6`
 
 6. Passphrase に `melotus`
 
 7. Authentication methodsの Use RSA..なんたらを選択
 
-8. `melotus.key`フォルダを選択する(ふかまちがもってます)
+8. `melotus6.key`フォルダを選択する(ふかまちがもってます)
 
 9. OK で接続できる
 
 
 ## サーバー上でやること
-1. メインで作業するフォルダに移動 `cd melotus.xsrv.jp/public_html/` 
+1. メインで作業するフォルダに移動 `cd melotus6.xsrv.jp/public_html/` 
 
 2. 仮想環境を実行 `conda activate py310`
+
+
+## お知らせ
+
+ドメインとったから`melodystatus.com`で飛べるよ

@@ -9,6 +9,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('', views.index, name='index'),
     path('songs/', views.songs, name='songs'),
+    path('status/', views.status, name='status'),
     path('test/', views.test, name='test'),
     path('playlist/', views.playlist, name='playlist'),
     path('social/', include('social_django.urls')),

@@ -1,10 +1,10 @@
-.graph-wrapper {
+.graph__wrapper {
   display: flex;
   justify-content: space-around; /* グラフ間のスペースを調整します */
   margin: 20px auto; /* 必要に応じてマージンを調整します */
 }
 
-.graph {
+.sutatus__graph {
   display: flex;
   justify-content: center;
   align-items: center;

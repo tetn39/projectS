@@ -4,7 +4,7 @@
   margin: 20px auto; /* 必要に応じてマージンを調整します */
 }
 
-.sutatus__graph {
+.status__graph {
   display: flex;
   justify-content: center;
   align-items: center;

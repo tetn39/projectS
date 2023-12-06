@@ -112,10 +112,13 @@ def playlist(request):
         'Authorization': 'Bearer ' + token,
     }
 
-    END_POINT = 'https://api.spotify.com/v1/me/albums?limit=1'
+    END_POINT = 'https://api.spotify.com/v1/me/albums?limit=3'
     res = requests.get(END_POINT, headers=header_params)
     data = res.json()
     context = {
         'all_data': data['items'][0]['album'],
+        'album_name': data['items'][0]['album']['name'],
+        'album_img': data['items'][0]['album']['images'][0]['url'],
+        
     }
     return render(request, 'old/playlist.html', context)

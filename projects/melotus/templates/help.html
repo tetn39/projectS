@@ -8,7 +8,7 @@
 		<meta name="keywords" content="サイトキーワードを,で区切って入力">
 		{% load static %}
 		<link rel="stylesheet" href="{% static 'css/reset.css' %}">
-		<link rel="stylesheet" href="{% static 'css/songs.css' %}">
+		<link rel="stylesheet" href="{% static 'css/help.css' %}">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap"
@@ -47,50 +47,37 @@
 				<div class="header__icon"><img src="{% static 'images/logos/favicon.png' %}" alt=""></div>
 				{% endif %}
 			</div>
-			<div class="main__search">
-				<form action="#" class="search-form-011">
-					<button type="submit" aria-label="検索"></button>
-					<label>
-						<input type="text" placeholder="好きな曲を入力！">
-					</label>
-				</form>
-			</div>
-			<div>
-				<table>
-					<tr>
-						<th>#</th>
-					  	<th>タイトル</th>
-					  	<th>アルバム</th>
-					  	<th>曲の長さ</th>
-					  	<th>選択</th>
-					</tr>
-					<tr>
-						<td>1</td>
-						<td class="icon bird">トリさん<br><span class="table__tr__sapn">ado</span></td>
-						<td>空を飛ぶこと</td>
-						<td>グリーン</td>
-						<td>山</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td class="icon whale">クジラさん<br><span class="table__tr__sapn">ado</span></td>
-						<td>潮を吹くこと</td>
-						<td>ブルー</td>
-						<td>海</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td class="icon crab">カニさん<br><span class="table__tr__sapn">ado</span></td>
-						<td>反復横飛び</td>
-						<td>レッド</td>
-						<td>川</td>
-					</tr>
-				</table>
-			</div>
+			<div class="main__content">
+				<article>
+					<div class="title__box">
+						<h1>ヘルプ</h1>
+					</div>
+					<section class="helptext_box">
+						<h2>ヘルプテキスト</h2>
+						<div>
+							<p>Q.xxxxxxxxxxxxxxxxxxxxx</p>
+					
+							<p>text</p>
+
+							<p>Q.xxxxxxxxxxxxxxxxxxxxx</p>
+
+							<p>text</p>
+
+							<p>Q.xxxxxxxxxxxxxxxxxxxxx</p>
+
+							<p>text</p>
+
+
+
+
+						</div>
+					</section>
+				</article>
 			<!----- メインコンテンツ END ----->
 	
-			<!----- フッター ----->
-			<footer>フッター</footer>
+				<!----- フッター ----->
+				<footer>フッター</footer>
+			</div>
 			<!----- フッター END ----->
 		</main>
 	</body>

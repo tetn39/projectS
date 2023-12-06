@@ -27,29 +27,15 @@ SECRET_KEY = 'django-insecure-f0xlx)**si+9c1%lvu)%6fu0+3cyo23@0(vjy84+pq=&1pls*^
 
 # 本番
 # DEBUG = False
-# ALLOWED_HOSTS = ['melotus.xsrv.jp', 'localhost', '127.0.0.1']
-# ALLOWED_HOSTS = ['melodystatus.xsrv.jp', 'localhost', '127.0.0.1']
-# STATIC_ROOT = '/var/www/static/' の可能性(修正する)
+# ALLOWED_HOSTS = ['melodystatus.com', 'melotus6.xsrv.jp', 'localhost', '127.0.0.1']
+# STATIC_URL = '/static/'
+# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # debug
 DEBUG = True
 ALLOWED_HOSTS = []
-
-# おためしdebug
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static') <- これはdebugだといらない？
-
-MEDIA_ROOT =  BASE_DIR / 'media'
-
-# # 共通
-# STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-# MEDIA_ROOT =  BASE_DIR / 'media'
-
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, 'static'),
-# ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Application definition
 
@@ -158,8 +144,8 @@ AUTHENTICATION_BACKENDS = (
 )
 
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
-SOCIAL_AUTH_SPOTIFY_KEY = '1afc34a37c8a46abaf1b26cbeabf9875'
-SOCIAL_AUTH_SPOTIFY_SECRET = 'f3788fc3e2024b7a95d9f5a4c7b72053'
+SOCIAL_AUTH_SPOTIFY_KEY = '4f0d25f0cec241bf974d3f9f558eabb1'
+SOCIAL_AUTH_SPOTIFY_SECRET = 'da7948150a4548b087e263bd6da8cf7b'
 SOCIAL_AUTH_SPOTIFY_SCOPE = ['user-read-email', 'user-library-read', 'playlist-read-private']
 LOGIN_REDIRECT_URL = '/songs/'
 LOGOUT_REDIRECT_URL = '/'

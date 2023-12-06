@@ -15,3 +15,10 @@
                     conic-gradient(#2589d0 39.6%, #25d025 30% 70%, #e2e2e2 39.6% 100%);
   /* 必要な他のスタイルを追加します */
 }
+
+.status__title{background-color: #2589d0;}
+.status__title h2{padding: 20px;}
+
+.status__playlist {
+  
+}

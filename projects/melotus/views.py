@@ -119,6 +119,9 @@ def playlist(request):
         'all_data': data['items'][0]['album'],
         'album_name': data['items'][0]['album']['name'],
         'album_img': data['items'][0]['album']['images'][0]['url'],
+        'album_url': data['items'][0]['album']['external_urls']['spotify'],
+        'artist_name': data['items'][0]['album']['artists'][0]['name'],
+        'artist_url': data['items'][0]['album']['artists'][0]['external_urls']['spotify'],
         
     }
     return render(request, 'old/playlist.html', context)

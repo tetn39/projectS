@@ -63,7 +63,6 @@
 `social-auth-app-django`
 `django`
 `pages`
-`psycopg2`
 
 
 ## ssh接続やりかた
@@ -94,21 +93,11 @@
 
 
 
-
-## DB
-1. PostgreSQLを[リンク](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)からダウンロード
-2. postgreSQLのコマンドラインを開く `psql -U postgres`
-3. DATABASE作る `CREATE DATABASE db;`
-4. 抜ける `\q`
-5. `python manage.py migrate`
+## DB (MySQL)
 
 
 
 ## パスワード系
-
-### PostgreSQL
-password: `projectMelotus`
-
 
 ### django-admin
 ID: `melotus6`

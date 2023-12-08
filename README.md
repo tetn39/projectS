@@ -63,6 +63,7 @@
 `social-auth-app-django`
 `django`
 `pages`
+`mysqlclient`
 
 
 ## ssh接続やりかた
@@ -95,9 +96,20 @@
 
 ## DB (MySQL)
 
+### ローカルの場合
+1. [参考サイト](https://www.techpit.jp/courses/189/curriculums/192/sections/1268/parts/5099)
+2. ダウンロードしたら`C:\Program Files\MySQL\MySQL Server 8.0\bin`のpathを通す (Pathに追加)
+3. `mysql --version`ででてきたらまる
+4. cmdで`mysql -u root -p`
+5. パスワード入力
+6. (DB作るなら) `CREATE DATABASE db;`
+7. `pip install mysqlclient`
 
 
 ## パスワード系
+
+## MySQL
+password: `projectMelotus`
 
 ### django-admin
 ID: `melotus6`
@@ -109,3 +121,7 @@ password: `projectMelotus`
 ## お知らせ
 
 ドメインとったから`melodystatus.com`で飛べるよ
+
+
+## めも
+dotenv入れたい

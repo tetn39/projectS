@@ -63,6 +63,7 @@
 `social-auth-app-django`
 `django`
 `pages`
+`psycopg2`
 
 
 ## ssh接続やりかた
@@ -87,9 +88,33 @@
 
 
 ## サーバー上でやること
-1. メインで作業するフォルダに移動 `cd melotus6.xsrv.jp/public_html/` 
+1. メインで作業するフォルダに移動 `cd melodystatus.com/public_html/` 
 
 2. 仮想環境を実行 `conda activate py310`
+
+
+
+
+## DB
+1. PostgreSQLを[リンク](https://www.enterprisedb.com/downloads/postgres-postgresql-downloads)からダウンロード
+2. postgreSQLのコマンドラインを開く `psql -U postgres`
+3. DATABASE作る `CREATE DATABASE db;`
+4. 抜ける `\q`
+5. `python manage.py migrate`
+
+
+
+## パスワード系
+
+### PostgreSQL
+password: `projectMelotus`
+
+
+### django-admin
+ID: `melotus6`
+email: `melotus6@gmail.com`
+password: `projectMelotus`
+
 
 
 ## お知らせ

@@ -1,0 +1,63 @@
+/* 全体のフォント設定 */
+* {
+    font-family: 'Zen Kaku Gothic New', sans-serif;
+}
+
+/* カラーバリエーション */
+:root {
+    --bg-primary-color: #121212;
+    --bg-secondary-color: #242424;
+    --bg-tertiary-color: #1A1A1A;
+    --primary-color: #00FF5C;
+    --txt-color: #fff;
+}
+
+/* トップセクション */
+.top__wrap {
+    height: 80vh;
+    background-color: var(--bg-primary-color);
+}
+
+/* トップロゴ */
+.top__logo {
+    width: 100%;
+    margin-top: 20vh;
+    margin-bottom: 50px;
+
+    & img {
+        width: 500px;
+        margin: auto;
+    }
+}
+
+/* トップボタンセクション */
+.top__btn__spotify__wrap {
+    width:20%;
+    margin: 0 auto;
+    background-color: var(--primary-color);
+    border-radius: 40px;
+    padding: 15px 0 15px 0;
+    margin-bottom: 20px;
+}
+
+.top__btn__guest__wrap {
+    width:20%;
+    margin: 0 auto;
+    padding: 20px 0 20px 0;
+    margin-bottom: 20px;
+}
+
+/* テキストセンタリング */
+.top__btn__spotify {
+    text-align: center;
+    color: #121212;
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.top__btn__guest{
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-size: 24px;
+}

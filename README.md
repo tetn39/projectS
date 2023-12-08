@@ -63,7 +63,7 @@
 `social-auth-app-django`
 `django`
 `pages`
-`mysqlclient`
+`PyMySQL`
 
 
 ## ssh接続やりかた
@@ -103,13 +103,24 @@
 4. cmdで`mysql -u root -p`
 5. パスワード入力
 6. (DB作るなら) `CREATE DATABASE db;`
-7. `pip install mysqlclient`
+7. `pip install PyMySQL` (manage.pyに追記する)
+
+## サーバーの場合
+1. xserverの管理画面でDB追加する
+2. teratermで`mysql -u melotus6_admin -p`で入る
+
+
 
 
 ## パスワード系
 
 ## MySQL
 password: `projectMelotus`
+xserver上でのMySQL-ID: `melotus6_admin`
+
+
+
+
 
 ### django-admin
 ID: `melotus6`

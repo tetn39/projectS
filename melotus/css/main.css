@@ -12,6 +12,7 @@
   --txt-color: #fff;
   --standby-color: #AFAFAF;
 }
+h1,h2,h3,h4,p{color: var(--txt-color);}
 
 /* メインコンテナ */
 main {

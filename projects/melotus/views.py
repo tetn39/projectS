@@ -30,7 +30,6 @@ def songs(request):
 
     res = requests.get(END_POINT, headers=header_params)
     data = res.json()
-    # print(data)
     context = {
         'user_name': data['display_name'],
         'user_url': data['external_urls']['spotify'],

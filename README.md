@@ -63,7 +63,7 @@
 `social-auth-app-django`
 `django`
 `pages`
-`PyMySQL`
+`python-dotenv`
 
 
 ## ssh接続やりかた

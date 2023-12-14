@@ -3,3 +3,6 @@ venv/
 
 # pycache対象外にする
 __pycache__
+
+# envを除外
+auth/

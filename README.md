@@ -101,8 +101,8 @@ xserver上でのMySQL-ID: `melotus6_admin`
 
 
 ### django-admin
-ID: `melotus6`
-email: `melotus6@gmail.com`
+ID: `admin`
+email: ``
 password: `projectMelotus`
 
 
@@ -113,4 +113,4 @@ password: `projectMelotus`
 
 
 ## めも
-dotenv入れたい
+/homeはdb,form練習用

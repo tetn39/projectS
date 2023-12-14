@@ -10,9 +10,10 @@ urlpatterns = [
     path('', views.index, name='index'),
     path('songs/', views.songs, name='songs'),
     path('status/', views.status, name='status'),
-    path('test/', views.test, name='test'),
     path('playlist/', views.playlist, name='playlist'),
     path('help/', views.help, name='help'),
+    path('home/', views.home_view, name='home'),
+    path('create/', views.create_view, name='create'),
     path('social/', include('social_django.urls')),
     path('', include('django.contrib.auth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

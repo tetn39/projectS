@@ -1,16 +1,29 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
 import json
 from social_django.models import UserSocialAuth
-
 import requests
+from .forms import PostForm
 from django.conf import settings
 
 
-def test(request):
-    return HttpResponse('testだよ')
+def home_view(request):
+    context = {}
+
+    context['form'] = PostForm()
+
+    return render(request, 'home.html', context)
+
+
+def create_view(request):
+    form =PostForm(request.POST)
+    if not form.is_valid():
+        raise ValueError('invalid form', status=500)
+    
+    post = form.save()
+
+    return HttpResponse(f'{post.id}, status=200')
+
 
 def index(request):
     return render(request, 'index.html')

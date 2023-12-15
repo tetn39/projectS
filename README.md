@@ -63,7 +63,7 @@
 `social-auth-app-django`
 `django`
 `pages`
-`PyMySQL`
+`python-dotenv`
 
 
 ## ssh接続やりかた
@@ -93,25 +93,6 @@
 2. 仮想環境を実行 `conda activate py310`
 
 
-
-## DB (MySQL)
-
-### ローカルの場合
-1. [参考サイト](https://www.techpit.jp/courses/189/curriculums/192/sections/1268/parts/5099)
-2. ダウンロードしたら`C:\Program Files\MySQL\MySQL Server 8.0\bin`のpathを通す (Pathに追加)
-3. `mysql --version`ででてきたらまる
-4. cmdで`mysql -u root -p`
-5. パスワード入力
-6. (DB作るなら) `CREATE DATABASE db;`
-7. `pip install PyMySQL` (manage.pyに追記する)
-
-## サーバーの場合
-1. xserverの管理画面でDB追加する
-2. teratermで`mysql -u melotus6_admin -p`で入る
-
-
-
-
 ## パスワード系
 
 ## MySQL
@@ -119,12 +100,9 @@ password: `projectMelotus`
 xserver上でのMySQL-ID: `melotus6_admin`
 
 
-
-
-
 ### django-admin
-ID: `melotus6`
-email: `melotus6@gmail.com`
+ID: `admin`
+email: ``
 password: `projectMelotus`
 
 
@@ -135,4 +113,4 @@ password: `projectMelotus`
 
 
 ## めも
-dotenv入れたい
+/homeはdb,form練習用

@@ -29,90 +29,86 @@ def index(request):
     return render(request, 'index.html')
 
 def songs(request):
-    print('-------------------')
-    print(request.user.id)
-    print('-------------------')
-    requested_user_id = request.user.id
-    print(UserSocialAuth.objects.all())
-    token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
-    header_params = {
-        'Authorization': 'Bearer ' + token,
-    }
+    context = {}
 
-    END_POINT = 'https://api.spotify.com/v1/me'
+    if request.user.is_authenticated:
+        print('ログイン済み')
+        requested_user_id = request.user.id
+        token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
+        header_params = {
+            'Authorization': 'Bearer ' + token,
+        }
 
-    res = requests.get(END_POINT, headers=header_params)
-    data = res.json()
-    
+        END_POINT = 'https://api.spotify.com/v1/me'
+        res = requests.get(END_POINT, headers=header_params)
+        data = res.json()
+
+        context = {
+            'user_name': data['display_name'],
+            'user_url': data['external_urls']['spotify'],
+            'user_image': data['images'][0]['url'],
+        }
+    else:
+        print('ログインしていない')
 
     song_name = request.POST.get('song_name')
-    print(song_name)
-    context = {
-        'user_name': data['display_name'],
-        'user_url': data['external_urls']['spotify'],
-        'user_image': data['images'][0]['url'],
-        'song_name': song_name,
-    }
+    context['song_name'] = song_name
     
     return render(request, 'songs.html', context)
 
 def status(request):
-    print('-------------------')
-    print(request.user.id)
-    print('-------------------')
-    requested_user_id = request.user.id
-    print(UserSocialAuth.objects.all())
-    token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
-    header_params = {
-        'Authorization': 'Bearer ' + token,
-    }
+    context = {}
 
-    END_POINT = 'https://api.spotify.com/v1/me'
+    if request.user.is_authenticated:
+        print('ログイン済み')
+    
+        requested_user_id = request.user.id
+        print(UserSocialAuth.objects.all())
+        token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
+        header_params = {
+            'Authorization': 'Bearer ' + token,
+        }
 
-    res = requests.get(END_POINT, headers=header_params)
-    data = res.json()
-    # print(data)
-    context = {
-        'user_name': data['display_name'],
-        'user_url': data['external_urls']['spotify'],
-        'user_image': data['images'][0]['url'],
-    }
-    # debug contect
-    # context = {
-    #     'user_name': 'test',
-    #     'user_url': 'test',
-    #     'user_image': 'test',
-    # }
+        END_POINT = 'https://api.spotify.com/v1/me'
+
+        res = requests.get(END_POINT, headers=header_params)
+        data = res.json()
+        context = {
+            'user_name': data['display_name'],
+            'user_url': data['external_urls']['spotify'],
+            'user_image': data['images'][0]['url'],
+        }
+    else:
+        print('ログインしていない')
+        
     return render(request, 'status.html', context)
 
 
 def help(request):
-    print('-------------------')
-    print(request.user.id)
-    print('-------------------')
-    requested_user_id = request.user.id
-    print(UserSocialAuth.objects.all())
-    token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
-    header_params = {
-        'Authorization': 'Bearer ' + token,
-    }
+    context = {}
 
-    END_POINT = 'https://api.spotify.com/v1/me'
+    if request.user.is_authenticated:
+        print('ログイン済み')
 
-    res = requests.get(END_POINT, headers=header_params)
-    data = res.json()
-    # print(data)
-    context = {
-        'user_name': data['display_name'],
-        'user_url': data['external_urls']['spotify'],
-        'user_image': data['images'][0]['url'],
-    }
-    # debug contect
-    # context = {
-    #     'user_name': 'test',
-    #     'user_url': 'test',
-    #     'user_image': 'test',
-    # }
+        requested_user_id = request.user.id
+        token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
+        header_params = {
+            'Authorization': 'Bearer ' + token,
+        }
+
+        END_POINT = 'https://api.spotify.com/v1/me'
+
+        res = requests.get(END_POINT, headers=header_params)
+        data = res.json()
+        context = {
+            'user_name': data['display_name'],
+            'user_url': data['external_urls']['spotify'],
+            'user_image': data['images'][0]['url'],
+        }
+
+    else:
+        print('ログインしていない')
+
     return render(request, 'help.html', context)
 
 

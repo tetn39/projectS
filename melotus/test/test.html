@@ -6,15 +6,32 @@
   <title>Document</title>
 </head>
 <body>
-  <img src="./logo.svg" alt="">
-  <img src="./music-note-svgrepo-com.svg" alt="">
-  <img src="./playlist-minimalistic-2-svgrepo-com.svg" alt="">
-  <img src="./help-2-svgrepo-com.svg" alt="">
-  <img src="./list-svgrepo-com.svg" alt="">
-  <img src="./user-svgrepo-com.svg" alt="">
-  <style type="text/css">
-    body{background-color: black;}
-    img{size: 10px;}
-  </style>
+<main>
+  <div class="test-logo">
+    <img src="../images/logos/logo.svg" alt="">
+  </div>
+  <div class="test-icons">
+    <img src="../images/icons/music-note-svgrepo-com.svg" alt="">
+    <img src="../images/icons/list-svgrepo-com.svg" alt="">
+    <img src="../images/icons/playlist-minimalistic-2-svgrepo-com.svg" alt="">
+    <img src="../images/icons/user-svgrepo-com.svg" alt="">
+    <img src="../images/icons/help-2-svgrepo-com.svg" alt="">
+  </div>
+</main>
 </body>
+
+<style type="text/css">
+  main{
+    background-color: black;
+    width: auto;
+    height: 1000px;
+  }
+  .test-logo{width: 500px;}
+  .test-icons{
+    display: flex;
+    width: 200px;
+  }
+  img {width: 100%;}
+</style>
+
 </html>

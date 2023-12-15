@@ -44,7 +44,7 @@
 				<!-- TODO: ここ、アイコン押したときにログアウトしてるようにしてるからいらなくなったら直す -->
 				<a href="{% url 'logout' %}"><div class="header__icon"><img src="{{ user_image }}" alt=""></div></a>
 				{% else %}
-				<div class="header__icon"><img src="{% static 'images/logos/favicon.png' %}" alt=""></div>
+				<a href="/"><div class="header__icon"><img src="{% static 'images/logos/favicon.png' %}" alt=""></div></a>
 				{% endif %}
 			</div>
 			<div class="main__search">

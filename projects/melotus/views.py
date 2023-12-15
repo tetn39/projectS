@@ -16,13 +16,13 @@ def home_view(request):
 
 
 def create_view(request):
-    form =PostForm(request.POST)
+    form = PostForm(request.POST)
     if not form.is_valid():
         raise ValueError('invalid form', status=500)
     
     post = form.save()
 
-    return HttpResponse(f'{post.id}, status=200')
+    return HttpResponse(f'{post.name}', status=200)
 
 
 def index(request):
@@ -43,17 +43,17 @@ def songs(request):
 
     res = requests.get(END_POINT, headers=header_params)
     data = res.json()
+    
+
+    song_name = request.POST.get('song_name')
+    print(song_name)
     context = {
         'user_name': data['display_name'],
         'user_url': data['external_urls']['spotify'],
         'user_image': data['images'][0]['url'],
+        'song_name': song_name,
     }
-    # debug contect
-    # context = {
-    #     'user_name': 'test',
-    #     'user_url': 'test',
-    #     'user_image': 'test',
-    # }
+    
     return render(request, 'songs.html', context)
 
 def status(request):

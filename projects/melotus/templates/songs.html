@@ -48,14 +48,18 @@
 				{% endif %}
 			</div>
 			<div class="main__search">
-				<form action="#" class="search-form-011">
+				<form action="/songs/" class="search-form-011", method="POST">
+					{% csrf_token %}
 					<button type="submit" aria-label="検索"></button>
 					<label>
-						<input type="text" placeholder="好きな曲を入力！">
+						<input type="text" placeholder="好きな曲を入力！", name="song_name">
 					</label>
 				</form>
 			</div>
 			<div>
+				<!-- TODO: form用のテスト -->
+				<h2>テスト</h2>
+				<p>{{ song_name }}</p>
 				<table>
 					<tr>
 						<th>#</th>

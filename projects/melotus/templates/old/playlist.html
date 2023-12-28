@@ -5,11 +5,15 @@
     <title>Document</title>
 </head>
 <body>
-
-    <!-- <p>{{ all_data }}</p> -->
-
-    <h2>{{ album_name }}</h2>
-    <p><a href="{{ artist_url }}">{{ artist_name }}</a></p>
-    <a href="{{ album_url }}"><img src="{{ album_img }}" alt="アルバム画像"></a>
+    {% for song in songs %}
+    <h2>{{ song.album_name }}</h2>
+    <a href="{{ song.album_url }}"><img src="{{ song.album_img }}" alt="album_img"></a>
+    <a href="{{ song.artist_url }}"><p>{{ song.artist_name }}</p></a>
+    
+    {% endfor %}
+    <!-- <h2>{{ album_name }}</h2>
+    <a href="{{ album_url }}"><img src="{{ album_img }}" alt="album_img"></a>
+    <a href="{{ artist_url }}"><p>{{ artist_name }}</p></a> -->
+    
 </body>
 </html>

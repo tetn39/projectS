@@ -1,5 +1,5 @@
-const client_id = "c43d80e9fc7f49d0a92f91b824acee1a";
-const client_secret = "346dd3cc528348f7aadfe57c77020551";
+const client_id = "4f0d25f0cec241bf974d3f9f558eabb1";
+const client_secret = "da7948150a4548b087e263bd6da8cf7b";
 let selectedTracks = [];
 
 // Spotifyのアクセストークンを取得する

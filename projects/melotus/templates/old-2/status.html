@@ -8,41 +8,31 @@
 		<meta name="keywords" content="サイトキーワードを,で区切って入力">
 		{% load static %}
 		<link rel="stylesheet" href="{% static 'css/reset.css' %}">
-		<link rel="stylesheet" href="{% static 'css/main.css' %}">
-		<link rel="stylesheet" href="{% static 'css/help.css' %}">
+		<link rel="stylesheet" href="{% static 'css/songs.css' %}">
+		<link rel="stylesheet" href="{% static 'css/status.css' %}">
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap"
 			rel="stylesheet">
-		<script src="{% static 'js/songs.js' %}"></script>
+		<!-- <script src="{% static 'js/songs.js' %}"></script> -->
 	</head>
 
 	<body class="body-wrap">
 		<!----- ヘッダー ----->
 		<header>
-			<div class="header__logo"><a href="/"><img src="{% static 'images/logos/logo.svg' %}" alt=""></a></div>
+			<div class="header__logo"><a href="/"><img src="{% static 'images/logos/logo.svg' %}" alt="ロゴ画像"></a></div>
 			<nav>
 				<ul>
 					<div class="nav__background nav__top">
-						<div class="nav__diagnosis"><img src="{% static 'images/icons/music-note-svgrepo-com.svg' %}" alt="">
-							<h2>楽曲診断</h2>
-						</div>
-						<li><a href="/songs/"><img src="{% static 'images/icons/list-svgrepo-com.svg' %}" alt="">
-								<p>曲一覧</p>
-							</a></li>
-						<li><a href="/playlist/"><img src="{% static 'images/icons/playlist-minimalistic-2-svgrepo-com.svg' %}" alt="">
-								<p>プレイリスト</p>
-							</a></li>
+						<div class="nav__diagnosis"><img src="{% static 'images/icons/music-note-svgrepo-com.svg' %}" alt=""><h2>楽曲診断</h2></div>
+						<li><a href="/songs/"><img src="{% static 'images/icons/list-svgrepo-com.svg' %}" alt=""><p>曲一覧</p></a></li>
+						<li><a href="/playlist/"><img src="{% static 'images/icons/playlist-minimalistic-2-svgrepo-com.svg' %}" alt=""><p>プレイリスト</p></a></li>
 					</div>
 					<div class="nav__background nav__bottom">
-						<li><a href="/status/"><img src="{% static 'images/icons/user-svgrepo-com.svg' %}" alt="">
-								<p>ステータス</p>
-							</a></li>
+						<li><a href="/status/"><img src="{% static 'images/icons/user-svgrepo-com.svg' %}" alt=""><p>ステータス</p></a></li>
 					</div>
 					<div class="nav__background nav__bottom">
-						<li><a href="/help/"><img src="{% static 'images/icons/help-2-svgrepo-com.svg' %}" alt="">
-								<p>ヘルプ</p>
-							</a></li>
+						<li><a href="/help/"><img src="{% static 'images/icons/help-2-svgrepo-com.svg' %}" alt=""><p>ヘルプ</p></a></li>
 					</div>
 				</ul>
 			</nav>
@@ -57,33 +47,19 @@
 				{% else %}
 				<a href="/"><div class="header__icon"><img src="{% static 'images/logos/favicon.png' %}" alt=""></div></a>
 				{% endif %}
-			<div class="main__header">
-				<div class="header__icon"><img src="{% static '/images/logos/favicon.png' %}" alt=""></div>
 			</div>
 			<div class="main__content">
-				<article>
-					<div class="title__box">
-						<h1>ヘルプ</h1>
-					</div>
-					<section class="helptext_box">
-						<h2>ヘルプテキスト</h2>
-						<div>
-							<p>Q.xxxxxxxxxxxxxxxxxxxxx</p>
-					
-							<p>text</p>
-
-							<p>Q.xxxxxxxxxxxxxxxxxxxxx</p>
-
-							<p>text</p>
-
-							<p>Q.xxxxxxxxxxxxxxxxxxxxx</p>
-
-							<p>text</p>
-
-
-
-
-						</div>
+				<div class="graph-wrapper">
+					<div class="graph"></div>
+					<div class="graph"></div>
+					<div class="graph"></div>
+			</div>
+			
+					<article>
+					<h1>タイトル</h1>
+					<section>
+						<h2>タイトル</h2>
+						<p>コンテンツの内容</p>
 					</section>
 				</article>
 			<!----- メインコンテンツ END ----->

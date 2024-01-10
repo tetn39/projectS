@@ -6,40 +6,43 @@
 	<title>メロタス</title>
 	<meta name="description" content="サイトキャプションを入力">
 	<meta name="keywords" content="サイトキーワードを,で区切って入力">
-	<link rel="stylesheet" href="../melotus/css/reset.css">
-	<link rel="stylesheet" href="../melotus/css/main.css">
-	<link rel="stylesheet" href="../melotus/css/help.css">
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" href="{% static 'css/status.css' %}">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap"
 		rel="stylesheet">
-	<script src="../melotus/js/songs.js"></script>
+	<script src="{% static 'js/songs.js' %}"></script>
 </head>
 
 <body class="body-wrap">
 	<!----- ヘッダー ----->
 	<header>
-		<div class="header__logo"><a href=""><img src="../melotus/images/logos/logo.svg" alt=""></a></div>
+		<div class="header__logo"><a href=""><img src="{% static './images/logos/logo.svg' %}" alt=""></a></div>
 		<nav>
 			<ul>
 				<div class="nav__background nav__top">
-					<div class="nav__diagnosis"><img src="../melotus/images/icons/music-note-svgrepo-com.svg" alt="">
+		<div class="header__logo"><a href=""><img src="{% static './images/logos/logo.svg' %}" alt=""></a></div>
+		<div class="header__logo"><a href=""><img src="{% static './images/logos/logo.svg' %}" alt=""></a></div>
+		<div class="nav__diagnosis"><img src="{% static './images/icons/music-note-svgrepo-com.svg' %}" alt="">
 						<h2>楽曲診断</h2>
 					</div>
-					<li><a href=""><img src="../melotus/images/icons/list-svgrepo-com.svg" alt="">
+					<li><a href=""><img src="{% static './images/icons/list-svgrepo-com.svg' %}" alt="">
 							<p>曲一覧</p>
 						</a></li>
-					<li><a href="./playlist.html"><img src="../melotus/images/icons/playlist-minimalistic-2-svgrepo-com.svg" alt="">
+					<li><a href="./playlist.html"><img src="{% static './images/icons/playlist-minimalistic-2-svgrepo-com.svg' %}" alt="">
 							<p>プレイリスト</p>
 						</a></li>
 				</div>
 				<div class="nav__background nav__bottom">
-					<li><a href="./status.html"><img src="../melotus/images/icons/user-svgrepo-com.svg" alt="">
+					<li><a href="./status.html"><img src="{% static './images/icons/user-svgrepo-com.svg' %}" alt="">
 							<p>ステータス</p>
 						</a></li>
 				</div>
 				<div class="nav__background nav__bottom">
-					<li><a href="./help.html"><img src="../melotus/images/icons/help-2-svgrepo-com.svg" alt="">
+					<li><a href="./help.html"><img src="{% static './images/icons/help-2-svgrepo-com.svg' %}" alt="">
 							<p>ヘルプ</p>
 						</a></li>
 				</div>
@@ -50,7 +53,7 @@
 	<!----- メインコンテンツ ----->
 	<main>
 		<div class="main__header">
-			<div class="header__icon"><img src="./images/logos/favicon.png" alt=""></div>
+			<div class="header__icon"><img src="{% static './images/logos/favicon.png' %}" alt=""></div>
 		</div>
 		<div class="main__content">
 			<div class="status__title">
@@ -63,7 +66,7 @@
 			</div>
 			<div class="status__main__list">
 				<h2>最新の診断オススメ</h2>
-				<ul　class="status__playlist">
+				<ul class="status__playlist">
 					<li>
 						<div class="">
 							<!-- <img src="" alt=""> -->

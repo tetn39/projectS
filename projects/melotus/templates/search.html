@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    {% load static %}
     <title>Spotify Search</title>
 </head>
 
@@ -12,7 +13,7 @@
     <h2>選択済みの曲:</h2>
     <div id="selectedTracks"></div>
 
-    <script src="main.js"></script>
+    <script src="{% static 'js/search.js' %}"></script>
 </body>
 
 </html>

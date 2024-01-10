@@ -14,6 +14,7 @@ urlpatterns = [
     path('help/', views.help, name='help'),
     path('home/', views.home_view, name='home'),
     path('create/', views.create_view, name='create'),
+    path('search/', views.search, name='search'),
     path('social/', include('social_django.urls')),
     path('', include('django.contrib.auth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

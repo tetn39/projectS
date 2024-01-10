@@ -1,7 +1,5 @@
 /* 全体のフォント設定 */
-* {
-  font-family: 'Zen Kaku Gothic New', sans-serif;
-}
+* {font-family: 'Zen Kaku Gothic New', sans-serif;}
 
 /* カラーバリエーション */
 :root {
@@ -67,15 +65,13 @@ img {
 
 /* トップナビゲーション */
 .nav__top a {
-  margin-left: 45px;
+  padding-left: 45px;
 }
-
 /* ボトムナビゲーション */
 .nav__bottom {
   background-color: var(--bg-tertiary-color);
-
   & a {
-      margin-left: 30px;
+      padding-left: 30px;
   }
 }
 

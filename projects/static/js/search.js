@@ -54,6 +54,7 @@ function renderSelectedTracks() {
 function createTrackDiv(track) {
   const trackDiv = document.createElement("div");
   trackDiv.textContent = track.name;
+  console.log(track.artists);
   return trackDiv;
 }
 

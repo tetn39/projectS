@@ -13,7 +13,7 @@
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap"
 			rel="stylesheet">
-		<script src="{% static 'js/songs.js' %}"></script>
+		<!-- <script src="{% static 'js/songs.js' %}"></script> -->
 	</head>
 
 	<body class="body-wrap">
@@ -48,49 +48,13 @@
 				{% endif %}
 			</div>
 			<div class="main__search">
-				<form action="/songs/" class="search-form-011", method="POST">
-					{% csrf_token %}
-					<button type="submit" aria-label="検索"></button>
-					<label>
-						<input type="text" placeholder="好きな曲を入力！", name="song_name">
-					</label>
-				</form>
-			</div>
-			<div>
-				<!-- TODO: form用のテスト -->
-				<h2>テスト</h2>
-				<p>{{ song_name }}</p>
-				<!-- テストここまで -->
-				<table>
-					<tr>
-						<th>#</th>
-					  	<th>タイトル</th>
-					  	<th>アルバム</th>
-					  	<th>曲の長さ</th>
-					  	<th>選択</th>
-					</tr>
-					<!-- <tr>
-						<td>1</td>
-						<td class="icon bird">トリさん<br><span class="table__tr__sapn">ado</span></td>
-						<td>空を飛ぶこと</td>
-						<td>グリーン</td>
-						<td>山</td>
-					</tr>
-					<tr>
-						<td>2</td>
-						<td class="icon whale">クジラさん<br><span class="table__tr__sapn">ado</span></td>
-						<td>潮を吹くこと</td>
-						<td>ブルー</td>
-						<td>海</td>
-					</tr>
-					<tr>
-						<td>3</td>
-						<td class="icon crab">カニさん<br><span class="table__tr__sapn">ado</span></td>
-						<td>反復横飛び</td>
-						<td>レッド</td>
-						<td>川</td>
-					</tr> -->
-				</table>
+				<input type="text" id="searchInput" placeholder="キーワードを入力！">
+				<div id="searchResults"></div>
+				
+				<h2>選択済みの曲:</h2>
+				<div id="selectedTracks"></div>
+				
+				<script src="{% static 'js/search.js' %}"></script>
 			</div>
 			<!----- メインコンテンツ END ----->
 	

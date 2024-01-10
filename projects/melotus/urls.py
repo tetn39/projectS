@@ -12,8 +12,6 @@ urlpatterns = [
     path('status/', views.status, name='status'),
     path('playlist/', views.playlist, name='playlist'),
     path('help/', views.help, name='help'),
-    path('home/', views.home_view, name='home'),
-    path('create/', views.create_view, name='create'),
     path('search/', views.search, name='search'),
     path('social/', include('social_django.urls')),
     path('', include('django.contrib.auth.urls')),

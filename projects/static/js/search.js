@@ -53,8 +53,8 @@ function renderSelectedTracks() {
 // トラック表示を作成する
 function createTrackDiv(track) {
   const trackDiv = document.createElement("div");
-  trackDiv.textContent = track.name;
-  console.log(track.artists);
+  trackDiv.textContent =
+    track.name + " / " + track.album.name + " / " + track.artists[0].name;
   return trackDiv;
 }
 

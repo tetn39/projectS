@@ -53,8 +53,26 @@ function renderSelectedTracks() {
 // トラック表示を作成する
 function createTrackDiv(track) {
   const trackDiv = document.createElement("div");
-  trackDiv.textContent =
+  trackDiv.style.display = "flex"; // 横に並べる
+
+  // 画像を表示するための <img> 要素を作成
+  const albumImage = document.createElement("img");
+  albumImage.src = track.album.images[0].url;
+  albumImage.alt = "Album Cover";
+  albumImage.style.width = "40px"; // 画像の幅を調整（必要に応じて変更）
+  albumImage.style.marginRight = "10px";
+
+  // トラック情報を表示する <div> 要素を作成
+  const trackInfo = document.createElement("div");
+  trackInfo.textContent =
     track.name + " / " + track.album.name + " / " + track.artists[0].name;
+  trackInfo.style.marginRight = "10px";
+
+  // トラック表示の <div> 要素に <img> と <div> を横に並べて追加
+  trackDiv.appendChild(albumImage);
+  trackDiv.appendChild(trackInfo);
+  trackDiv.style.marginTop = "10px";
+
   return trackDiv;
 }
 

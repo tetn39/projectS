@@ -118,7 +118,48 @@ img {
     background-color: brown;
 }
 
-
-
-
 /* 検索窓 */
+/* トラック表示を作成する */
+.track-div {
+    display: flex;
+    /* 横に並べる */
+    margin-top: 10px;
+    background-color: green;
+}
+
+/* 画像を表示するための <img> 要素 */
+.album-image {
+    width: 40px;
+    /* 画像の幅を調整（必要に応じて変更） */
+    margin-right: 10px;
+}
+
+/* トラック情報を表示する <div> 要素 */
+.track-info {
+    margin-right: 10px;
+}
+
+/* 削除ボタン */
+.delete-button {
+    cursor: pointer;
+}
+
+/* 追加ボタン */
+.add-button {
+    cursor: pointer;
+}
+
+/* 検索入力欄 */
+#searchInput {
+    margin-bottom: 10px;
+}
+
+/* 検索結果のリスト */
+#searchResults {
+    margin-top: 10px;
+}
+
+/* 選択したトラックのリスト */
+#selectedTracks {
+    margin-top: 10px;
+}

@@ -18,4 +18,5 @@ jobs:
           script: |
             cd /home/melotus6/melotus6.xsrv.jp/forgit/projectS
             git pull origin main
-            \cp -rf /home/melotus6/melotus6.xsrv.jp/forgit/projectS/projects/* /home/melotus6/melotus6.xsrv.jp/public_html 
+            rm projects/pprojects/settings.py
+            \cp -rfa /home/melotus6/melotus6.xsrv.jp/forgit/projectS/projects/* /home/melotus6/melotus6.xsrv.jp/public_html 

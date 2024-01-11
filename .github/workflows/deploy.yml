@@ -1,0 +1,21 @@
+name: deploy
+on:
+  push:
+    branches: main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install SSH Key for Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          key: ${{ secrets.SSH_KEY }}
+          host: ${{ secrets.HOST_NAME }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          # git用ディレクトリからドキュメントルートにファイルをコピー
+          script: |
+            cd /home/melotus6/melotus6.xsrv.jp/forgit
+            git pull origin main
+            \cp -rf /home/melotus6/melotus6.xsrv.jp/forgit/projects/* /home/melotus6/melotus6.xsrv.jp/public_html 

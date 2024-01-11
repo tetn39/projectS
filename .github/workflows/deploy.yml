@@ -16,6 +16,7 @@ jobs:
           port: ${{ secrets.SSH_PORT }}
           # git用ディレクトリからドキュメントルートにファイルをコピー
           script: |
-            cd /home/melotus6/melotus6.xsrv.jp/forgit/projectS
+            cd /home/melotus6/melodystatus.com/fotgit/projectS
             git pull origin main
-            \cp -rf /home/melotus6/melotus6.xsrv.jp/forgit/projectS/projects/* /home/melotus6/melotus6.xsrv.jp/public_html 
+            rm projects/projects/settings.py
+            \cp -rfa /home/melotus6/melodystatus.com/forgit/projectS/projects/* /home/melotus6/melodystatus.com/public_html 

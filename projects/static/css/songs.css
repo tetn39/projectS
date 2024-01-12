@@ -121,13 +121,16 @@ img {
     background-color: var(--bg-tertiary-color);
 }
 
+
+
+
 /* 検索窓 */
 /* トラック表示を作成する */
 .track-div {
     display: flex;
     /* 横に並べる */
     margin-top: 10px;
-    background-color: var(--bg-tertiary-color);
+    background-color: var(--test-coler);
 }
 
 /* 画像を表示するための <img> 要素 */

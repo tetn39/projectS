@@ -1,7 +1,7 @@
 const client_id = "4f0d25f0cec241bf974d3f9f558eabb1";
 const client_secret = "da7948150a4548b087e263bd6da8cf7b";
 let selectedTracks = [];
-let selectedUris = []; // 追加: URIを格納するための配列
+let selectedUris = [];
 
 // SpotifyのAPIへのアクセストークンを取得する関数
 async function getToken() {
@@ -38,7 +38,7 @@ function addTrackToList(track) {
 
   if (!isAlreadySelected) {
     selectedTracks.push(track);
-    selectedUris.push(track.uri); // 追加: URIを配列に追加
+    selectedUris.push(track.uri);
     renderSelectedTracks();
     console.log("Selected URIs:", selectedUris);
   } else {
@@ -48,18 +48,30 @@ function addTrackToList(track) {
 
 // 選択されたトラックを表示する関数
 function renderSelectedTracks() {
+  renderSelectedTracksWithIndex();
+}
+
+// 選択されたトラックを配列番号と共に表示する関数
+function renderSelectedTracksWithIndex() {
   const listContainer = document.getElementById("selectedTracks");
   listContainer.innerHTML = "";
 
   selectedTracks.forEach((track, index) => {
     const trackDiv = createTrackDiv(track);
+    const indexLabel = createIndexLabel(index);
+    trackDiv.insertBefore(indexLabel, trackDiv.firstChild); // 配列番号を画像の左に挿入
     const deleteButton = createDeleteButton(index);
     trackDiv.appendChild(deleteButton);
     listContainer.appendChild(trackDiv);
   });
+}
 
-  // 追加: PythonにURIの配列を送信
-  // sendUrisToPython(selectedUris);
+// 新しい関数: 配列番号を表示するためのラベルを作成
+function createIndexLabel(index) {
+  const indexLabel = document.createElement("div");
+  indexLabel.textContent = `#${index + 1}`; // 配列番号は1から始まるようにするため +1
+  indexLabel.classList.add("index-label");
+  return indexLabel;
 }
 
 // 選択されたトラックを表示するためのDIVを作成する関数
@@ -113,7 +125,7 @@ function createDeleteButton(index) {
 // 選択されたトラックをリストから削除する関数
 function removeTrackFromList(index) {
   selectedTracks.splice(index, 1);
-  selectedUris.splice(index, 1); // 修正: 対応するURIも削除
+  selectedUris.splice(index, 1);
   renderSelectedTracks();
   console.log("Selected URIs:", selectedUris);
 }

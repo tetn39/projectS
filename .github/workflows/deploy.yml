@@ -17,6 +17,8 @@ jobs:
           # git用ディレクトリからドキュメントルートにファイルをコピー
           script: |
             cd /home/melotus6/melodystatus.com/forgit/projectS
+            git chechout .
             git pull origin main
             rm projects/projects/settings.py
+            rm projects/db/db.sqlite3
             \cp -rfa /home/melotus6/melodystatus.com/forgit/projectS/projects/* /home/melotus6/melodystatus.com/public_html 

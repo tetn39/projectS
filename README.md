@@ -43,7 +43,7 @@
 ## サーバー起動方法
 
 ### 初回だけやること
-1. `python -m venv venv`で仮想環境を作る(READMEとかの階層でする(projectSでする))
+1. `python -3.10 -m venv venv`で仮想環境を作る(READMEとかの階層でする(projectSでする))
 
 2. `venv/Scripts/activate`で仮想環境実行
 
@@ -78,7 +78,7 @@
 
 5. User name に `melotus6`
 
-6. Passphrase に `melotus`
+6. Passphrase に `melotus` <- これ不要
 
 7. Authentication methodsの Use RSA..なんたらを選択
 
@@ -110,7 +110,3 @@ password: `projectMelotus`
 ## お知らせ
 
 ドメインとったから`melodystatus.com`で飛べるよ
-
-
-## めも
-/homeはdb,form練習用

@@ -1,7 +1,9 @@
 const client_id = "4f0d25f0cec241bf974d3f9f558eabb1";
 const client_secret = "da7948150a4548b087e263bd6da8cf7b";
 let selectedTracks = [];
+let selectedUris = []; // 追加: URIを格納するための配列
 
+// SpotifyのAPIへのアクセストークンを取得する関数
 async function getToken() {
   const credentials = btoa(`${client_id}:${client_secret}`);
   const response = await fetch("https://accounts.spotify.com/api/token", {
@@ -17,6 +19,7 @@ async function getToken() {
   return await response.json();
 }
 
+// Spotifyでトラックを検索する関数
 async function searchSpotify(access_token, query) {
   const response = await fetch(
     `https://api.spotify.com/v1/search?q=${query}&type=track&limit=10`,
@@ -28,11 +31,22 @@ async function searchSpotify(access_token, query) {
   return await response.json();
 }
 
+// トラックを選択リストに追加する関数
 function addTrackToList(track) {
-  selectedTracks.push(track);
-  renderSelectedTracks();
+  // 既に選択されているかを確認
+  const isAlreadySelected = selectedUris.includes(track.uri);
+
+  if (!isAlreadySelected) {
+    selectedTracks.push(track);
+    selectedUris.push(track.uri); // 追加: URIを配列に追加
+    renderSelectedTracks();
+    console.log("Selected URIs:", selectedUris);
+  } else {
+    console.log("既に選択されています");
+  }
 }
 
+// 選択されたトラックを表示する関数
 function renderSelectedTracks() {
   const listContainer = document.getElementById("selectedTracks");
   listContainer.innerHTML = "";
@@ -43,8 +57,12 @@ function renderSelectedTracks() {
     trackDiv.appendChild(deleteButton);
     listContainer.appendChild(trackDiv);
   });
+
+  // 追加: PythonにURIの配列を送信
+  // sendUrisToPython(selectedUris);
 }
 
+// 選択されたトラックを表示するためのDIVを作成する関数
 function createTrackDiv(track) {
   const trackDiv = document.createElement("div");
   trackDiv.classList.add("track-div");
@@ -65,6 +83,7 @@ function createTrackDiv(track) {
   return trackDiv;
 }
 
+// 選択されたトラックを削除するボタンを作成する関数
 function createDeleteButton(index) {
   const deleteButton = document.createElement("button");
   deleteButton.textContent = "削除";
@@ -75,11 +94,15 @@ function createDeleteButton(index) {
   return deleteButton;
 }
 
+// 選択されたトラックをリストから削除する関数
 function removeTrackFromList(index) {
   selectedTracks.splice(index, 1);
+  selectedUris.splice(index, 1); // 修正: 対応するURIも削除
   renderSelectedTracks();
+  console.log("Selected URIs:", selectedUris);
 }
 
+// 初期化処理を行う関数
 async function initializeSearch() {
   const response = await getToken();
   const searchInput = document.getElementById("searchInput");
@@ -95,6 +118,7 @@ async function initializeSearch() {
     }
   });
 
+  // 検索結果を表示する関数
   function displayResults(tracks) {
     searchResults.innerHTML = "";
     tracks.forEach((track) => {
@@ -105,6 +129,7 @@ async function initializeSearch() {
     });
   }
 
+  // トラックを選択するボタンを作成する関数
   function createAddButton(track) {
     const addButton = document.createElement("button");
     addButton.textContent = "選択";
@@ -112,8 +137,16 @@ async function initializeSearch() {
     addButton.addEventListener("click", () => {
       addTrackToList(track);
     });
+
+    // 既に選択されている曲ならボタンを無効にする
+    if (selectedUris.includes(track.uri)) {
+      addButton.disabled = true;
+      addButton.textContent = "選択済み";
+    }
+
     return addButton;
   }
 }
 
+// 初期化処理を実行
 initializeSearch();

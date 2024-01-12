@@ -118,7 +118,7 @@ img {
 .main__header {
     width: 100%;
     height: 60px;
-    background-color: var(--test-coler);
+    background-color: var(--bg-tertiary-color);
 }
 
 /* 検索窓 */
@@ -127,7 +127,7 @@ img {
     display: flex;
     /* 横に並べる */
     margin-top: 10px;
-    background-color: green;
+    background-color: var(--bg-tertiary-color);
 }
 
 /* 画像を表示するための <img> 要素 */

@@ -3,13 +3,16 @@
     font-family: 'Zen Kaku Gothic New', sans-serif;
 }
 
-/* カラーバリエーション */
+
+/* これを作業用のCSSの上に貼る */
+/* 終わったら消す */
 :root {
-    --bg-primary-color: #121212;
-    --bg-secondary-color: #242424;
-    --bg-tertiary-color: #1A1A1A;
-    --primary-color: #00FF5C;
+    --bg-primary-color: #033;
+    --bg-secondary-color: #036;
+    --bg-tertiary-color: #069;
+    --primary-color: #0f0;
     --txt-color: #fff;
+    --test-coler:#f00;
 }
 
 /* メインコンテナ */
@@ -115,7 +118,7 @@ img {
 .main__header {
     width: 100%;
     height: 60px;
-    background-color: brown;
+    background-color: var(--test-coler);
 }
 
 /* 検索窓 */

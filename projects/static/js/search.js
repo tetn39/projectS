@@ -73,9 +73,25 @@ function createTrackDiv(track) {
   albumImage.classList.add("album-image");
 
   const trackInfo = document.createElement("div");
-  trackInfo.textContent =
-    track.name + " / " + track.album.name + " / " + track.artists[0].name;
   trackInfo.classList.add("track-info");
+
+  // トラック情報のための三つの div を作成
+  const trackNameDiv = document.createElement("div");
+  trackNameDiv.textContent = track.name;
+  trackNameDiv.classList.add("track-name");
+
+  const albumNameDiv = document.createElement("div");
+  albumNameDiv.textContent = track.album.name;
+  albumNameDiv.classList.add("album-name");
+
+  const artistNameDiv = document.createElement("div");
+  artistNameDiv.textContent = track.artists[0].name;
+  artistNameDiv.classList.add("artist-name");
+
+  // 三つの div を trackInfo に追加
+  trackInfo.appendChild(trackNameDiv);
+  trackInfo.appendChild(albumNameDiv);
+  trackInfo.appendChild(artistNameDiv);
 
   trackDiv.appendChild(albumImage);
   trackDiv.appendChild(trackInfo);
@@ -138,7 +154,7 @@ async function initializeSearch() {
       addTrackToList(track);
     });
 
-    // 既に選択されている曲ならボタンを無効にする
+    // 既に選択されている曲ならボタンを無効にする todo
     if (selectedUris.includes(track.uri)) {
       addButton.disabled = true;
       addButton.textContent = "選択済み";

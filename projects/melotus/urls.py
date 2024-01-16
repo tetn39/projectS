@@ -18,6 +18,10 @@ urlpatterns = [
     path('', include('django.contrib.auth.urls')),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
+
+
+
+
 # old
 # urlpatterns = [
 #     path('', views.index, name='index'),

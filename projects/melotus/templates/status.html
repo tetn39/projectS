@@ -14,7 +14,7 @@
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap"
 		rel="stylesheet">
-	<script src="{% static 'js/songs.js' %}"></script>
+	<!-- <script src="{% static 'js/songs.js' %}"></script> -->
 </head>
 
 <body class="body-wrap">
@@ -62,41 +62,13 @@
 			<div class="header__icon"><img src="{% static './images/logos/favicon.png' %}" alt=""></div>
 		</div>
 		<div class="main__content">
-			<div class="status__title">
+			<!-- <div class="status__title">
 				<div>
 					<h2>ステータス</h2>
 				</div>
-			</div>
-			<div class="graph__wrapper">
-				<div class="status__graph"></div>
-				<div class="status__graph"></div>
-				<div class="status__graph"></div>
-			</div>
-			<div class="status__main__list">
-				<h2>最新の診断オススメ</h2>
-				<ul class="status__playlist">
-					<li>
-						<div class="">
-							<!-- <img src="" alt=""> -->
-							<h4>布団の中から出たくない</h4>
-							<p>打首獄門同好会</p>
-						</div>
-					</li>
-					<li>
-						<div class="">
-							<!-- <img src="" alt=""> -->
-							<h4>日本の米は世界一</h4>
-							<p>打首獄門同好会</p>
-						</div>
-					</li>
-					<li>
-						<div class="">
-							<!-- <img src="" alt=""> -->
-							<h4>はたらきたくない</h4>
-							<p>打首獄門同好会</p>
-						</div>
-					</li>
-				</ul>
+			</div> -->
+			<div>
+				<canvas id="myChart"></canvas>
 			</div>
 			<!----- メインコンテンツ END ----->
 			<!----- フッター ----->
@@ -104,6 +76,37 @@
 		</div>
 		<!----- フッター END ----->
 	</main>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	
+	<script>
+		const ctx = document.getElementById('myChart');
+
+		new Chart(ctx, {
+			type: 'radar',
+			data: {
+				labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+				datasets: [{
+					label: '# of Votes',
+					data: [12, 19, 3, 5, 2, 3],
+					borderWidth: 1,
+					// backgroundColor : '#fff',
+					// borderColor: '#fff',
+					// pointBackgroundColor: '#fff',
+					// pointBorderColor: '#fff',
+					pointHoverBackgroundColor: '#fff',
+					// pointHoverBorderColor: 'rgb(255, 99, 132)
+				}]
+			},
+			options: {
+				scales: {
+					y: {
+						beginAtZero: true
+					}
+				}
+			}
+		});
+		
+	</script>
 </body>
 
 </html>

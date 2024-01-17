@@ -4,6 +4,9 @@ import django
 django.setup()
 from social_django.models import UserSocialAuth
 from projects.settings import BASE_DIR
+import os
+from dotenv import load_dotenv
+from base64 import b64encode
 
 
 def get_status(json):
@@ -39,7 +42,6 @@ def get_status(json):
 
 
     # APIから取得
-    # print(not_in_db)
 
     if len(not_in_db) == 0:
         return ret
@@ -54,11 +56,36 @@ def get_status(json):
     res = requests.get(END_POINT, headers=header_params)
 
     data = res.json()   
-    # print(data)
+    if 'error' in data:
+        print("era-------------")
+        # refresh token する
+        load_dotenv(os.path.join(BASE_DIR, 'auth/.env'))
+        refresh_token = UserSocialAuth.objects.get(user_id=1).extra_data['refresh_token']
+        refresh_data = {
+            "grant_type": "refresh_token",
+            "refresh_token": refresh_token,
+        }
+        token_url = "https://accounts.spotify.com/api/token"
+        client_id = os.environ.get('SPOTIFY_KEY')
+        client_secret = os.environ.get('SPOTIFY_SECRET')
+        auth_header = b64encode(f"{client_id}:{client_secret}".encode("utf-8")).decode("utf-8")
+        refresh_response = requests.post(token_url, data=refresh_data, headers={"Authorization": f"Basic {auth_header}"})
+        refresh_json = refresh_response.json()
+        
+        refreshed_access_token = refresh_json["access_token"]
+
+        # これで refreshed_access_token を使用して認証済みのリクエストを行うことができます
+        print("Access Token:", refreshed_access_token)
+    print(data)
 
 
 
     return ret
+
+
+
+def add_db():
+    pass
 
 json = {
    "uris": [

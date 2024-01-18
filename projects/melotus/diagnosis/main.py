@@ -10,7 +10,8 @@ from dotenv import load_dotenv
 from base64 import b64encode
 from datetime import datetime
 
-
+# get_statusとadd_dbは曲のステータスをdbから取得し、なければAPIから取得し、dbに追加する。
+# add_dbはget_statusから呼び出されるので、classにして結合してもよい
 def get_status(json):
     
     # db操作
@@ -55,7 +56,6 @@ def get_status(json):
 
     # 1時間経過していたらrefreshする
     if now_unix - auth_time > 3500:
-        print("-----refresh token-----")
         # refresh token する
         load_dotenv(os.path.join(BASE_DIR, 'auth/.env'))
         refresh_token = UserSocialAuth.objects.get(user_id=1).extra_data['refresh_token']
@@ -63,6 +63,7 @@ def get_status(json):
             "grant_type": "refresh_token",
             "refresh_token": refresh_token,
         }
+
         token_url = "https://accounts.spotify.com/api/token"
         client_id = os.environ.get('SPOTIFY_KEY')
         client_secret = os.environ.get('SPOTIFY_SECRET')
@@ -98,16 +99,17 @@ def get_status(json):
     for d in data['audio_features']:
         if d is not None:
             not_in_db_data[d['id']] = {
-                'acousticness': d['acousticness'],
-                'danceability': d['danceability'],
-                'energy': d['energy'],
-                'instrumentalness': d['instrumentalness'],
-                'liveness': d['liveness'],
-                'loudness': d['loudness'],
-                'mode': d['mode'],
-                'speechiness': d['speechiness'],
-                'tempo': d['tempo'],
-                'valence': d['valence'],
+                # 小数点以下4桁に丸める
+                'acousticness': float(f'{d["acousticness"]:.4f}'),
+                'danceability': float(f'{d["danceability"]:.4f}'),
+                'energy': float(f'{d["energy"]:.4f}'),
+                'instrumentalness': float(f'{d["instrumentalness"]:.4f}'),
+                'liveness': float(f'{d["liveness"]:.4f}'),
+                'loudness': float(f'{d["loudness"]:.4f}'),
+                'mode': float(f'{d["mode"]:.4f}'),
+                'speechiness': float(f'{d["speechiness"]:.4f}'),
+                'tempo': float(f'{d["tempo"]:.4f}'),
+                'valence': float(f'{d["valence"]:.4f}'),
                 'country': 'JP',
             }
 
@@ -118,8 +120,6 @@ def get_status(json):
     ret |= not_in_db_data
 
     return ret
-
-
 
 def add_db(content):
     music_status_list = [
@@ -142,7 +142,16 @@ def add_db(content):
     print(music_status_list)
     music_status.objects.bulk_create(music_status_list)
 
-    
+
+# ユーザーが選んだ曲のステータスからその人の好みのステータスを出す
+def user_music_status(content):
+    pass
+
+
+# spotifyからdbに曲のステータスを追加する。 db保有量を増やすためのdev用
+def add_db_from_spotify(content):
+    pass
+
 
 json = {
    "uris": [

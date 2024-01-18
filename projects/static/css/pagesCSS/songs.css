@@ -1,116 +1,70 @@
 /* 全体のフォント設定 */
 * {
-    font-family: 'Zen Kaku Gothic New', sans-serif;
+  font-family: 'Zen Kaku Gothic New', sans-serif;
 }
 
-/* メインコンテナ */
-main {
-    width: 100%;
-    min-width: 600px;
-    background-color: var(--bg-primary-color);
-}
-
-/* 画像スタイル */
-img {
-    width: 100%;
-    height: 100%;
-}
-
-/* ボディコンテナ */
-.body-wrap {
-    display: flex;
-    width: 100%;
-    background-color: var(--bg-primary-color);
-}
-
-/* ナビゲーションバックグラウンド */
-.nav__background {
-    background-color: var(--bg-primary-color);
-    margin: 10px;
-    border-radius: 10px;
-
-    & li a {
-        display: flex;
-        color: var(--txt-color);
-    }
-    & li img {
-        width: 30px;
-        margin: 10px;
-    }
-    & li {
-        vertical-align: middle;
-    }
-    & p {
-        height: 50px;
-        line-height: 50px;
-        font-weight: bold;
-    }
-}
-
-/* トップナビゲーション */
-.nav__top a {
-    margin-left: 45px;
-}
-
-/* ボトムナビゲーション */
-.nav__bottom {
-    background-color: var(--bg-tertiary-color);
-
-    & a {
-        margin-left: 30px;
-    }
+/* これを作業用のCSSの上に貼る */
+/* 終わったら消す */
+:root {
+  --bg-primary-color: #033;
+  --bg-secondary-color: #053;
+  --bg-tertiary-color: #043;
+  --primary-color: #0f0;
+  --txt-color: #fff;
+  --test-coler: #f00;
 }
 
 /* 診断ナビゲーション */
 .nav__diagnosis {
-    display: flex;
-    padding-left: 30px;
-    background-color: var(--bg-tertiary-color);
-    border-radius: 10px 10px 0 0;
-    
-    & h2 {
-        height: 60px;
-        line-height: 60px;
-        color: var(--primary-color);
-    }
-    
-    & img {
-        width: 40px;
-        margin: 10px;
-    }
+  display: flex;
+  padding-left: 30px;
+  background-color: var(--bg-tertiary-color);
+  border-radius: 10px 10px 0 0;
+
+  & h2 {
+    height: 60px;
+    line-height: 60px;
+    color: var(--primary-color);
+  }
+
+  & img {
+    width: 40px;
+    margin: 10px;
+  }
 }
 
 /* ヘッダーロゴ */
 .header__logo {
-    width: 200px;
-    margin: 30px auto 30px auto;
+  width: 200px;
+  margin: 30px auto 30px auto;
 }
 
 /* ヘッダーアイコン */
 .header__icon {
-    width: 50px;
-    height: 50px;
-    margin-left: auto;
-    margin-right: 30px;
+  width: 50px;
+  height: 50px;
+  margin-left: auto;
+  margin-right: 30px;
 }
 
 /* メインヘッダー */
 .main__header {
-    width: 100%;
-    height: 60px;
-    background-color: var(--bg-tertiary-color);
+  width: 100%;
+  height: 60px;
+  background-color: var(--bg-tertiary-color);
 }
 
 /* 項目名 */
-.main__title{
-    background-color: var(--bg-secondary-color);
-    height: 150px;
-    margin: 10px 20px;
-    padding: 20px;
-    border-radius: 30px;
+.main__title {
+  background-color: var(--bg-secondary-color);
+  height: 150px;
+  margin: 10px 20px;
+  padding: 20px;
+  border-radius: 30px;
 }
-.main__title p{
-    color: var(--txt-color);
+
+.main__title p {
+  color: var(--txt-color);
 }
 
 
@@ -118,45 +72,45 @@ img {
 /* 検索窓 */
 /* トラック表示を作成する */
 .track-div {
-    display: flex;
-    /* 横に並べる */
-    margin-top: 10px;
-    background-color: var(--primary-color);
+  display: flex;
+  /* 横に並べる */
+  margin-top: 10px;
+  background-color: var(--primary-color);
 }
 
 /* 画像を表示するための <img> 要素 */
 .album-image {
-    width: 40px;
-    /* 画像の幅を調整（必要に応じて変更） */
-    margin-right: 10px;
+  width: 40px;
+  /* 画像の幅を調整（必要に応じて変更） */
+  margin-right: 10px;
 }
 
 /* トラック情報を表示する <div> 要素 */
 .track-info {
-    margin-right: 10px;
+  margin-right: 10px;
 }
 
 /* 削除ボタン */
 .delete-button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* 追加ボタン */
 .add-button {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* 検索入力欄 */
 #searchInput {
-    margin-bottom: 10px;
+  margin-bottom: 10px;
 }
 
 /* 検索結果のリスト */
 #searchResults {
-    margin-top: 10px;
+  margin-top: 10px;
 }
 
 /* 選択したトラックのリスト */
 #selectedTracks {
-    margin-top: 10px;
+  margin-top: 10px;
 }

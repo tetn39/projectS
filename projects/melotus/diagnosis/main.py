@@ -143,15 +143,39 @@ def add_db(content):
     music_status.objects.bulk_create(music_status_list)
 
 
-# ユーザーが選んだ曲のステータスからその人の好みのステータスを出す
+# ユーザーが選んだ曲のステータスからその人の好みのステータスを出す weightもつけるといいかも
 def user_music_status(content):
-    pass
+    avegare_status = {
+        'acousticness': 0,
+        'danceability': 0,
+        'energy': 0,
+        'instrumentalness': 0,
+        'liveness': 0,
+        'loudness': 0,
+        'mode': 0,
+        'speechiness': 0,
+        'tempo': 0,
+        'valence': 0,
+    }
+    for key in content:
+        for status in content[key]:
+            if status != 'country':
+                avegare_status[status] += content[key][status]
+    for status in avegare_status:
+        avegare_status[status] /= len(content)
+        avegare_status[status] = float(f'{avegare_status[status]:.4f}')
+    
+    print(avegare_status)
 
+    return avegare_status
 
 # spotifyからdbに曲のステータスを追加する。 db保有量を増やすためのdev用
 def add_db_from_spotify(content):
     pass
 
+# ユーザーのステータスにあった曲をdbから探す。
+def choose_music(content):
+    pass
 
 json = {
    "uris": [

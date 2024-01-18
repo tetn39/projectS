@@ -58,6 +58,7 @@
 
 3. `http://127.0.0.1:8000/` で開ける
 
+4. `deactivate`で抜ける
 
 ## pip 
 `social-auth-app-django`

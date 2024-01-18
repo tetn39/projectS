@@ -3,17 +3,6 @@
     font-family: 'Zen Kaku Gothic New', sans-serif;
 }
 
-/* これを作業用のCSSの上に貼る */
-/* 終わったら消す */
-:root {
-    --bg-primary-color: #033;
-    --bg-secondary-color: #053;
-    --bg-tertiary-color: #043;
-    --primary-color: #0f0;
-    --txt-color: #fff;
-    --test-coler:#f00;
-}  
-
 /* メインコンテナ */
 main {
     width: 100%;

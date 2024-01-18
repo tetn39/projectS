@@ -145,12 +145,11 @@ def old_playlist(request):
             "2ChSAhdQmJpHgos2DQP6cI"
             ] 
     }
-    print(get_status(json))
-    
+    content = get_status(json)
+    print(content)
     context = {
 
     }
-
 
 
     return render(request, 'old/playlist.html', context)

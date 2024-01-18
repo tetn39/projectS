@@ -3,10 +3,12 @@ import requests
 import django
 django.setup()
 from social_django.models import UserSocialAuth
+from melotus.models import music_status
 from projects.settings import BASE_DIR
 import os
 from dotenv import load_dotenv
 from base64 import b64encode
+from datetime import datetime
 
 
 def get_status(json):
@@ -15,6 +17,7 @@ def get_status(json):
     con = sqlite3.connect(f'{BASE_DIR}/db/db.sqlite3')
     cur = con.cursor()
     not_in_db = []
+    not_in_db_data = {}
     ret = {}
 
     placeholders = ', '.join('?' for _ in json["uris"]) # その数だけ ?入れるみたいな感じ
@@ -32,10 +35,10 @@ def get_status(json):
                 'liveness': row[5],
                 'loudness': row[6],
                 'mode': row[7],
-                'speechness': row[8],
+                'speechiness': row[8],
                 'tempo': row[9],
-                'valence': row[11],
-                'country': row[10],
+                'valence': row[10],
+                'country': row[11],
             }
         
     con.close()
@@ -46,18 +49,13 @@ def get_status(json):
     if len(not_in_db) == 0:
         return ret
 
-    token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
-    header_params = {
-        'Authorization': 'Bearer ' + token,
-    }
-    ids = ','.join(not_in_db)
-    END_POINT = f'https://api.spotify.com/v1/audio-features?ids={ids}'
+    # unixタイムを取得して、1時間経過していればrefreshする
+    now_unix = int(datetime.now().timestamp())
+    auth_time = UserSocialAuth.objects.get(user_id=1).extra_data['auth_time']
 
-    res = requests.get(END_POINT, headers=header_params)
-
-    data = res.json()   
-    if 'error' in data:
-        print("era-------------")
+    # 1時間経過していたらrefreshする
+    if now_unix - auth_time > 3500:
+        print("-----refresh token-----")
         # refresh token する
         load_dotenv(os.path.join(BASE_DIR, 'auth/.env'))
         refresh_token = UserSocialAuth.objects.get(user_id=1).extra_data['refresh_token']
@@ -74,18 +72,77 @@ def get_status(json):
         
         refreshed_access_token = refresh_json["access_token"]
 
-        # これで refreshed_access_token を使用して認証済みのリクエストを行うことができます
-        print("Access Token:", refreshed_access_token)
-    print(data)
+        unix = datetime.now()
+        extra_data = {
+            'auth_time': int(unix.timestamp()),
+            'refresh_token': refresh_token,
+            'access_token': refreshed_access_token,
+            'token_type': 'Bearer',
+        }
+
+        UserSocialAuth.objects.filter(user_id=1).update(extra_data=extra_data)
 
 
+    # たりないデータを取得
+    token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
+    header_params = {
+        'Authorization': 'Bearer ' + token,
+    }
+    ids = ','.join(not_in_db)
+    END_POINT = f'https://api.spotify.com/v1/audio-features?ids={ids}'
+
+    res = requests.get(END_POINT, headers=header_params)
+
+    data = res.json()   
+
+    for d in data['audio_features']:
+        if d is not None:
+            not_in_db_data[d['id']] = {
+                'acousticness': d['acousticness'],
+                'danceability': d['danceability'],
+                'energy': d['energy'],
+                'instrumentalness': d['instrumentalness'],
+                'liveness': d['liveness'],
+                'loudness': d['loudness'],
+                'mode': d['mode'],
+                'speechiness': d['speechiness'],
+                'tempo': d['tempo'],
+                'valence': d['valence'],
+                'country': 'JP',
+            }
+
+    # DBに追加
+    add_db(not_in_db_data)
+
+    
+    ret |= not_in_db_data
 
     return ret
 
 
 
-def add_db():
-    pass
+def add_db(content):
+    music_status_list = [
+        music_status(
+            music_id = key,
+            acousticness = content[key]['acousticness'],
+            danceability = content[key]['danceability'],
+            energy = content[key]['energy'],
+            instrumentalness = content[key]['instrumentalness'],
+            liveness = content[key]['liveness'],
+            loudness = content[key]['loudness'],
+            mode = content[key]['mode'],
+            speechiness = content[key]['speechiness'],
+            tempo = content[key]['tempo'],
+            valence = content[key]['valence'],
+            country = content[key]['country'],
+        )
+        for key in content
+    ]
+    print(music_status_list)
+    music_status.objects.bulk_create(music_status_list)
+
+    
 
 json = {
    "uris": [
@@ -96,35 +153,57 @@ json = {
        ] 
 }
 
-get_status(json)
-
-
-data = {
-    '0MyTMrPTh0GgtuyhYRdl3P': {
-        'acousticness': 1.0, 
-        'danceability': 2.0, 
-        'energy': 3.0, 
-        'instrumentalness': 4.0, 
-        'liveness': 5.0, 
-        'loudness': 6.0, 
-        'mode': 7.0, 
-        'speechness': 8.0, 
-        'tempo': 0.01, 
-        'valence': -0.1, 
-        'country': 'JP'
-        }, 
-        
-    '1Sy41HCCozDBL73orZpW5Y': {
-        'acousticness': 1.2, 
-        'danceability': 2.3, 
-        'energy': 3.4, 
-        'instrumentalness': 4.5, 
-        'liveness': 6.7, 
-        'loudness': 7.8, 
-        'mode': 9.0, 
-        'speechness': 0.2, 
-        'tempo': 0.1, 
-        'valence': 0.4, 
-        'country': 'JP'
-        }
+content = {
+'0MyTMrPTh0GgtuyhYRdl3P': {
+    'acousticness': 0.000166, 
+    'danceability': 0.436, 
+    'energy': 0.896, 
+    'instrumentalness': 0, 
+    'liveness': 0.0757, 
+    'loudness': -2.15, 
+    'mode': 1, 
+    'speechiness': 0.0928, 
+    'tempo': 173.015, 
+    'valence': 0.771, 
+    'country': 'JP'
+    }, 
+'7IQiZVGgfW927fImwKJDOq': {
+    'acousticness': 0.996, 
+    'danceability': 0.567, 
+    'energy': 0.0994, 
+    'instrumentalness': 0.833, 
+    'liveness': 0.103, 
+    'loudness': -17.668, 
+    'mode': 1, 
+    'speechiness': 0.0578, 
+    'tempo': 86.689, 
+    'valence': 0.594,
+    'country': 'JP'
+    }, 
+'1Sy41HCCozDBL73orZpW5Y': {
+    'acousticness': 0.00151, 
+    'danceability': 0.404, 
+    'energy': 0.963, 
+    'instrumentalness': 1.06e-05, 
+    'liveness': 0.0521, 
+    'loudness': -1.707, 
+    'mode': 1, 
+    'speechiness': 0.0663, 
+    'tempo': 169.963, 
+    'valence': 0.607, 
+    'country': 'JP'
+    }, 
+'2ChSAhdQmJpHgos2DQP6cI': {
+    'acousticness': 0.00304, 
+    'danceability': 0.734, 
+    'energy': 0.822, 
+    'instrumentalness': 0, 
+    'liveness': 0.0165, 
+    'loudness': -3.397, 
+    'mode': 0, 
+    'speechiness': 0.0537,
+    'tempo': 129.956, 
+    'valence': 0.801, 
+    'country': 'JP'
     }
+}

@@ -4,8 +4,11 @@ import json
 from social_django.models import UserSocialAuth
 import requests
 from django.conf import settings
-# mainpyからimport
 from .diagnosis.main import get_status
+from django.http import JsonResponse
+from django.middleware.csrf import get_token
+from django.views.decorators.csrf import ensure_csrf_cookie
+
 
 
 def index(request):
@@ -131,13 +134,9 @@ def playlist(request):
     return render(request, 'playlist.html', context)
 
 
-def old_playlist(request):
-    token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
-    header_params = {
-        'Authorization': 'Bearer ' + token,
-    }
+def jikken(request):
 
-    json = {
+    json_text = {
         "uris": [
             "7IQiZVGgfW927fImwKJDOq",
             "0MyTMrPTh0GgtuyhYRdl3P",
@@ -145,11 +144,38 @@ def old_playlist(request):
             "2ChSAhdQmJpHgos2DQP6cI"
             ] 
     }
-    content = get_status(json)
-    print(content)
-    context = {
+    get_status(json_text)
 
+    context = {
+        'songs': "test",
     }
 
 
     return render(request, 'old/playlist.html', context)
+
+@ensure_csrf_cookie
+def js_py(request):
+    if request.method == 'POST':
+        # POSTリクエストの場合、CSRFトークンを確認
+        csrf_token = request.headers.get("X-CSRFToken")
+        if not request.COOKIES.get("csrftoken") == csrf_token:
+            return JsonResponse({'status': 'error', 'message': 'CSRF Token Validation Failed'})
+
+        data = json.loads(request.body.decode('utf-8'))
+        myArray = data.get('myArray', [])
+        # ここで配列を使用した処理を行う
+        print('成功')
+        print(myArray)
+        json_text = {
+            "uris": [
+                "7IQiZVGgfW927fImwKJDOq",
+                "0MyTMrPTh0GgtuyhYRdl3P",
+                "1Sy41HCCozDBL73orZpW5Y",
+                "2ChSAhdQmJpHgos2DQP6cI"
+            ]
+        }
+        return JsonResponse(json_text)
+
+    else:
+        print('失敗')
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})

@@ -23,11 +23,36 @@ def add_db_from_spotify():
         audio_features = sp.audio_features(track_id)[0]
 
         # 特徴量を表示または保存
+        #　参考
+        """
+                    music_id = key,
+            acousticness = content[key]['acousticness'],
+            danceability = content[key]['danceability'],
+            energy = content[key]['energy'],
+            instrumentalness = content[key]['instrumentalness'],
+            liveness = content[key]['liveness'],
+            loudness = content[key]['loudness'],
+            mode = content[key]['mode'],
+            speechiness = content[key]['speechiness'],
+            tempo = content[key]['tempo'],
+            valence = content[key]['valence'],
+            country = content[key]['country'],
+            """
+        print(audio_features)
+        print(f"Track ID: {track_id}")
         print(f"Track: {track_name}")
         print(f"Acousticness: {audio_features['acousticness']:.4f}")
         print(f"Danceability: {audio_features['danceability']:.4f}")
         print(f"Energy: {audio_features['energy']:.4f}")
-        # 他の特徴量も同様に表示または保存
+        print(f"Instrumentalness: {audio_features['instrumentalness']:.4f}")
+        print(f"Liveness: {audio_features['liveness']:.4f}")
+        print(f"Loudness: {audio_features['loudness']:.4f}")
+        print(f"Mode: {audio_features['mode']:.4f}")
+        print(f"Speechiness: {audio_features['speechiness']:.4f}")
+        print(f"Tempo: {audio_features['tempo']:.4f}")
+        print(f"Valence: {audio_features['valence']:.4f}")
+        
+        
 
         print("\n")
 

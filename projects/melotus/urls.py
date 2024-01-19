@@ -13,6 +13,7 @@ urlpatterns = [
     path('js_py/', views.js_py, name='js_py'),
     path('help/', views.help, name='help'),
     path('search/', views.search, name='search'),
+    path('add_db/', views.add_db, name='add_db'),
     path('logout/', views.logout_view, name='logout'),
     path('social/', include('social_django.urls')),
     path('', include('django.contrib.auth.urls')),

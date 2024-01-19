@@ -4,7 +4,7 @@ import json
 from social_django.models import UserSocialAuth
 import requests
 from django.conf import settings
-from .diagnosis.main import get_status
+from .diagnosis.main import get_status, add_db_from_spotify
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -159,7 +159,7 @@ def jikken(request):
     }
 
 
-    return render(request, 'old/playlist.html', context)
+    return render(request, 'old/jikken.html', context)
 
 @ensure_csrf_cookie
 def js_py(request):
@@ -187,3 +187,12 @@ def js_py(request):
     else:
         print('失敗')
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+
+def add_db(request):
+    ret = add_db_from_spotify()
+    
+    content = {
+        'ret': ret,
+    }
+    return render(request, 'add_db.html', content)

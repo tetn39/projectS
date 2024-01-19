@@ -172,32 +172,77 @@ def user_music_status(content):
     return avegare_status
 
 # spotifyからdbに曲のステータスを追加する。 db保有量を増やすためのdev用
-def add_db_from_spotify(content):
+def add_db_from_spotify():
+    load_dotenv(os.path.join(BASE_DIR, 'auth/.env'))
     client_id = os.environ.get('SPOTIFY_KEY')
     client_secret = os.environ.get('SPOTIFY_SECRET')
 
     client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
-    playlist_id = "37i9dQZEVXbKXQ4mDTEBXq" # top50 japan
+    playlist_id = "37i9dQZEVXbKXQ4mDTEBXq" # top50 japan　ここをいつもいい感じに変えられるといいかも。
     playlist_tracks = sp.playlist_tracks(playlist_id)
 
     # トラックごとにステータスを取得
+    add_db_data = {}
     for track in playlist_tracks['items']:
         track_id = track['track']['id']
-        track_name = track['track']['name']
 
         # トラックの特徴量を取得
         audio_features = sp.audio_features(track_id)[0]
 
         # 特徴量を表示または保存
-        print(f"Track: {track_name}")
-        print(f"Acousticness: {audio_features['acousticness']:.4f}")
-        print(f"Danceability: {audio_features['danceability']:.4f}")
-        print(f"Energy: {audio_features['energy']:.4f}")
-        # 他の特徴量も同様に表示または保存
+        #　参考
+        """
+                    music_id = key,
+            acousticness = content[key]['acousticness'],
+            danceability = content[key]['danceability'],
+            energy = content[key]['energy'],
+            instrumentalness = content[key]['instrumentalness'],
+            liveness = content[key]['liveness'],
+            loudness = content[key]['loudness'],
+            mode = content[key]['mode'],
+            speechiness = content[key]['speechiness'],
+            tempo = content[key]['tempo'],
+            valence = content[key]['valence'],
+            country = content[key]['country'],
+            """
+        # print(audio_features)
+        # print(f"Track ID: {track_id}")
+        # print(f"Acousticness: {audio_features['acousticness']:.4f}")
+        # print(f"Danceability: {audio_features['danceability']:.4f}")
+        # print(f"Energy: {audio_features['energy']:.4f}")
+        # print(f"Instrumentalness: {audio_features['instrumentalness']:.4f}")
+        # print(f"Liveness: {audio_features['liveness']:.4f}")
+        # print(f"Loudness: {audio_features['loudness']:.4f}")
+        # print(f"Mode: {audio_features['mode']:.4f}")
+        # print(f"Speechiness: {audio_features['speechiness']:.4f}")
+        # print(f"Tempo: {audio_features['tempo']:.4f}")
+        # print(f"Valence: {audio_features['valence']:.4f}")
 
-        print("\n")
+        add_db_data |= {
+            track_id: {
+                'acousticness': float(f'{audio_features["acousticness"]:.4f}'),
+                'danceability': float(f'{audio_features["danceability"]:.4f}'),
+                'energy': float(f'{audio_features["energy"]:.4f}'),
+                'instrumentalness': float(f'{audio_features["instrumentalness"]:.4f}'),
+                'liveness': float(f'{audio_features["liveness"]:.4f}'),
+                'loudness': float(f'{audio_features["loudness"]:.4f}'),
+                'mode': float(f'{audio_features["mode"]:.4f}'),
+                'speechiness': float(f'{audio_features["speechiness"]:.4f}'),
+                'tempo': float(f'{audio_features["tempo"]:.4f}'),
+                'valence': float(f'{audio_features["valence"]:.4f}'),
+                'country': 'JP',
+            }
+        }
+
+    # DBに追加
+    ret = []
+    for key in add_db_data:
+        obj, created = music_status.objects.get_or_create(music_id=key, defaults=add_db_data[key])
+        ret.append([obj, created])
+    
+    return ret
 
 
 

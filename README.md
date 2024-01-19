@@ -65,6 +65,7 @@
 `django`
 `pages`
 `python-dotenv`
+`spotipy`
 
 
 ## ssh接続やりかた

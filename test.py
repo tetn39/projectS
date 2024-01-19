@@ -1,79 +1,34 @@
-def user_music_status(content):
-    avegare_status = {
-        'acousticness': 0,
-        'danceability': 0,
-        'energy': 0,
-        'instrumentalness': 0,
-        'liveness': 0,
-        'loudness': 0,
-        'mode': 0,
-        'speechiness': 0,
-        'tempo': 0,
-        'valence': 0,
-    }
-    for key in content:
-        for status in content[key]:
-            if status != 'country':
-                avegare_status[status] += content[key][status]
-    for status in avegare_status:
-        avegare_status[status] /= len(content)
-        avegare_status[status] = float(f'{avegare_status[status]:.4f}')
-    
-    print(avegare_status)
+import spotipy
+from spotipy.oauth2 import SpotifyClientCredentials
+import os
+from dotenv import load_dotenv
 
-content = {
-'0MyTMrPTh0GgtuyhYRdl3P': {
-    'acousticness': 0.000166, 
-    'danceability': 0.436, 
-    'energy': 0.896, 
-    'instrumentalness': 0, 
-    'liveness': 0.0757, 
-    'loudness': -2.15, 
-    'mode': 1, 
-    'speechiness': 0.0928, 
-    'tempo': 173.015, 
-    'valence': 0.771, 
-    'country': 'JP'
-    }, 
-'7IQiZVGgfW927fImwKJDOq': {
-    'acousticness': 0.996, 
-    'danceability': 0.567, 
-    'energy': 0.0994, 
-    'instrumentalness': 0.833, 
-    'liveness': 0.103, 
-    'loudness': -17.668, 
-    'mode': 1, 
-    'speechiness': 0.0578, 
-    'tempo': 86.689, 
-    'valence': 0.594,
-    'country': 'JP'
-    }, 
-'1Sy41HCCozDBL73orZpW5Y': {
-    'acousticness': 0.00151, 
-    'danceability': 0.404, 
-    'energy': 0.963, 
-    'instrumentalness': 1.06e-05, 
-    'liveness': 0.0521, 
-    'loudness': -1.707, 
-    'mode': 1, 
-    'speechiness': 0.0663, 
-    'tempo': 169.963, 
-    'valence': 0.607, 
-    'country': 'JP'
-    }, 
-'2ChSAhdQmJpHgos2DQP6cI': {
-    'acousticness': 0.00304, 
-    'danceability': 0.734, 
-    'energy': 0.822, 
-    'instrumentalness': 0, 
-    'liveness': 0.0165, 
-    'loudness': -3.397, 
-    'mode': 0, 
-    'speechiness': 0.0537,
-    'tempo': 129.956, 
-    'valence': 0.801, 
-    'country': 'JP'
-    }
-}
+def add_db_from_spotify():
+    load_dotenv(os.path.join('./projects/auth/.env'))
+    client_id = os.environ.get('SPOTIFY_KEY')
+    client_secret = os.environ.get('SPOTIFY_SECRET')
 
-user_music_status(content)
+    client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
+    playlist_id = "37i9dQZEVXbKXQ4mDTEBXq" # top50 japan
+    playlist_tracks = sp.playlist_tracks(playlist_id)
+
+    # トラックごとにステータスを取得
+    for track in playlist_tracks['items']:
+        track_id = track['track']['id']
+        track_name = track['track']['name']
+
+        # トラックの特徴量を取得
+        audio_features = sp.audio_features(track_id)[0]
+
+        # 特徴量を表示または保存
+        print(f"Track: {track_name}")
+        print(f"Acousticness: {audio_features['acousticness']:.4f}")
+        print(f"Danceability: {audio_features['danceability']:.4f}")
+        print(f"Energy: {audio_features['energy']:.4f}")
+        # 他の特徴量も同様に表示または保存
+
+        print("\n")
+
+add_db_from_spotify()

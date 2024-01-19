@@ -2,10 +2,14 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    {% load static %}
     <title>Document</title>
+    <script src="{% static 'js/send.js' %}"></script>
 </head>
 <body>
-    <p>テストページ</p>
+    <p>テストペaaージ</p>
     
+    <!-- js実行 -->
+    <button onclick="send()">送信</button>
 </body>
 </html>

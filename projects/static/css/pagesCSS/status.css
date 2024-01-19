@@ -19,7 +19,6 @@
 }
 .chart__wrap{
   /* background-color: var(--bg-tertiary-color); */
-  background-color: #fff;
   width: 500px;
   height: 500px;
 }

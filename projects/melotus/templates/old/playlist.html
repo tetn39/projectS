@@ -2,18 +2,14 @@
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
+    {% load static %}
     <title>Document</title>
+    <script src="{% static 'js/send.js' %}"></script>
 </head>
 <body>
-    {% for song in songs %}
-    <h2>{{ song.album_name }}</h2>
-    <a href="{{ song.album_url }}"><img src="{{ song.album_img }}" alt="album_img"></a>
-    <a href="{{ song.artist_url }}"><p>{{ song.artist_name }}</p></a>
+    <p>テストペaaージ</p>
     
-    {% endfor %}
-    <!-- <h2>{{ album_name }}</h2>
-    <a href="{{ album_url }}"><img src="{{ album_img }}" alt="album_img"></a>
-    <a href="{{ artist_url }}"><p>{{ artist_name }}</p></a> -->
-    
+    <!-- js実行 -->
+    <button onclick="send()">送信</button>
 </body>
 </html>

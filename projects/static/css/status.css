@@ -1,3 +1,12 @@
+/* カラーバリエーション */
+:root {
+  --bg-primary-color: #121212;
+  --bg-secondary-color: #242424;
+  --bg-tertiary-color: #1A1A1A;
+  --primary-color: #00FF5C;
+  --txt-color: #fff;
+}
+
 .status__title{background-color: #2589d0;}
 .status__title h2{padding: 20px;}
 
@@ -8,3 +17,13 @@
   padding: 20px;
   border-radius: 30px;
 }
+.chart__wrap{
+  /* background-color: var(--bg-tertiary-color); */
+  background-color: #fff;
+  width: 500px;
+  height: 500px;
+}
+
+/* #myRadarChart{
+  background-color: #fff;
+} */

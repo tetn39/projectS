@@ -18,7 +18,7 @@ const data = {
       fill: true,
       backgroundColor: "rgba(0, 255, 92, 0.2)",
       borderColor: "rgb(0, 255, 92)",
-      pointBackgroundColor: "rgb(255, 99, 132)",
+      pointBackgroundColor: "rgb(0, 0, 0)",
       pointBorderColor: "#fff",
       pointHoverBackgroundColor: "#fff",
       pointHoverBorderColor: "rgb(255, 99, 132)",
@@ -29,7 +29,7 @@ const data = {
       fill: true,
       backgroundColor: "rgba(189, 0, 255, 0.2)",
       borderColor: "rgb(189, 0, 255)",
-      pointBackgroundColor: "rgb(54, 162, 235)",
+      pointBackgroundColor: "rgb(0, 0, 0)",
       pointBorderColor: "#fff",
       pointHoverBackgroundColor: "#fff",
       pointHoverBorderColor: "rgb(54, 162, 235)",
@@ -39,9 +39,9 @@ const data = {
 
 const fontSpec = {
   family: "sans-serif",
-  size: 24, // Change the font size as needed
+  size: 16, // Change the font size as needed
   style: "normal",
-  weight: "normal",
+  weight: "bold",
   lineHeight: 1.2,
 };
 
@@ -53,20 +53,25 @@ const config = {
   options: {
     scales: {
       r: {
-        backgroundColor: "#005533",
+        backgroundColor: "#000",
         pointLabels: {
           color: "#fff",
-          backdropColor: "#000",
+          // backdropColor: "#000",
           font: fontSpec,
         },
+        angleLines: {
+          color: "#fff",
+        },
+        grid: {
+          color: "#fff",
+        },
+        ticks: {
+          textStrokeColor: "#fff",
+          backdropColor: "rgba(255, 255, 255, 0)",
+          maxTicksLimit: 6,
+          display: false,
+        },
       },
-    },
-    title: {
-      color: "#fff",
-    },
-    ticks: {
-      maxTicksLimit: 1,
-      textStrokeColor: "#fff",
     },
     elements: {
       line: {

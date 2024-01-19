@@ -8,6 +8,9 @@ from .diagnosis.main import get_status
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
+from django.urls import reverse
+from django.http import HttpResponseRedirect
+from django.contrib.auth import logout
 
 
 
@@ -16,6 +19,11 @@ def index(request):
 
 def search(request):
     return render(request, 'search.html')
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('index')) 
 
 def songs(request):
     context = {}

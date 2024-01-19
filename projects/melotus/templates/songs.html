@@ -62,7 +62,7 @@
 			<div class="main__header">
 				{% if user.is_authenticated %}
 				<!-- TODO: ここ、アイコン押したときにログアウトしてるようにしてるからいらなくなったら直す -->
-				<a href="{% url 'logout' %}"><div class="header__icon"><img src="{{ user_image }}" alt=""></div></a>
+				<div class="header__icon"><a href="{% url 'logout' %}"><img src="{{ user_image }}" alt=""></a></div>
 				{% else %}
 				<a href="/"><div class="header__icon"><img src="{% static 'images/logos/favicon.png' %}" alt=""></div></a>
 				{% endif %}

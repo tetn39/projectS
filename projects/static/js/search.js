@@ -57,16 +57,16 @@ function renderSelectedTracksWithIndex() {
   listContainer.innerHTML = "";
 
   selectedTracks.forEach((track, index) => {
-    const trackDiv = createTrackDiv(track);
+    const trackDiv = createTrackDiv(track, index);
     const indexLabel = createIndexLabel(index);
-    trackDiv.insertBefore(indexLabel, trackDiv.firstChild); // 配列番号を画像の左に挿入
+    trackDiv.insertBefore(indexLabel, trackDiv.firstChild);
     const deleteButton = createDeleteButton(index);
     trackDiv.appendChild(deleteButton);
     listContainer.appendChild(trackDiv);
   });
 }
 
-// 新しい関数: 配列番号を表示するためのラベルを作成
+// 配列番号を表示するためのラベルを作成
 function createIndexLabel(index) {
   const indexLabel = document.createElement("div");
   indexLabel.textContent = `#${index + 1}`; // 配列番号は1から始まるようにするため +1
@@ -75,8 +75,18 @@ function createIndexLabel(index) {
 }
 
 // 選択されたトラックを表示するためのDIVを作成する関数
-function createTrackDiv(track) {
+function createTrackDiv(track, index = 0) {
   const trackDiv = document.createElement("div");
+
+  // indexが偶数の場合はevenクラスを、奇数の場合はoddクラスを追加
+  console.log("Index value:", index);
+
+  if (index % 2 === 0) {
+    trackDiv.classList.add("even");
+  } else {
+    trackDiv.classList.add("odd");
+  }
+
   trackDiv.classList.add("track-div");
 
   const albumImage = document.createElement("img");
@@ -104,7 +114,6 @@ function createTrackDiv(track) {
   trackInfo.appendChild(trackNameDiv);
   trackInfo.appendChild(albumNameDiv);
   trackInfo.appendChild(artistNameDiv);
-
   trackDiv.appendChild(albumImage);
   trackDiv.appendChild(trackInfo);
 
@@ -149,8 +158,8 @@ async function initializeSearch() {
   // 検索結果を表示する関数
   function displayResults(tracks) {
     searchResults.innerHTML = "";
-    tracks.forEach((track) => {
-      const trackDiv = createTrackDiv(track);
+    tracks.forEach((track, index) => {
+      const trackDiv = createTrackDiv(track, index);
       const addButton = createAddButton(track);
       trackDiv.appendChild(addButton);
       searchResults.appendChild(trackDiv);
@@ -189,7 +198,8 @@ function send() {
   })
     .then((response) => response.json())
     .then((data) => {
-      console.log("Success:", data);
+      console.log("jsから:", data.uris);
+      console.log("pyから:", data.user_status);
     })
     .catch((error) => {
       console.error("Error:", error);

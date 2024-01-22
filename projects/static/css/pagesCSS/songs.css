@@ -51,29 +51,66 @@
   display: flex;
   /* 横に並べる */
   margin-top: 10px;
-  background-color: var(--primary-color);
+  width: 80%;
+  margin: 0 auto;
+}
+
+.track-div.odd{}
+
+.track-div.even {
+  background-color: var(--bg-secondary-color);
+  border-radius: 10px;
 }
 
 /* 画像を表示するための <img> 要素 */
 .album-image {
-  width: 40px;
+  width: 7%;
+  display: block;
+  margin: auto;
   /* 画像の幅を調整（必要に応じて変更） */
-  margin-right: 10px;
+  margin-left: 2%;
 }
+
 
 /* トラック情報を表示する <div> 要素 */
 .track-info {
   margin-right: 10px;
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+.track-name{
+  width: 35%;
+}
+.album-name{
+  width: 30%;
+}
+.artist-name{
+  width: 35%;
+}
+
+/* 選択済みの曲のindex */
+.index-label{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 2%;
 }
 
 /* 削除ボタン */
 .delete-button {
   cursor: pointer;
+  width: 8%;
+  margin: 4% 1% 4% 1%;
+  border-radius: 5px;
 }
 
 /* 追加ボタン */
 .add-button {
   cursor: pointer;
+  width: 8%;
+  margin: 4% 1% 4% 1%;
+  border-radius:5px;
 }
 
 /* 検索入力欄 */
@@ -84,9 +121,28 @@
 /* 検索結果のリスト */
 #searchResults {
   margin-top: 10px;
+  width: 100%;
 }
 
 /* 選択したトラックのリスト */
 #selectedTracks {
   margin-top: 10px;
+}
+
+/* 診断ボタン */
+.diagnosis__button__wrap{
+  width: 80%;
+  display: flex;
+  justify-content: flex-end;
+  margin: 0 auto;
+}
+
+.diagnosis__button{
+  width: 10%;
+  height: 50px;
+  border-radius: 30px;
+  background-color: var(--primary-color);
+  color: #000;
+  text-align: center;
+  font-weight: bold;
 }

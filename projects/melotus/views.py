@@ -175,7 +175,8 @@ def js_py(request):
         print('成功')
         print(selected_uris)
         json_text = {
-            "uris": selected_uris
+            "uris": selected_uris,
+            "user_status": {'acousticness': 0.2502, 'danceability': 0.5353, 'energy': 0.6951, 'instrumentalness': 0.2083, 'liveness': 0.0618, 'loudness': -6.2305, 'mode': 0.75, 'speechiness': 0.0676, 'tempo': 139.9057, 'valence': 0.6933}
         }
         return JsonResponse(json_text)
 

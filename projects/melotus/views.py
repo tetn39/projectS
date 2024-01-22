@@ -4,7 +4,7 @@ import json
 from social_django.models import UserSocialAuth
 import requests
 from django.conf import settings
-from .diagnosis.main import get_status, add_db_from_spotify
+from .diagnosis.main import get_status, add_db_from_spotify, user_music_status
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -170,13 +170,17 @@ def js_py(request):
             return JsonResponse({'status': 'error', 'message': 'CSRF Token Validation Failed'})
 
         data = json.loads(request.body.decode('utf-8'))
-        selected_uris = data.get('selectedUris', [])
+        selected_uris = {"uris": data.get('selectedUris', [])}
+        
+        selected_music_data = get_status(selected_uris)
+        user_status = user_music_status(selected_music_data)
+        print(user_status)
         # ここで配列を使用した処理を行う
         print('成功')
-        print(selected_uris)
+        
         json_text = {
             "uris": selected_uris,
-            "user_status": {'acousticness': 0.2502, 'danceability': 0.5353, 'energy': 0.6951, 'instrumentalness': 0.2083, 'liveness': 0.0618, 'loudness': -6.2305, 'mode': 0.75, 'speechiness': 0.0676, 'tempo': 139.9057, 'valence': 0.6933}
+            "user_status": user_status,
         }
         return JsonResponse(json_text)
 

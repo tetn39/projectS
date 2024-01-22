@@ -167,7 +167,6 @@ def user_music_status(content):
         avegare_status[status] /= len(content)
         avegare_status[status] = float(f'{avegare_status[status]:.4f}')
     
-    print(avegare_status)
 
     return avegare_status
 

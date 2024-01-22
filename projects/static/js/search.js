@@ -38,7 +38,7 @@ function addTrackToList(track) {
 
   if (!isAlreadySelected) {
     selectedTracks.push(track);
-    selectedUris.push(track.uri);
+    selectedUris.push(track.uri.substr(14));
     renderSelectedTracks();
     console.log("Selected URIs:", selectedUris);
   } else {

@@ -170,17 +170,12 @@ def js_py(request):
             return JsonResponse({'status': 'error', 'message': 'CSRF Token Validation Failed'})
 
         data = json.loads(request.body.decode('utf-8'))
-        myArray = data.get('myArray', [])
+        selected_uris = data.get('selectedUris', [])
         # ここで配列を使用した処理を行う
         print('成功')
-        print(myArray)
+        print(selected_uris)
         json_text = {
-            "uris": [
-                "7IQiZVGgfW927fImwKJDOq",
-                "0MyTMrPTh0GgtuyhYRdl3P",
-                "1Sy41HCCozDBL73orZpW5Y",
-                "2ChSAhdQmJpHgos2DQP6cI"
-            ]
+            "uris": selected_uris
         }
         return JsonResponse(json_text)
 

@@ -125,22 +125,24 @@ def playlist(request):
         }
 
     
-        END_POINT = 'https://api.spotify.com/v1/search?q=BTS&type=album&market=JP&limit=3'
+        END_POINT = 'https://api.spotify.com/v1/me/playlists?limit=10&offset=0'
 
         res = requests.get(END_POINT, headers=header_params)
         data = res.json()
+        for playlist in data['items']:
+            playlist_name = playlist['name']
+            playlist_url = playlist['external_urls']['spotify']
+            largest_image_url = playlist['images'][0]['url'] if playlist['images'] else None
+
+            print(f"Playlist Name: {playlist_name}")
+            print(f"Playlist URL: {playlist_url}")
+            print(f"Largest Image URL: {largest_image_url}")
+            print()
+
         context = {
             'songs': [],
         }
 
-        for i in range(3):
-            context['songs'].append({
-                'album_name': data['albums']['items'][i]['name'],
-                'album_img': data['albums']['items'][i]['images'][0]['url'],
-                'album_url': data['albums']['items'][i]['external_urls']['spotify'],
-                'artist_name': data['albums']['items'][i]['artists'][0]['name'],
-                'artist_url': data['albums']['items'][i]['artists'][0]['external_urls']['spotify'],
-            })
     else:
         print('ログインしていない')
         context = {

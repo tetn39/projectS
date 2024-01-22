@@ -12,25 +12,36 @@
 }
 h1,h2,h3,h4,p{color: var(--txt-color);}
 
-/* メインコンテナ */
-main {
-  width: 100%;
-  min-width: 600px;
-  background-color: var(--bg-primary-color);
-}
-
 /* ヘッダー */
 header {
+  position: fixed;
   width: 250px;
+  height: 100%;
   min-width: 250px;
   margin-left: 16px;
   background-color: var(--bg-secondary-color);
+  top: 0;
+  /* 画面上端に固定 */
+  z-index: 1000;
+  /* ヘッダーを他の要素よりも手前に表示するための z-index */
 }
 
 /* 画像スタイル */
 img {
-  width: 100%;
-  height: 100%;
+  max-width: 100%;
+  /* 幅が100%になるように変更 */
+  height: auto;
+  /* アスペクト比を維持しながら自動的に高さを設定 */
+}
+
+/* メインコンテナ */
+main {
+  width: calc(100% - 250px);
+  /* ヘッダーの幅を考慮して main の幅を調整 */
+  min-width: 600px;
+  margin-left: 266px;
+  /* ヘッダーの幅 + マージンを合わせた値 */
+  background-color: var(--bg-primary-color);
 }
 
 /* ボディコンテナ */
@@ -38,6 +49,8 @@ img {
   display: flex;
   width: 100%;
   background-color: var(--bg-primary-color);
+  margin-top: 60px;
+  /* ヘッダーの高さ分だけ下にスペースを確保 */
 }
 
 /* ナビゲーションバックグラウンド */

@@ -141,7 +141,6 @@ def add_db(content):
         )
         for key in content
     ]
-    print(music_status_list)
     music_status.objects.bulk_create(music_status_list)
 
 
@@ -190,35 +189,6 @@ def add_db_from_spotify():
         # トラックの特徴量を取得
         audio_features = sp.audio_features(track_id)[0]
 
-        # 特徴量を表示または保存
-        #　参考
-        """
-                    music_id = key,
-            acousticness = content[key]['acousticness'],
-            danceability = content[key]['danceability'],
-            energy = content[key]['energy'],
-            instrumentalness = content[key]['instrumentalness'],
-            liveness = content[key]['liveness'],
-            loudness = content[key]['loudness'],
-            mode = content[key]['mode'],
-            speechiness = content[key]['speechiness'],
-            tempo = content[key]['tempo'],
-            valence = content[key]['valence'],
-            country = content[key]['country'],
-            """
-        # print(audio_features)
-        # print(f"Track ID: {track_id}")
-        # print(f"Acousticness: {audio_features['acousticness']:.4f}")
-        # print(f"Danceability: {audio_features['danceability']:.4f}")
-        # print(f"Energy: {audio_features['energy']:.4f}")
-        # print(f"Instrumentalness: {audio_features['instrumentalness']:.4f}")
-        # print(f"Liveness: {audio_features['liveness']:.4f}")
-        # print(f"Loudness: {audio_features['loudness']:.4f}")
-        # print(f"Mode: {audio_features['mode']:.4f}")
-        # print(f"Speechiness: {audio_features['speechiness']:.4f}")
-        # print(f"Tempo: {audio_features['tempo']:.4f}")
-        # print(f"Valence: {audio_features['valence']:.4f}")
-
         add_db_data |= {
             track_id: {
                 'acousticness': float(f'{audio_features["acousticness"]:.4f}'),
@@ -248,6 +218,43 @@ def add_db_from_spotify():
 # ユーザーのステータスにあった曲をdbから探す。
 def choose_music(content):
     pass
+
+def token_check(user_data):
+    # unixタイムを取得して、1時間経過していればrefreshする
+    now_unix = int(datetime.now().timestamp())
+    auth_time = UserSocialAuth.objects.get(user_id=user_data).extra_data['auth_time']
+
+    # 1時間経過していたらrefreshする
+    if now_unix - auth_time > 3500:
+        # refresh token する
+        load_dotenv(os.path.join(BASE_DIR, 'auth/.env'))
+        refresh_token = UserSocialAuth.objects.get(user_id=user_data).extra_data['refresh_token']
+        refresh_data = {
+            "grant_type": "refresh_token",
+            "refresh_token": refresh_token,
+        }
+
+        token_url = "https://accounts.spotify.com/api/token"
+        client_id = os.environ.get('SPOTIFY_KEY')
+        client_secret = os.environ.get('SPOTIFY_SECRET')
+        auth_header = b64encode(f"{client_id}:{client_secret}".encode("utf-8")).decode("utf-8")
+        refresh_response = requests.post(token_url, data=refresh_data, headers={"Authorization": f"Basic {auth_header}"})
+        refresh_json = refresh_response.json()
+        
+        refreshed_access_token = refresh_json["access_token"]
+
+        unix = datetime.now()
+        extra_data = {
+            'auth_time': int(unix.timestamp()),
+            'refresh_token': refresh_token,
+            'access_token': refreshed_access_token,
+            'token_type': 'Bearer',
+        }
+
+        UserSocialAuth.objects.filter(user_id=user_data).update(extra_data=extra_data)
+
+
+
 
 json = {
    "uris": [

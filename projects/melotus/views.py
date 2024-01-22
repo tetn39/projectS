@@ -4,7 +4,7 @@ import json
 from social_django.models import UserSocialAuth
 import requests
 from django.conf import settings
-from .diagnosis.main import get_status, add_db_from_spotify, user_music_status
+from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -31,6 +31,7 @@ def songs(request):
     if request.user.is_authenticated:
         print('ログイン済み')
         requested_user_id = request.user.id
+        token_check(requested_user_id)
         token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
         header_params = {
             'Authorization': 'Bearer ' + token,
@@ -62,6 +63,7 @@ def status(request):
         print('ログイン済み')
     
         requested_user_id = request.user.id
+        token_check(requested_user_id)
         token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
         header_params = {
             'Authorization': 'Bearer ' + token,
@@ -89,6 +91,7 @@ def help(request):
         print('ログイン済み')
 
         requested_user_id = request.user.id
+        token_check(requested_user_id)
         token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
         header_params = {
             'Authorization': 'Bearer ' + token,
@@ -112,31 +115,37 @@ def help(request):
 
 
 def playlist(request):
-    requested_user_id = request.user.id
-    token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
-    header_params = {
-        'Authorization': 'Bearer ' + token,
-    }
+    if request.user.is_authenticated:
 
-    # ここで検索のを試す
-    # END_POINT = 'https://api.spotify.com/v1/me/albums?limit=3' 
-    END_POINT = 'https://api.spotify.com/v1/search?q=BTS&type=album&market=JP&limit=3'
-    # https://developer.spotify.com/documentation/web-api/reference/search 参考サイト
+        requested_user_id = request.user.id
+        token_check(requested_user_id)
+        token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
+        header_params = {
+            'Authorization': 'Bearer ' + token,
+        }
 
-    res = requests.get(END_POINT, headers=header_params)
-    data = res.json()
-    context = {
-        'songs': [],
-    }
+    
+        END_POINT = 'https://api.spotify.com/v1/search?q=BTS&type=album&market=JP&limit=3'
 
-    for i in range(3):
-        context['songs'].append({
-            'album_name': data['albums']['items'][i]['name'],
-            'album_img': data['albums']['items'][i]['images'][0]['url'],
-            'album_url': data['albums']['items'][i]['external_urls']['spotify'],
-            'artist_name': data['albums']['items'][i]['artists'][0]['name'],
-            'artist_url': data['albums']['items'][i]['artists'][0]['external_urls']['spotify'],
-        })
+        res = requests.get(END_POINT, headers=header_params)
+        data = res.json()
+        context = {
+            'songs': [],
+        }
+
+        for i in range(3):
+            context['songs'].append({
+                'album_name': data['albums']['items'][i]['name'],
+                'album_img': data['albums']['items'][i]['images'][0]['url'],
+                'album_url': data['albums']['items'][i]['external_urls']['spotify'],
+                'artist_name': data['albums']['items'][i]['artists'][0]['name'],
+                'artist_url': data['albums']['items'][i]['artists'][0]['external_urls']['spotify'],
+            })
+    else:
+        print('ログインしていない')
+        context = {
+            'songs': [],
+        }
     
     
     return render(request, 'playlist.html', context)
@@ -174,7 +183,7 @@ def js_py(request):
         
         selected_music_data = get_status(selected_uris)
         user_status = user_music_status(selected_music_data)
-        print(user_status)
+        
         # ここで配列を使用した処理を行う
         print('成功')
         

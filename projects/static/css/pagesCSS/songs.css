@@ -30,6 +30,22 @@
 
 
 /* 検索窓 */
+.main__search{
+  text-align: center;
+}
+.search-box{
+  background-color: var(--bg-tertiary-color);
+  border-radius: 5px;
+  border: none;
+  width: 80%;
+  padding: 2%;
+}
+.main__search input{
+  width: 80%;
+  height: 50px;
+  margin: 2% auto;
+}
+
 /* トラック表示を作成する */
 .track-div {
   display: flex;

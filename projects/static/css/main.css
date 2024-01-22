@@ -49,8 +49,6 @@ main {
   display: flex;
   width: 100%;
   background-color: var(--bg-primary-color);
-  margin-top: 60px;
-  /* ヘッダーの高さ分だけ下にスペースを確保 */
 }
 
 /* ナビゲーションバックグラウンド */

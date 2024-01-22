@@ -111,6 +111,9 @@ main {
   width: 50px;
   margin-left: auto;
   margin-right: 30px;
+  & img{
+    border-radius: 50%;
+  }
 }
 .main__header {
   width: 100%;

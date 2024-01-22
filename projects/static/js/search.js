@@ -22,7 +22,7 @@ async function getToken() {
 // Spotifyでトラックを検索する関数
 async function searchSpotify(access_token, query) {
   const response = await fetch(
-    `https://api.spotify.com/v1/search?q=${query}&type=track&limit=10`,
+    `https://api.spotify.com/v1/search?q=${query}&type=track&limit=9`,
     {
       method: "GET",
       headers: { Authorization: "Bearer " + access_token },

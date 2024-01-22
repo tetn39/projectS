@@ -34,7 +34,7 @@ async function searchSpotify(access_token, query) {
 // トラックを選択リストに追加する関数
 function addTrackToList(track) {
   // 既に選択されているかを確認
-  const isAlreadySelected = selectedUris.includes(track.uri);
+  const isAlreadySelected = selectedUris.includes(track.uri.substr(14));
 
   if (!isAlreadySelected) {
     selectedTracks.push(track);

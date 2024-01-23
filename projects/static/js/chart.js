@@ -45,8 +45,6 @@ const fontSpec = {
   lineHeight: 1.2,
 };
 
-//#00FF5C yellow
-//#BD00FF blue
 const config = {
   type: "radar",
   data: data,

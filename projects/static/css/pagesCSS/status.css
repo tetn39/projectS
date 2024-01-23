@@ -7,7 +7,10 @@
   --txt-color: #fff;
 }
 
-.status__title{background-color: #2589d0;}
+.status__title{
+  background-color: #2589d0;
+  margin-bottom: 2%;
+}
 .status__title h2{padding: 20px;}
 
 .status__playlist{
@@ -26,3 +29,49 @@
 /* #myRadarChart{
   background-color: #fff;
 } */
+
+.chart__text__wrap{
+  background-color: #242424;
+  display: flex;
+  width: 90%;
+  margin: 0 auto;
+  border-radius: 30px;
+}
+.chart__wrap{
+  width: 50%;
+  margin: 2%;
+}
+.chart__text{
+  width: 50%;
+  margin: 2%;
+  font-weight: bold;
+  & h2 {
+    font-size: 48px;
+    margin-bottom: 5%;
+  }
+  & p{
+    font-size: 20px;
+    line-height: 150%;
+  }
+}
+
+.recommend__wrap{
+  width: 90%;
+  background-color: #242424;
+  margin: 2% auto;
+  border-radius: 20px;
+}
+
+.recommend__title {
+  & h2{
+    padding: 20px;
+  }
+}
+
+.recommend__images__wrap{
+  display: flex;
+  justify-content: space-around;
+  padding-bottom: 3%;
+  & img{
+  }
+}

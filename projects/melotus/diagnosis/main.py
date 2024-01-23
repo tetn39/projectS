@@ -146,7 +146,7 @@ def add_db(content):
 
 # ユーザーが選んだ曲のステータスからその人の好みのステータスを出す weightもつけるといいかも
 def user_music_status(content):
-    avegare_status = {
+    average_status = {
         'acousticness': 0,
         'danceability': 0,
         'energy': 0,
@@ -161,15 +161,15 @@ def user_music_status(content):
     for key in content:
         for status in content[key]:
             if status != 'country':
-                avegare_status[status] += content[key][status]
-    for status in avegare_status:
-        avegare_status[status] /= len(content)
+                average_status[status] += content[key][status]
+    for status in average_status:
+        average_status[status] /= len(content)
         if status != 'tempo' and status != 'loudness':
-            avegare_status[status] *= 100
-        avegare_status[status] = float(f'{avegare_status[status]:.4f}')
+            average_status[status] *= 100
+        average_status[status] = float(f'{average_status[status]:.4f}')
     
 
-    return avegare_status
+    return average_status
 
 # spotifyからdbに曲のステータスを追加する。 db保有量を増やすためのdev用
 def add_db_from_spotify():

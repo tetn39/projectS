@@ -225,6 +225,11 @@ function send() {
     .then((data) => {
       console.log("jsから:", data.uris);
       console.log("pyから:", data.user_status);
+
+      // status.htmlに遷移する
+      window.location.href =
+        "/status/?user_status=" +
+        encodeURIComponent(JSON.stringify(data.user_status));
     })
     .catch((error) => {
       console.error("Error:", error);

@@ -167,6 +167,8 @@ def user_music_status(content):
         if status != 'tempo' and status != 'loudness':
             average_status[status] *= 100
         average_status[status] = float(f'{average_status[status]:.4f}')
+        if status == 'loudness':
+            average_status[status] += 80.0
     
 
     return average_status

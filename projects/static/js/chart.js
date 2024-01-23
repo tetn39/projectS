@@ -14,32 +14,21 @@ const data = {
   datasets: [
     {
       label: "今回の診断結果",
-      data: [65, 59, 90, 81, 56, 55, 40, 59, 30],
+      data: [],
       fill: true,
-      backgroundColor: "rgba(0, 255, 92, 0.2)",
+      backgroundColor: "rgba(0, 255, 92, 0.5)",
       borderColor: "rgb(0, 255, 92)",
       pointBackgroundColor: "rgb(0, 0, 0)",
       pointBorderColor: "#fff",
       pointHoverBackgroundColor: "#fff",
       pointHoverBorderColor: "rgb(255, 99, 132)",
     },
-    {
-      label: "前回の診断結果",
-      data: [28, 48, 40, 19, 96, 27, 100, 70, 30],
-      fill: true,
-      backgroundColor: "rgba(189, 0, 255, 0.2)",
-      borderColor: "rgb(189, 0, 255)",
-      pointBackgroundColor: "rgb(0, 0, 0)",
-      pointBorderColor: "#fff",
-      pointHoverBackgroundColor: "#fff",
-      pointHoverBorderColor: "rgb(54, 162, 235)",
-    },
   ],
 };
 
 const fontSpec = {
   family: "sans-serif",
-  size: 16, // Change the font size as needed
+  size: 16,
   style: "normal",
   weight: "bold",
   lineHeight: 1.2,
@@ -54,7 +43,6 @@ const config = {
         backgroundColor: "#000",
         pointLabels: {
           color: "#fff",
-          // backdropColor: "#000",
           font: fontSpec,
         },
         angleLines: {
@@ -84,3 +72,40 @@ const ctx = document.getElementById("myRadarChart").getContext("2d");
 
 // Create a new radar chart
 const myRadarChart = new Chart(ctx, config);
+
+// 3. Chart.jsのdataオブジェクトを更新する関数
+function updateChartData(userStatus) {
+  // チャートに表示するデータ
+  const newData = [
+    userStatus.acousticness,
+    userStatus.danceability,
+    userStatus.energy,
+    userStatus.instrumentalness,
+    userStatus.liveness,
+    userStatus.loudness,
+    userStatus.speechiness,
+    userStatus.tempo,
+    userStatus.valence,
+  ];
+
+  console.log(newData);
+
+  // dataオブジェクトの更新
+  myRadarChart.data.datasets[0].data = newData;
+
+  // チャートの再描画
+  myRadarChart.update();
+}
+
+// ページが読み込まれたときに実行されるコード
+document.addEventListener("DOMContentLoaded", function () {
+  // パラメータからuser_statusを取得
+  const params = new URLSearchParams(window.location.search);
+  const userStatusParam = params.get("user_status");
+
+  // user_statusが存在する場合はJSONパースしてチャートを更新
+  if (userStatusParam) {
+    const userStatus = JSON.parse(userStatusParam);
+    updateChartData(userStatus);
+  }
+});

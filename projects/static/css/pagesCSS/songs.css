@@ -17,11 +17,30 @@
   color: var(--txt-color);
 }
 
+.search_title {
+  width: 80%;
+  margin: 10px auto;
+  padding: 0 7%;
+  justify-content: space-around;
+  display: flex;
+  color: white;
+  border-bottom: 1px solid var(--txt-color);  /* 枠線 */
+}
+
+.search_title p{
+  width: 35%;
+}
+
 /* 検索窓 */
+
+.main__search h2{
+  margin: 10px auto;
+}
+
 .main__search{
   text-align: center;
 }
-.search-box{
+.search_box{
   background-color: var(--bg-tertiary-color);
   border-radius: 5px;
   border: none;
@@ -63,9 +82,8 @@
 .album-image {
   width: 5%;
   display: block;
-  margin: auto;
   /* 画像の幅を調整（必要に応じて変更） */
-  margin-left: 2%;
+  margin: 2%;
 }
 
 
@@ -77,13 +95,13 @@
   align-items: center;
 }
 .track-name{
-  width: 35%;
+  width: 50%;
 }
 .album-name{
-  width: 30%;
+  width: 50%;
 }
 .artist-name{
-  width: 35%;
+  width: 50%;
 }
 
 /* 選択済みの曲のindex */
@@ -97,16 +115,16 @@
 /* 削除ボタン */
 .delete-button {
   cursor: pointer;
-  width: 8%;
-  margin: 4% 1% 4% 1%;
+  width: 7%;
+  margin: 3% 1%;
   border-radius: 5px;
 }
 
 /* 追加ボタン */
 .add-button {
   cursor: pointer;
-  width: 8%;
-  margin: 4% 1% 4% 1%;
+  width: 7%;
+  margin: 3% 1%;
   border-radius:5px;
 }
 

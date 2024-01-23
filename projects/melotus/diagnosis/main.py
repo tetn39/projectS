@@ -164,6 +164,8 @@ def user_music_status(content):
                 avegare_status[status] += content[key][status]
     for status in avegare_status:
         avegare_status[status] /= len(content)
+        if status != 'tempo' and status != 'loudness':
+            avegare_status[status] *= 100
         avegare_status[status] = float(f'{avegare_status[status]:.4f}')
     
 

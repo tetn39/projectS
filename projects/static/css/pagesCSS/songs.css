@@ -145,11 +145,13 @@
 }
 
 /* 診断ボタン */
-.diagnosis__button__wrap{
+
+#diagnosisButtonWrap {
   width: 80%;
   display: flex;
   justify-content: flex-end;
-  margin: 0 auto;
+  margin: 2% auto;
+  text-align: right;
 }
 
 .diagnosis__button{

@@ -78,10 +78,14 @@
 					<p>アーティスト</p>
 				</div>
 				<div id="searchResults"></div>
-				<h2>選択済みの曲:</h2>
+				<h2 id="selectedTracksHeader">選択済みの曲:</h2>
 				<div id="selectedTracks"></div>
 			</div>
-			<div class="diagnosis__button__wrap"><button class="diagnosis__button" onclick="send()">診断する</button></div>
+			<!-- 診断ボタン -->
+			<div id="diagnosisButtonWrap">
+				<button class="diagnosis__button" onclick="send()">診断する</button>
+			</div>
+
 			<!----- メインコンテンツ END ----->
 	
 			<!----- フッター ----->

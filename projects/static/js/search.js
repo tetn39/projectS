@@ -49,6 +49,22 @@ function addTrackToList(track) {
 // 選択されたトラックを表示する関数
 function renderSelectedTracks() {
   renderSelectedTracksWithIndex();
+
+  // 選択された曲がある場合
+  if (selectedTracks.length > 0) {
+    // 「選択済みの曲」ヘッダーを表示
+    document.getElementById("selectedTracksHeader").style.display = "block";
+
+    // 「診断する」ボタンのラッパーを表示
+    document.getElementById("diagnosisButtonWrap").style.display = "block";
+  } else {
+    // 選択された曲がない場合
+    // 「選択済みの曲」ヘッダーを非表示
+    document.getElementById("selectedTracksHeader").style.display = "none";
+
+    // 「診断する」ボタンのラッパーを非表示
+    document.getElementById("diagnosisButtonWrap").style.display = "none";
+  }
 }
 
 // 選択されたトラックを配列番号と共に表示する関数
@@ -144,6 +160,12 @@ async function initializeSearch() {
   const response = await getToken();
   const searchInput = document.getElementById("searchInput");
   const searchResults = document.getElementById("searchResults");
+  const selectedTracksHeader = document.getElementById("selectedTracksHeader");
+  const diagnosisButtonWrap = document.getElementById("diagnosisButtonWrap");
+
+  // 初期状態で非表示にする
+  selectedTracksHeader.style.display = "none";
+  diagnosisButtonWrap.style.display = "none";
 
   searchInput.addEventListener("input", async (event) => {
     const query = event.target.value;
@@ -164,6 +186,9 @@ async function initializeSearch() {
       trackDiv.appendChild(addButton);
       searchResults.appendChild(trackDiv);
     });
+
+    // 選択された曲がある場合、初期状態で表示にする
+    renderSelectedTracks();
   }
 
   // トラックを選択するボタンを作成する関数

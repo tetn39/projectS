@@ -17,17 +17,14 @@
 /* 項目名 */
 .main__title {
   background-color: var(--bg-secondary-color);
-  height: 150px;
-  margin: 10px 20px;
-  padding: 20px;
+  margin: 20px;
+  padding: 75px;
   border-radius: 30px;
+  text-align: center;
 }
-
-.main__title p {
+.main__title h2 {
   color: var(--txt-color);
 }
-
-
 
 /* 検索窓 */
 .main__search{

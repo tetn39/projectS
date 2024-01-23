@@ -3,16 +3,7 @@
   font-family: 'Zen Kaku Gothic New', sans-serif;
 }
 
-/* これを作業用のCSSの上に貼る */
-/* 終わったら消す */
-:root {
-  --bg-primary-color: #033;
-  --bg-secondary-color: #053;
-  --bg-tertiary-color: #043;
-  --primary-color: #0f0;
-  --txt-color: #fff;
-  --test-coler: #f00;
-}
+
 
 /* 項目名 */
 .main__title {
@@ -41,7 +32,14 @@
   width: 80%;
   height: 50px;
   margin: 2% auto;
+  border: 1px solid var(--standby-color);  /* 枠線 */
 }
+
+.main__search input:focus {
+  border: 3px solid var(--primary-color);  /* 枠線 */
+  outline: none;           /* ※ブラウザが標準で付加する線を消したいとき */
+}
+
 /* 選択済みの曲リスト */
 .select_item{margin-top: 50px;}
 
@@ -57,13 +55,13 @@
 .track-div.odd{}
 
 .track-div.even {
-  background-color: var(--bg-secondary-color);
+  background-color: var(--bg-tertiary-color);
   border-radius: 10px;
 }
 
 /* 画像を表示するための <img> 要素 */
 .album-image {
-  width: 7%;
+  width: 5%;
   display: block;
   margin: auto;
   /* 画像の幅を調整（必要に応じて変更） */
@@ -137,9 +135,10 @@
 }
 
 .diagnosis__button{
-  width: 10%;
+  width: 100px;
   height: 50px;
   border-radius: 30px;
+  border: 2px solid var(--primary-color);  /* 枠線 */
   background-color: var(--primary-color);
   color: #000;
   text-align: center;

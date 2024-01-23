@@ -42,6 +42,8 @@
   height: 50px;
   margin: 2% auto;
 }
+/* 選択済みの曲リスト */
+.select_item{margin-top: 50px;}
 
 /* トラック表示を作成する */
 .track-div {

@@ -20,3 +20,14 @@
 .playlist img{
   width: 100px;
 }
+
+.playlist ul {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.playlist li {
+  width: 150px;
+  height: auto;
+  
+}

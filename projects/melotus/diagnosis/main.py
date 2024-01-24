@@ -143,7 +143,6 @@ def add_db(content):
     ]
     music_status.objects.bulk_create(music_status_list)
 
-
 # ユーザーが選んだ曲のステータスからその人の好みのステータスを出す weightもつけるといいかも
 def user_music_status(content):
     average_status = {
@@ -213,8 +212,6 @@ def add_db_from_spotify():
     
     return ret
 
-
-
 # ユーザーのステータスにあった曲をdbから探す。
 def choose_music(content):
     pass
@@ -253,69 +250,75 @@ def token_check(user_data):
 
         UserSocialAuth.objects.filter(user_id=user_data).update(extra_data=extra_data)
 
+def for_chart_weight(user_status):
+    for status in user_status:
+            if status != 'tempo' and status != 'loudness':
+                user_status[status] *= 100
+                user_status[status] += 20
+            
+            if status == 'loudness':
+                user_status[status] += 80.0
+            
+            if status == 'tempo':
+                user_status[status] /= 2.0
+            
+            user_status[status] = float(f'{user_status[status]:.4f}')
+    
+    return user_status
+
+def get_playlist_status(content):
+    # db操作
+    con = sqlite3.connect(f'{BASE_DIR}/db/db.sqlite3')
+    cur = con.cursor()
+    not_in_db = []
+    not_in_db_data = {}
+    ret = {}
+
+    placeholders = ', '.join('?' for _ in content["uris"]) # その数だけ ?入れるみたいな感じ
+    cur.execute(f'SELECT * FROM melotus_music_status WHERE music_id IN ({placeholders})', content["uris"])
+
+    rows = cur.fetchall()
+    not_in_db = list(set(content["uris"]) - set([row[0] for row in rows]))
+    for row in rows:
+        if row is not None:
+            ret[row[0]] = {
+                'acousticness': row[1],
+                'danceability': row[2],
+                'energy': row[3],
+                'instrumentalness': row[4],
+                'liveness': row[5],
+                'loudness': row[6],
+                'mode': row[7],
+                'speechiness': row[8],
+                'tempo': row[9],
+                'valence': row[10],
+                'country': row[11],
+            }
+        
+    con.close()
 
 
+    # APIから取得
 
-json = {
-   "uris": [
-       "7IQiZVGgfW927fImwKJDOq",
-       "0MyTMrPTh0GgtuyhYRdl3P",
-       "1Sy41HCCozDBL73orZpW5Y",
-       "2ChSAhdQmJpHgos2DQP6cI"
-       ] 
-}
+    if len(not_in_db) == 0:
+        return ret
 
-content = {
-'0MyTMrPTh0GgtuyhYRdl3P': {
-    'acousticness': 0.000166, 
-    'danceability': 0.436, 
-    'energy': 0.896, 
-    'instrumentalness': 0, 
-    'liveness': 0.0757, 
-    'loudness': -2.15, 
-    'mode': 1, 
-    'speechiness': 0.0928, 
-    'tempo': 173.015, 
-    'valence': 0.771, 
-    'country': 'JP'
-    }, 
-'7IQiZVGgfW927fImwKJDOq': {
-    'acousticness': 0.996, 
-    'danceability': 0.567, 
-    'energy': 0.0994, 
-    'instrumentalness': 0.833, 
-    'liveness': 0.103, 
-    'loudness': -17.668, 
-    'mode': 1, 
-    'speechiness': 0.0578, 
-    'tempo': 86.689, 
-    'valence': 0.594,
-    'country': 'JP'
-    }, 
-'1Sy41HCCozDBL73orZpW5Y': {
-    'acousticness': 0.00151, 
-    'danceability': 0.404, 
-    'energy': 0.963, 
-    'instrumentalness': 1.06e-05, 
-    'liveness': 0.0521, 
-    'loudness': -1.707, 
-    'mode': 1, 
-    'speechiness': 0.0663, 
-    'tempo': 169.963, 
-    'valence': 0.607, 
-    'country': 'JP'
-    }, 
-'2ChSAhdQmJpHgos2DQP6cI': {
-    'acousticness': 0.00304, 
-    'danceability': 0.734, 
-    'energy': 0.822, 
-    'instrumentalness': 0, 
-    'liveness': 0.0165, 
-    'loudness': -3.397, 
-    'mode': 0, 
-    'speechiness': 0.0537,
-    'tempo': 129.956, 
-    'valence': 0.801, 
-    'country': 'JP'
-    }
-}
+    # unixタイムを取得して、1時間経過していればrefreshする
+    now_unix = int(datetime.now().timestamp())
+    auth_time = UserSocialAuth.objects.get(user_id=1).extra_data['auth_time']
+
+    # 1時間経過していたらrefreshする
+    if now_unix - auth_time > 3500:
+        # refresh token する
+        load_dotenv(os.path.join(BASE_DIR, 'auth/.env'))
+        refresh_token = UserSocialAuth.objects.get(user_id=1).extra_data['refresh_token']
+        refresh_data = {
+            "grant_type": "refresh_token",
+            "refresh_token": refresh_token,
+        }
+
+        token_url = "https://accounts.spotify.com/api/token"
+        client_id = os.environ.get('SPOTIFY_KEY')
+        client_secret = os.environ.get('SPOTIFY_SECRET')
+        auth_header = b64encode(f"{client_id}:{client_secret}".encode("utf-8")).decode("utf-8")
+        refresh_response

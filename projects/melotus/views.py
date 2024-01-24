@@ -4,7 +4,7 @@ import json
 from social_django.models import UserSocialAuth
 import requests
 from django.conf import settings
-from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check
+from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -139,15 +139,18 @@ def playlist(request):
         res = requests.get(END_POINT, headers=header_params)
         data = res.json()
         context['playlist_data'] = []
-        print(context)
+        print(data)
         for playlist in data['items']:
             playlist_name = playlist['name']
             playlist_url = playlist['external_urls']['spotify']
             largest_image_url = playlist['images'][0]['url'] if playlist['images'] else 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=v2'
+            playlist_id = playlist['id']
+            print(playlist_id)
             playlist_data = {
                 'playlist_name': playlist_name,
                 'playlist_url': playlist_url,
                 'playlist_image_url': largest_image_url,
+                'playlist_id': playlist_id,
             }
             context['playlist_data'].append(playlist_data)
         print(context)
@@ -192,27 +195,46 @@ def js_py(request):
         selected_music_data = get_status(selected_uris)
         user_status = user_music_status(selected_music_data)
         
-        for status in user_status:
-
-            if status != 'tempo' and status != 'loudness':
-                user_status[status] *= 100
-                user_status[status] += 20
-            
-            if status == 'loudness':
-                user_status[status] += 80.0
-            
-            if status == 'tempo':
-                user_status[status] /= 2.0
-            
-            user_status[status] = float(f'{user_status[status]:.4f}')
-        print(user_status)
+        weighted_user_status = for_chart_weight(user_status)
+        print(weighted_user_status)
 
         # ここで配列を使用した処理を行う
         print('成功')
         
         json_text = {
             "uris": selected_uris,
-            "user_status": user_status,
+            "user_status": weighted_user_status,
+        }
+        return JsonResponse(json_text)
+
+    else:
+        print('失敗')
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+
+@ensure_csrf_cookie
+def js_py_playlist(request):
+    if request.method == 'POST':
+        # POSTリクエストの場合、CSRFトークンを確認
+        csrf_token = request.headers.get("X-CSRFToken")
+        if not request.COOKIES.get("csrftoken") == csrf_token:
+            return JsonResponse({'status': 'error', 'message': 'CSRF Token Validation Failed'})
+
+        data = json.loads(request.body.decode('utf-8'))
+        selected_playlist = {"playlist_id": data.get('selectedPlaylist', [])} #selectedPlaylist として名前つけてほしい
+        
+        selected_music_data = get_status(selected_playlist)
+        user_status = user_music_status(selected_music_data)
+        
+        weighted_user_status = for_chart_weight(user_status)
+        print(weighted_user_status)
+
+        # ここで配列を使用した処理を行う
+        print('成功')
+        
+        json_text = {
+            "uris": selected_playlist,
+            "user_status": weighted_user_status,
         }
         return JsonResponse(json_text)
 

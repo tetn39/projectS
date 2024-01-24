@@ -65,7 +65,7 @@
 				<h2>診断プレイリスト</h2>
 				<ul>
 					{% for item in playlist_data %}
-					<li>
+					<li id="{{ item.playlist_id }}">
 						<a href="{{ item.playlist_url }}">
 							<img src="{{ item.playlist_image_url }}" alt="{{ item.playlist_name }}">
 							<!-- <p>{{ item.playlist_name }}</p> -->

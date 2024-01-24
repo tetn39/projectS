@@ -139,15 +139,19 @@ def playlist(request):
             print(f"Largest Image URL: {largest_image_url}")
             print()
 
+        END_POINT = 'https://api.spotify.com/v1/me'
+
+        res = requests.get(END_POINT, headers=header_params)
+        data = res.json()
         context = {
-            'songs': [],
+            'user_name': data['display_name'],
+            'user_url': data['external_urls']['spotify'],
+            'user_image': data['images'][0]['url'],
         }
 
     else:
         print('ログインしていない')
-        context = {
-            'songs': [],
-        }
+
     
     
     return render(request, 'playlist.html', context)

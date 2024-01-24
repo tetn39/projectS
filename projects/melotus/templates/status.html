@@ -60,7 +60,12 @@
 	<!----- メインコンテンツ ----->
 	<main>
 		<div class="main__header">
-			<div class="header__icon"><img src="{% static './images/logos/favicon.png' %}" alt=""></div>
+			{% if user.is_authenticated %}
+				<!-- TODO: ここ、アイコン押したときにログアウトしてるようにしてるからいらなくなったら直す -->
+				<div class="header__icon"><a href="{% url 'logout' %}"><img src="{{ user_image }}" alt=""></a></div>
+				{% else %}
+				<a href="/"><div class="header__icon"><img src="{% static 'images/logos/favicon.png' %}" alt=""></div></a>
+				{% endif %}
 		</div>
 		<div class="main__content">
 			<div class="status__title">

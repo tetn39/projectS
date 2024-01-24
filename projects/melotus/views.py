@@ -79,7 +79,7 @@ def status(request):
             'user_image': data['images'][0]['url'],
         }
     else:
-        print('ログインしていない')
+        context = {}
 
     return render(request, 'status.html', context)
 
@@ -108,7 +108,7 @@ def help(request):
         }
 
     else:
-        print('ログインしていない')
+        context = {}
 
     return render(request, 'help.html', context)
 
@@ -152,7 +152,6 @@ def playlist(request):
             context['playlist_data'].append(playlist_data)
         print(context)
     else:
-        print('ログインしていない')
         context = {}
 
     

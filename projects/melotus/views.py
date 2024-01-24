@@ -124,30 +124,37 @@ def playlist(request):
             'Authorization': 'Bearer ' + token,
         }
 
-    
-        END_POINT = 'https://api.spotify.com/v1/me/playlists?limit=10&offset=0'
+        END_POINT = 'https://api.spotify.com/v1/me'
 
         res = requests.get(END_POINT, headers=header_params)
         data = res.json()
+        context = {
+            'user_name': data['display_name'],
+            'user_url': data['external_urls']['spotify'],
+            'user_image': data['images'][0]['url'],
+        }
+
+        END_POINT = 'https://api.spotify.com/v1/me/playlists?limit=5&offset=0'
+
+        res = requests.get(END_POINT, headers=header_params)
+        data = res.json()
+        context['playlist_data'] = []
+        print(context)
         for playlist in data['items']:
             playlist_name = playlist['name']
             playlist_url = playlist['external_urls']['spotify']
-            largest_image_url = playlist['images'][0]['url'] if playlist['images'] else None
-
-            print(f"Playlist Name: {playlist_name}")
-            print(f"Playlist URL: {playlist_url}")
-            print(f"Largest Image URL: {largest_image_url}")
-            print()
-
-        context = {
-            'songs': [],
-        }
-
+            largest_image_url = playlist['images'][0]['url'] if playlist['images'] else 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=v2'
+            playlist_data = {
+                'playlist_name': playlist_name,
+                'playlist_url': playlist_url,
+                'playlist_image_url': largest_image_url,
+            }
+            context['playlist_data'].append(playlist_data)
+        print(context)
     else:
         print('ログインしていない')
-        context = {
-            'songs': [],
-        }
+        context = {}
+
     
     
     return render(request, 'playlist.html', context)
@@ -186,6 +193,21 @@ def js_py(request):
         selected_music_data = get_status(selected_uris)
         user_status = user_music_status(selected_music_data)
         
+        for status in user_status:
+
+            if status != 'tempo' and status != 'loudness':
+                user_status[status] *= 100
+                user_status[status] += 20
+            
+            if status == 'loudness':
+                user_status[status] += 80.0
+            
+            if status == 'tempo':
+                user_status[status] /= 2.0
+            
+            user_status[status] = float(f'{user_status[status]:.4f}')
+        print(user_status)
+
         # ここで配列を使用した処理を行う
         print('成功')
         
@@ -207,3 +229,4 @@ def add_db(request):
         'ret': ret,
     }
     return render(request, 'add_db.html', content)
+

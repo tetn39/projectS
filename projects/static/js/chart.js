@@ -41,9 +41,12 @@ const config = {
     scales: {
       r: {
         backgroundColor: "#000",
+        min: 0,
+        max: 120,
         pointLabels: {
           color: "#fff",
           font: fontSpec,
+        
         },
         angleLines: {
           color: "#fff",
@@ -52,6 +55,7 @@ const config = {
           color: "#fff",
         },
         ticks: {
+          stepSize: 20,
           textStrokeColor: "#fff",
           backdropColor: "rgba(255, 255, 255, 0)",
           maxTicksLimit: 6,

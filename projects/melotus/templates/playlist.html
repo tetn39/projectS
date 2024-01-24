@@ -50,7 +50,12 @@
 	</header>
 	<main>
 		<div class="main__header">
-			<div class="header__icon"><img src="{% static './images/logos/favicon.png' %}" alt=""></div>
+			{% if user.is_authenticated %}
+				<!-- TODO: ここ、アイコン押したときにログアウトしてるようにしてるからいらなくなったら直す -->
+				<div class="header__icon"><a href="{% url 'logout' %}"><img src="{{ user_image }}" alt=""></a></div>
+				{% else %}
+				<a href="/"><div class="header__icon"><img src="{% static 'images/logos/favicon.png' %}" alt=""></div></a>
+				{% endif %}
 		</div>
 		<div class="main__content">
 			<div class="title__box">
@@ -58,6 +63,17 @@
 			</div>
 			<div class="playlist">
 				<h2>診断プレイリスト１</h2>
+				<ul>
+					{% for item in playlist_data %}
+					<li>
+						<a href="{{ item.playlist_url }}">
+							<img src="{{ item.playlist_image_url }}" alt="{{ item.playlist_name }}">
+							<p>{{ item.playlist_name }}</p>
+						</a>
+					</li>
+					{% endfor %}
+					
+				</ul>
 			</div>
 			<div class="playlist">
 				<h2>診断プレイリスト２</h2>

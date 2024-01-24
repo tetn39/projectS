@@ -199,12 +199,11 @@ def js_py(request):
             if status == 'loudness':
                 user_status[status] += 80.0
             
-            # if status == 'tempo':
-            #     user_status[status] -= 50.0
+            if status == 'tempo':
+                user_status[status] /= 2.0
             
             user_status[status] = float(f'{user_status[status]:.4f}')
         print(user_status)
-        #http://127.0.0.1:8000/status/?user_status=%7B%22acousticness%22%3A50%2C%22danceability%22%3A51%2C%22energy%22%3A52%2C%22instrumentalness%22%3A53%2C%22liveness%22%3A54%2C%22loudness%22%3A55%2C%22mode%22%3A56%2C%22speechiness%22%3A57%2C%22tempo%22%3A58%2C%22valence%59%3A84.9%7D
 
         # ここで配列を使用した処理を行う
         print('成功')

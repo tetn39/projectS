@@ -50,8 +50,12 @@
     margin-bottom: 5%;
   }
   & p{
-    font-size: 20px;
-    line-height: 150%;
+    font-size: 16px;
+    line-height: 200%;
+    & span{
+      color: var(--primary-color);
+      font-size: 20px;
+    }
   }
 }
 

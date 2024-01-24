@@ -63,6 +63,17 @@
 			</div>
 			<div class="playlist">
 				<h2>診断プレイリスト１</h2>
+				<ul>
+					{% for item in playlist_data %}
+					<li>
+						<a href="{{ item.playlist_url }}">
+							<img src="{{ item.playlist_image_url }}" alt="{{ item.playlist_name }}">
+							<p>{{ item.playlist_name }}</p>
+						</a>
+					</li>
+					{% endfor %}
+					
+				</ul>
 			</div>
 			<div class="playlist">
 				<h2>診断プレイリスト２</h2>

@@ -164,11 +164,7 @@ def user_music_status(content):
                 average_status[status] += content[key][status]
     for status in average_status:
         average_status[status] /= len(content)
-        if status != 'tempo' and status != 'loudness':
-            average_status[status] *= 100
         average_status[status] = float(f'{average_status[status]:.4f}')
-        if status == 'loudness':
-            average_status[status] += 80.0
     
 
     return average_status

@@ -1,5 +1,5 @@
-const client_id = "4f0d25f0cec241bf974d3f9f558eabb1";
-const client_secret = "da7948150a4548b087e263bd6da8cf7b";
+const client_id = "";
+const client_secret = "";
 let selectedTracks = [];
 let selectedUris = [];
 

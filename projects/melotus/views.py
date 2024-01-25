@@ -4,7 +4,7 @@ import json
 from social_django.models import UserSocialAuth
 import requests
 from django.conf import settings
-from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight
+from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight, get_playlist_status
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -155,6 +155,9 @@ def playlist(request):
             context['playlist_data'].append(playlist_data)
         print(context)
     else:
+        # ログインしていない状態
+        token_check(1)
+
         context = {}
 
     
@@ -223,11 +226,18 @@ def js_py_playlist(request):
         data = json.loads(request.body.decode('utf-8'))
         selected_playlist = {"playlist_id": data.get('selectedPlaylist', [])} #selectedPlaylist として名前つけてほしい
         
-        selected_music_data = get_status(selected_playlist)
+        token_check(request.user.id)
+        # playlistからすべて?の曲のIDを取得し、get_statusに渡す。
+        # その後、get_statusの返り値をuser_music_statusに渡す。
+        # その後、user_music_statusの返り値をfor_chart_weightに渡す。
+        # その後、for_chart_weightの返り値をjsonにして返す。
+
+
+        selected_music_data = get_playlist_status(selected_playlist)
+        playlist_name = selected_music_data['playlist_name']
         user_status = user_music_status(selected_music_data)
         
         weighted_user_status = for_chart_weight(user_status)
-        print(weighted_user_status)
 
         # ここで配列を使用した処理を行う
         print('成功')
@@ -235,6 +245,7 @@ def js_py_playlist(request):
         json_text = {
             "uris": selected_playlist,
             "user_status": weighted_user_status,
+            "playlist_name": playlist_name
         }
         return JsonResponse(json_text)
 

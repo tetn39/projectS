@@ -52,38 +52,7 @@ def get_status(json):
     if len(not_in_db) == 0:
         return ret
 
-    # unixタイムを取得して、1時間経過していればrefreshする
-    now_unix = int(datetime.now().timestamp())
-    auth_time = UserSocialAuth.objects.get(user_id=1).extra_data['auth_time']
-
-    # 1時間経過していたらrefreshする
-    if now_unix - auth_time > 3500:
-        # refresh token する
-        load_dotenv(os.path.join(BASE_DIR, 'auth/.env'))
-        refresh_token = UserSocialAuth.objects.get(user_id=1).extra_data['refresh_token']
-        refresh_data = {
-            "grant_type": "refresh_token",
-            "refresh_token": refresh_token,
-        }
-
-        token_url = "https://accounts.spotify.com/api/token"
-        client_id = os.environ.get('SPOTIFY_KEY')
-        client_secret = os.environ.get('SPOTIFY_SECRET')
-        auth_header = b64encode(f"{client_id}:{client_secret}".encode("utf-8")).decode("utf-8")
-        refresh_response = requests.post(token_url, data=refresh_data, headers={"Authorization": f"Basic {auth_header}"})
-        refresh_json = refresh_response.json()
-        
-        refreshed_access_token = refresh_json["access_token"]
-
-        unix = datetime.now()
-        extra_data = {
-            'auth_time': int(unix.timestamp()),
-            'refresh_token': refresh_token,
-            'access_token': refreshed_access_token,
-            'token_type': 'Bearer',
-        }
-
-        UserSocialAuth.objects.filter(user_id=1).update(extra_data=extra_data)
+    token_check(1)
 
 
     # たりないデータを取得
@@ -267,58 +236,25 @@ def for_chart_weight(user_status):
     return user_status
 
 def get_playlist_status(content):
-    # db操作
-    con = sqlite3.connect(f'{BASE_DIR}/db/db.sqlite3')
-    cur = con.cursor()
-    not_in_db = []
-    not_in_db_data = {}
-    ret = {}
+    token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
+    header_params = {
+        'Authorization': 'Bearer ' + token,
+    }
 
-    placeholders = ', '.join('?' for _ in content["uris"]) # その数だけ ?入れるみたいな感じ
-    cur.execute(f'SELECT * FROM melotus_music_status WHERE music_id IN ({placeholders})', content["uris"])
+    END_POINT = f'https://api.spotify.com/v1/playlists/{content}/tracks?limit=50'
 
-    rows = cur.fetchall()
-    not_in_db = list(set(content["uris"]) - set([row[0] for row in rows]))
-    for row in rows:
-        if row is not None:
-            ret[row[0]] = {
-                'acousticness': row[1],
-                'danceability': row[2],
-                'energy': row[3],
-                'instrumentalness': row[4],
-                'liveness': row[5],
-                'loudness': row[6],
-                'mode': row[7],
-                'speechiness': row[8],
-                'tempo': row[9],
-                'valence': row[10],
-                'country': row[11],
-            }
-        
-    con.close()
+    res = requests.get(END_POINT, headers=header_params)
 
-
-    # APIから取得
-
-    if len(not_in_db) == 0:
-        return ret
-
-    # unixタイムを取得して、1時間経過していればrefreshする
-    now_unix = int(datetime.now().timestamp())
-    auth_time = UserSocialAuth.objects.get(user_id=1).extra_data['auth_time']
-
-    # 1時間経過していたらrefreshする
-    if now_unix - auth_time > 3500:
-        # refresh token する
-        load_dotenv(os.path.join(BASE_DIR, 'auth/.env'))
-        refresh_token = UserSocialAuth.objects.get(user_id=1).extra_data['refresh_token']
-        refresh_data = {
-            "grant_type": "refresh_token",
-            "refresh_token": refresh_token,
+    data = res.json()
+    print(data)
+    music_ids = []
+    for d in data['items']:
+        music_ids.append(d['track']['id'])
+    
+    ret = {
+            'uris': music_ids,
+            'playlist_name': data['name'],
+            # 'playlist_image': data['images'][0]['url'],
+            # 'playlist_url': data['external_urls']['spotify'],
         }
-
-        token_url = "https://accounts.spotify.com/api/token"
-        client_id = os.environ.get('SPOTIFY_KEY')
-        client_secret = os.environ.get('SPOTIFY_SECRET')
-        auth_header = b64encode(f"{client_id}:{client_secret}".encode("utf-8")).decode("utf-8")
-        refresh_response
+    return ret

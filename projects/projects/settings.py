@@ -114,6 +114,6 @@ AUTHENTICATION_BACKENDS = (
 SOCIAL_AUTH_URL_NAMESPACE = 'social'
 SOCIAL_AUTH_SPOTIFY_KEY = os.environ.get('SPOTIFY_KEY')
 SOCIAL_AUTH_SPOTIFY_SECRET = os.environ.get('SPOTIFY_SECRET')
-SOCIAL_AUTH_SPOTIFY_SCOPE = ['user-read-email', 'user-library-read', 'playlist-read-private']
+SOCIAL_AUTH_SPOTIFY_SCOPE = ['user-read-email', 'user-library-read', 'playlist-read-private', 'playlist-modify-private', 'playlist-modify-public', 'user-reaed-private',]
 LOGIN_REDIRECT_URL = '/songs/'
 LOGOUT_REDIRECT_URL = '/'

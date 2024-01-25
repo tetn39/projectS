@@ -90,6 +90,7 @@ def get_status(json):
     
     ret |= not_in_db_data
 
+  
     return ret
 
 def add_db(content):
@@ -240,21 +241,21 @@ def get_playlist_status(content):
     header_params = {
         'Authorization': 'Bearer ' + token,
     }
-
-    END_POINT = f'https://api.spotify.com/v1/playlists/{content}/tracks?limit=50'
+    print(content)
+    END_POINT = f'https://api.spotify.com/v1/playlists/{content["playlist_id"]}/tracks?limit=50'
 
     res = requests.get(END_POINT, headers=header_params)
 
     data = res.json()
-    print(data)
+    
     music_ids = []
     for d in data['items']:
         music_ids.append(d['track']['id'])
     
     ret = {
             'uris': music_ids,
-            'playlist_name': data['name'],
             # 'playlist_image': data['images'][0]['url'],
             # 'playlist_url': data['external_urls']['spotify'],
         }
-    return ret
+
+    return get_status(ret)

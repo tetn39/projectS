@@ -16,6 +16,7 @@
 		rel="stylesheet">
 	<link rel="icon" href="{% static 'images/logos/favicon.ico' %}">
 	<script src="{% static 'js/songs.js' %}"></script>
+	<script src="{% static 'js/send.js' %}"></script>
 </head>
 
 <body class="body-wrap">
@@ -74,6 +75,8 @@
 					{% endfor %}
 					
 				</ul>
+				<!-- clickされたらsend()実行 -->
+				<button onclick="send()">プレイリストで診断</button>
 			</div>
 
 			<!-- <footer>フッター</footer> -->

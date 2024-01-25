@@ -139,13 +139,13 @@ def playlist(request):
         res = requests.get(END_POINT, headers=header_params)
         data = res.json()
         context['playlist_data'] = []
-        print(data)
+        
         for playlist in data['items']:
             playlist_name = playlist['name']
             playlist_url = playlist['external_urls']['spotify']
             largest_image_url = playlist['images'][0]['url'] if playlist['images'] else 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=v2'
             playlist_id = playlist['id']
-            print(playlist_id)
+            
             playlist_data = {
                 'playlist_name': playlist_name,
                 'playlist_url': playlist_url,
@@ -153,7 +153,7 @@ def playlist(request):
                 'playlist_id': playlist_id,
             }
             context['playlist_data'].append(playlist_data)
-        print(context)
+        
     else:
         # ログインしていない状態
         token_check(1)
@@ -225,7 +225,6 @@ def js_py_playlist(request):
 
         data = json.loads(request.body.decode('utf-8'))
         selected_playlist = {"playlist_id": data.get('selectedPlaylist', [])} #selectedPlaylist として名前つけてほしい
-        
         token_check(request.user.id)
         # playlistからすべて?の曲のIDを取得し、get_statusに渡す。
         # その後、get_statusの返り値をuser_music_statusに渡す。
@@ -234,7 +233,6 @@ def js_py_playlist(request):
 
 
         selected_music_data = get_playlist_status(selected_playlist)
-        playlist_name = selected_music_data['playlist_name']
         user_status = user_music_status(selected_music_data)
         
         weighted_user_status = for_chart_weight(user_status)
@@ -245,7 +243,6 @@ def js_py_playlist(request):
         json_text = {
             "uris": selected_playlist,
             "user_status": weighted_user_status,
-            "playlist_name": playlist_name
         }
         return JsonResponse(json_text)
 

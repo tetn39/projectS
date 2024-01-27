@@ -11,6 +11,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
+import base64
 
 
 
@@ -250,6 +251,12 @@ def js_py_playlist(request):
         print('失敗')
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
+    
+@ensure_csrf_cookie
+def get_token(request):
+    token_check(1)
+    token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
+    return JsonResponse({'access_token': token})
 
 def add_db(request):
     ret = add_db_from_spotify()

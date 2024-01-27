@@ -12,6 +12,7 @@ urlpatterns = [
     path('jikken/', views.jikken, name='jikken'),
     path('js_py/', views.js_py, name='js_py'),
     path('js_py_playlist/', views.js_py_playlist, name='js_py_playlist'),
+    path('get_token/', views.get_token, name='get_token'),
     path('help/', views.help, name='help'),
     path('search/', views.search, name='search'),
     path('add_db/', views.add_db, name='add_db'),

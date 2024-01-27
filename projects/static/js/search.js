@@ -1,22 +1,21 @@
-const client_id = "";
-const client_secret = "";
 let selectedTracks = [];
 let selectedUris = [];
 
-// SpotifyのAPIへのアクセストークンを取得する関数
-async function getToken() {
-  const credentials = btoa(`${client_id}:${client_secret}`);
-  const response = await fetch("https://accounts.spotify.com/api/token", {
-    method: "POST",
-    body: new URLSearchParams({
-      grant_type: "client_credentials",
-    }),
+async function getAccessToken() {
+  // CSRFトークンを取得
+  const csrftoken = getCookie("csrftoken");
+
+  // get_token/ からGETしてアクセストークンを取得する
+  const response = await fetch("/get_token/", {
+    method: "GET",
     headers: {
-      "Content-Type": "application/x-www-form-urlencoded",
-      Authorization: `Basic ${credentials}`,
+      "Content-Type": "application/json",
+      "X-CSRFToken": csrftoken,
     },
   });
-  return await response.json();
+
+  const data = await response.json();
+  return data;
 }
 
 // Spotifyでトラックを検索する関数
@@ -157,7 +156,7 @@ function removeTrackFromList(index) {
 
 // 初期化処理を行う関数
 async function initializeSearch() {
-  const response = await getToken();
+  const accessToken = await getAccessToken();
   const searchInput = document.getElementById("searchInput");
   const searchResults = document.getElementById("searchResults");
   const selectedTracksHeader = document.getElementById("selectedTracksHeader");
@@ -170,7 +169,7 @@ async function initializeSearch() {
   searchInput.addEventListener("input", async (event) => {
     const query = event.target.value;
     if (query.length > 0) {
-      const result = await searchSpotify(response.access_token, query);
+      const result = await searchSpotify(accessToken.access_token, query);
       displayResults(result.tracks.items);
     } else {
       searchResults.innerHTML = "";

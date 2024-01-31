@@ -65,15 +65,29 @@
 			<div class="playlist">
 				<h2>診断プレイリスト</h2>
 				<ul>
-					{% for item in playlist_data %}
+					<!-- {% for item in playlist_data %}
 					<li id="{{ item.playlist_id }}">
 						<a href="{{ item.playlist_url }}">
 							<img src="{{ item.playlist_image_url }}" alt="{{ item.playlist_name }}">
-							<!-- <p>{{ item.playlist_name }}</p> -->
+							
 						</a>
 					</li>
-					{% endfor %}
-					
+					{% endfor %} -->
+					<li>
+						<a href="#">
+							<img src="{% static 'images/icons/no-icon.png' %}" alt="曲アイコン">
+						</a>
+					</li>					
+					<li>
+						<a href="#">
+							<img src="{% static 'images/icons/no-icon.png' %}" alt="曲アイコン">
+						</a>
+					</li>					
+					<li>
+						<a href="#">
+							<img src="{% static 'images/icons/no-icon.png' %}" alt="曲アイコン">
+						</a>
+					</li>					
 				</ul>
 				<!-- clickされたらsend()実行 -->
 				<button onclick="send()">プレイリストで診断</button>

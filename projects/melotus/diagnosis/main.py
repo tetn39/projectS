@@ -3,7 +3,7 @@ import requests
 import django
 django.setup()
 from social_django.models import UserSocialAuth
-from melotus.models import music_status
+from melotus.models import music_status, history
 from projects.settings import BASE_DIR
 import os
 from dotenv import load_dotenv
@@ -11,6 +11,7 @@ from base64 import b64encode
 from datetime import datetime
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from asgiref.sync import sync_to_async
 
 # get_statusとadd_dbは曲のステータスをdbから取得し、なければAPIから取得し、dbに追加する。
 # add_dbはget_statusから呼び出されるので、classにして結合してもよい
@@ -186,6 +187,7 @@ def add_db_from_spotify():
 def choose_music(content):
     pass
 
+# tokenが有効かどうかを調べる
 def token_check(user_data):
     # unixタイムを取得して、1時間経過していればrefreshする
     now_unix = int(datetime.now().timestamp())
@@ -220,6 +222,7 @@ def token_check(user_data):
 
         UserSocialAuth.objects.filter(user_id=user_data).update(extra_data=extra_data)
 
+# チャート用にデータを調整する
 def for_chart_weight(user_status):
     for status in user_status:
             if status != 'tempo' and status != 'loudness':
@@ -236,6 +239,7 @@ def for_chart_weight(user_status):
     
     return user_status
 
+# プレイリストからステータスを取得する
 def get_playlist_status(content):
     token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
     header_params = {
@@ -254,8 +258,25 @@ def get_playlist_status(content):
     
     ret = {
             'uris': music_ids,
-            # 'playlist_image': data['images'][0]['url'],
-            # 'playlist_url': data['external_urls']['spotify'],
         }
 
     return get_status(ret)
+
+async def add_db_history(content):
+    history_list = [
+        history(
+            history_id = content['history_id'],
+            acousticness = content['acousticness'],
+            danceability = content['danceability'],
+            energy = content['energy'],
+            instrumentalness = content['instrumentalness'],
+            liveness = content['liveness'],
+            loudness = content['loudness'],
+            mode = content['mode'],
+            speechiness = content['speechiness'],
+            tempo = content['tempo'],
+            valence = content['valence'],
+        )
+    ]
+    
+    await sync_to_async(history.objects.bulk_create)(history_list)

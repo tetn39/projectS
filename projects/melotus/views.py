@@ -4,7 +4,7 @@ import json
 from social_django.models import UserSocialAuth
 import requests
 from django.conf import settings
-from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight, get_playlist_status
+from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight, get_playlist_status, add_db_history
 from django.http import JsonResponse
 from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
@@ -144,7 +144,7 @@ def playlist(request):
         for playlist in data['items']:
             playlist_name = playlist['name']
             playlist_url = playlist['external_urls']['spotify']
-            largest_image_url = playlist['images'][0]['url'] if playlist['images'] else 'https://community.spotify.com/t5/image/serverpage/image-id/25294i2836BD1C1A31BDF2?v=v2'
+            largest_image_url = playlist['images'][0]['url'] if playlist['images'] else "{% static 'images/icons/no-icon.png' %}"
             playlist_id = playlist['id']
             
             playlist_data = {
@@ -196,9 +196,15 @@ def js_py(request):
         data = json.loads(request.body.decode('utf-8'))
         selected_uris = {"uris": data.get('selectedUris', [])}
         
+        # 曲のステータスのリスト
         selected_music_data = get_status(selected_uris)
-        user_status = user_music_status(selected_music_data)
         
+        # ユーザーとしてのステータス
+        user_status = user_music_status(selected_music_data)
+        # 非同期でadd_db_historyに渡す
+        # add_db_history(user_status)
+
+        # チャートに書くためのステータス
         weighted_user_status = for_chart_weight(user_status)
         print(weighted_user_status)
 

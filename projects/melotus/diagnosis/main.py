@@ -11,7 +11,7 @@ from base64 import b64encode
 from datetime import datetime
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from asgiref.sync import sync_to_async
+
 
 # get_statusとadd_dbは曲のステータスをdbから取得し、なければAPIから取得し、dbに追加する。
 # add_dbはget_statusから呼び出されるので、classにして結合してもよい
@@ -262,10 +262,9 @@ def get_playlist_status(content):
 
     return get_status(ret)
 
-async def add_db_history(content):
+def add_db_history(content):
     history_list = [
         history(
-            history_id = content['history_id'],
             acousticness = content['acousticness'],
             danceability = content['danceability'],
             energy = content['energy'],
@@ -279,4 +278,4 @@ async def add_db_history(content):
         )
     ]
     
-    await sync_to_async(history.objects.bulk_create)(history_list)
+    history.objects.bulk_create(history_list)

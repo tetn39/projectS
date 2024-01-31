@@ -12,7 +12,7 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
 import base64
-
+import asyncio
 
 
 def index(request):
@@ -201,12 +201,12 @@ def js_py(request):
         
         # ユーザーとしてのステータス
         user_status = user_music_status(selected_music_data)
-        # 非同期でadd_db_historyに渡す
-        # add_db_history(user_status)
+
+        # historyに追加する
+        add_db_history(selected_music_data)
 
         # チャートに書くためのステータス
         weighted_user_status = for_chart_weight(user_status)
-        print(weighted_user_status)
 
         # ここで配列を使用した処理を行う
         print('成功')
@@ -272,3 +272,6 @@ def add_db(request):
     }
     return render(request, 'add_db.html', content)
 
+async def db_history(request):
+    await add_db_history()
+    return JsonResponse({'status': 'success', 'message': 'DB History Added'})

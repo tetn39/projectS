@@ -34,4 +34,3 @@ class melotus_data(models.Model):
     melotus_id = models.AutoField(primary_key=True)
     history_id = models.ForeignKey(history, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-

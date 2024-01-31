@@ -48,7 +48,7 @@ def songs(request):
             'user_image': data['images'][0]['url'],
         }
     else:
-        print('ログインしていない')
+        context = {}
 
     song_name = request.POST.get('song_name')
     if song_name is None:

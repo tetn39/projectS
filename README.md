@@ -105,7 +105,7 @@ xserver上でのMySQL-ID: `melotus6_admin`
 ### django-admin
 ID: `admin`
 email: ``
-password: `projectMelotus`
+password: `2023projects`
 
 
 

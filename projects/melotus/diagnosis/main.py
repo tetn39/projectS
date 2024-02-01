@@ -3,7 +3,7 @@ import requests
 import django
 django.setup()
 from social_django.models import UserSocialAuth
-from melotus.models import music_status, history
+from melotus.models import music_status, history, spotify_data, melotus_data
 from projects.settings import BASE_DIR
 import os
 from dotenv import load_dotenv
@@ -262,6 +262,7 @@ def get_playlist_status(content):
 
     return get_status(ret)
 
+# 履歴をdbに追加する
 def add_db_history(content):
     history_list = [
         history(
@@ -279,3 +280,33 @@ def add_db_history(content):
     ]
     
     history.objects.bulk_create(history_list)
+
+# spotifyデータをdbに追加する
+def add_db_spotify_data(user_uid):
+
+    if spotify_data.objects.filter(user_name=user_uid).exists():
+        return
+    else:
+        print(user_uid)
+        token = UserSocialAuth.objects.get(uid=user_uid).extra_data['access_token']
+        header_params = {
+            'Authorization': 'Bearer ' + token,
+        }
+
+        END_POINT = 'https://api.spotify.com/v1/me'
+        res = requests.get(END_POINT, headers=header_params)
+        data = res.json()
+        if data['images'][0]['url'] is None:
+            get_image_url = "{% static 'images/logos/favicon.png' %}"
+        else:
+            get_image_url = data['images'][0]['url']
+
+        spotify_data_list = [
+            spotify_data(
+                user_name = user_uid,
+                image_url = get_image_url,
+                country = 'JP',
+            )
+        ]
+
+        spotify_data.objects.bulk_create(spotify_data_list)

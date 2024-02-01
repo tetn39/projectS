@@ -2,29 +2,37 @@ from django.shortcuts import render, redirect
 from django.http import HttpResponse
 import json
 from social_django.models import UserSocialAuth
+from .models import spotify_data
 import requests
 from django.conf import settings
-from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight, get_playlist_status, add_db_history
+from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight, get_playlist_status, add_db_history, add_db_spotify_data
 from django.http import JsonResponse
-from django.middleware.csrf import get_token
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
-import base64
-import asyncio
 
 
 def index(request):
     return render(request, 'index.html')
 
+
 def search(request):
     return render(request, 'search.html')
+
+
+# ログインしたときだけ実行
+def login(request):
+    user_name = request.user
+    add_db_spotify_data(user_name)
+    print('ログイン完了')
+    return redirect('/songs/')
 
 
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect(reverse('index')) 
+
 
 def songs(request):
     context = {}
@@ -33,19 +41,10 @@ def songs(request):
         print('ログイン済み')
         requested_user_id = request.user.id
         token_check(requested_user_id)
-        token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
-        header_params = {
-            'Authorization': 'Bearer ' + token,
-        }
-
-        END_POINT = 'https://api.spotify.com/v1/me'
-        res = requests.get(END_POINT, headers=header_params)
-        data = res.json()
         
+        user_data = spotify_data.objects.get(user_name=request.user)
         context = {
-            'user_name': data['display_name'],
-            'user_url': data['external_urls']['spotify'],
-            'user_image': data['images'][0]['url'],
+            'user_image': user_data.image_url,
         }
     else:
         context = {}
@@ -57,27 +56,18 @@ def songs(request):
     
     return render(request, 'songs.html', context)
 
+
 def status(request):
     context = {}
 
     if request.user.is_authenticated:
         print('ログイン済み')
-    
         requested_user_id = request.user.id
         token_check(requested_user_id)
-        token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
-        header_params = {
-            'Authorization': 'Bearer ' + token,
-        }
-
-        END_POINT = 'https://api.spotify.com/v1/me'
-
-        res = requests.get(END_POINT, headers=header_params)
-        data = res.json()
+        
+        user_data = spotify_data.objects.get(user_name=request.user)
         context = {
-            'user_name': data['display_name'],
-            'user_url': data['external_urls']['spotify'],
-            'user_image': data['images'][0]['url'],
+            'user_image': user_data.image_url,
         }
     else:
         context = {}
@@ -90,53 +80,35 @@ def help(request):
 
     if request.user.is_authenticated:
         print('ログイン済み')
-
         requested_user_id = request.user.id
         token_check(requested_user_id)
-        token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
-        header_params = {
-            'Authorization': 'Bearer ' + token,
-        }
-
-        END_POINT = 'https://api.spotify.com/v1/me'
-
-        res = requests.get(END_POINT, headers=header_params)
-        data = res.json()
+        
+        user_data = spotify_data.objects.get(user_name=request.user)
         context = {
-            'user_name': data['display_name'],
-            'user_url': data['external_urls']['spotify'],
-            'user_image': data['images'][0]['url'],
+            'user_image': user_data.image_url,
         }
-
     else:
         context = {}
 
     return render(request, 'help.html', context)
 
 
-
 def playlist(request):
     if request.user.is_authenticated:
-
+        print('ログイン済み')
         requested_user_id = request.user.id
         token_check(requested_user_id)
+        
+        user_data = spotify_data.objects.get(user_name=request.user)
+        context = {
+            'user_image': user_data.image_url,
+        }
+
+        END_POINT = 'https://api.spotify.com/v1/me/playlists?limit=5&offset=0'
         token = UserSocialAuth.objects.get(user_id=requested_user_id).extra_data['access_token']
         header_params = {
             'Authorization': 'Bearer ' + token,
         }
-
-        END_POINT = 'https://api.spotify.com/v1/me'
-
-        res = requests.get(END_POINT, headers=header_params)
-        data = res.json()
-        context = {
-            'user_name': data['display_name'],
-            'user_url': data['external_urls']['spotify'],
-            'user_image': data['images'][0]['url'],
-        }
-
-        END_POINT = 'https://api.spotify.com/v1/me/playlists?limit=5&offset=0'
-
         res = requests.get(END_POINT, headers=header_params)
         data = res.json()
         context['playlist_data'] = []
@@ -185,6 +157,7 @@ def jikken(request):
 
     return render(request, 'old/jikken.html', context)
 
+
 @ensure_csrf_cookie
 def js_py(request):
     if request.method == 'POST':
@@ -203,7 +176,7 @@ def js_py(request):
         user_status = user_music_status(selected_music_data)
 
         # historyに追加する
-        add_db_history(selected_music_data)
+        add_db_history(user_status)
 
         # チャートに書くためのステータス
         weighted_user_status = for_chart_weight(user_status)
@@ -264,6 +237,7 @@ def get_token(request):
     token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
     return JsonResponse({'access_token': token})
 
+
 def add_db(request):
     ret = add_db_from_spotify()
     
@@ -272,6 +246,3 @@ def add_db(request):
     }
     return render(request, 'add_db.html', content)
 
-async def db_history(request):
-    await add_db_history()
-    return JsonResponse({'status': 'success', 'message': 'DB History Added'})

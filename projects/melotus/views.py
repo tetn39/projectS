@@ -5,7 +5,7 @@ from social_django.models import UserSocialAuth
 from .models import spotify_data
 import requests
 from django.conf import settings
-from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight, get_playlist_status, add_db_history, add_db_spotify_data
+from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight, get_playlist_status, add_db_history, add_db_spotify_data, add_db_melotus_data
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.urls import reverse
@@ -175,8 +175,12 @@ def js_py(request):
         # ユーザーとしてのステータス
         user_status = user_music_status(selected_music_data)
 
-        # historyに追加する
-        add_db_history(user_status)
+        # historyに追加してhistory_id取得
+        new_history_id = add_db_history(user_status)
+
+        # melotus_dataに追加
+        print(request.user)
+        add_db_melotus_data(request.user, new_history_id)
 
         # チャートに書くためのステータス
         weighted_user_status = for_chart_weight(user_status)

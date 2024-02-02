@@ -277,7 +277,7 @@ def add_db_history(content):
         )
 
     new_history_id = history_instance.history_id
-    print(new_history_id) # これで取得できる TODO: 
+    return new_history_id
 
 # spotifyデータをdbに追加する
 def add_db_spotify_data(user_uid):
@@ -309,14 +309,13 @@ def add_db_spotify_data(user_uid):
         spotify_data.objects.bulk_create(spotify_data_list)
 
 
-def add_db_melotus_data(user_uid, history_id):
-    user_data = spotify_data.objects.get(user_name=user_uid)
-    history_data = history.objects.get(history_id=history_id)
-    melotus_data_list = [
-        melotus_data(
-            spotify_id = user_data,
-            history_id = history_data,
-        )
-    ]
+# melotus_dataを追加する
+def add_db_melotus_data(user_uid, new_history_id):
+    spotify_data_instance = spotify_data.objects.get(user_name=user_uid)
 
-    melotus_data.objects.bulk_create(melotus_data_list)
+    test = melotus_data.objects.create(
+        spotify_id = spotify_data_instance,
+        history_id = history.objects.get(history_id=new_history_id),
+    )
+
+    print(test.date)

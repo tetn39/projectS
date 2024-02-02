@@ -17,9 +17,9 @@ function send() {
       console.log("pyから:", data.user_status);
 
       // status.htmlに遷移する この下コメント外したらちゃんと遷移する。
-    //   window.location.href =
-    //     "/status/?user_status=" +
-    //     encodeURIComponent(JSON.stringify(data.user_status));
+      window.location.href =
+        "/status/?user_status=" +
+        encodeURIComponent(JSON.stringify(data.user_status));
     })
     .catch((error) => {
       console.error("Error:", error);

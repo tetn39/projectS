@@ -1,4 +1,3 @@
-import sqlite3
 import requests
 import django
 django.setup()
@@ -11,88 +10,51 @@ from base64 import b64encode
 from datetime import datetime
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from django.forms.models import model_to_dict
+import numpy as np
 
 
 # get_statusとadd_dbは曲のステータスをdbから取得し、なければAPIから取得し、dbに追加する。
 # add_dbはget_statusから呼び出されるので、classにして結合してもよい
 def get_status(json):
-    
-    # db操作
-    con = sqlite3.connect(f'{BASE_DIR}/db/db.sqlite3')
-    cur = con.cursor()
-    not_in_db = []
-    not_in_db_data = {}
-    ret = {}
-
-    placeholders = ', '.join('?' for _ in json["uris"]) # その数だけ ?入れるみたいな感じ
-    cur.execute(f'SELECT * FROM melotus_music_status WHERE music_id IN ({placeholders})', json["uris"])
-
-    rows = cur.fetchall()
-    not_in_db = list(set(json["uris"]) - set([row[0] for row in rows]))
-    for row in rows:
-        if row is not None:
-            ret[row[0]] = {
-                'acousticness': row[1],
-                'danceability': row[2],
-                'energy': row[3],
-                'instrumentalness': row[4],
-                'liveness': row[5],
-                'loudness': row[6],
-                'mode': row[7],
-                'speechiness': row[8],
-                'tempo': row[9],
-                'valence': row[10],
-                'country': row[11],
-            }
-        
-    con.close()
-
+    # データベースから取得
+    rows = music_status.objects.filter(music_id__in=json["uris"])
+    ret = {row.music_id: model_to_dict(row) for row in rows}
+    not_in_db = list(set(json["uris"]) - set(ret.keys()))
 
     # APIから取得
+    if not_in_db:
+        token_check(1)
+        token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
+        header_params = {'Authorization': 'Bearer ' + token}
+        ids = ','.join(not_in_db)
+        END_POINT = f'https://api.spotify.com/v1/audio-features?ids={ids}'
+        res = requests.get(END_POINT, headers=header_params)
+        data = res.json()
 
-    if len(not_in_db) == 0:
-        return ret
-
-    token_check(1)
-
-
-    # たりないデータを取得
-    token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
-    header_params = {
-        'Authorization': 'Bearer ' + token,
-    }
-    ids = ','.join(not_in_db)
-    END_POINT = f'https://api.spotify.com/v1/audio-features?ids={ids}'
-
-    res = requests.get(END_POINT, headers=header_params)
-
-    data = res.json()   
-
-    for d in data['audio_features']:
-        if d is not None:
+        not_in_db_data = {}
+        for d in data['audio_features']:
             not_in_db_data[d['id']] = {
-                # 小数点以下4桁に丸める
-                'acousticness': float(f'{d["acousticness"]:.4f}'),
-                'danceability': float(f'{d["danceability"]:.4f}'),
-                'energy': float(f'{d["energy"]:.4f}'),
-                'instrumentalness': float(f'{d["instrumentalness"]:.4f}'),
-                'liveness': float(f'{d["liveness"]:.4f}'),
-                'loudness': float(f'{d["loudness"]:.4f}'),
-                'mode': float(f'{d["mode"]:.4f}'),
-                'speechiness': float(f'{d["speechiness"]:.4f}'),
-                'tempo': float(f'{d["tempo"]:.4f}'),
-                'valence': float(f'{d["valence"]:.4f}'),
+                'acousticness': round(d['acousticness'], 4),
+                'danceability': round(d['danceability'], 4),
+                'energy': round(d['energy'], 4),
+                'instrumentalness': round(d['instrumentalness'], 4),
+                'liveness': round(d['liveness'], 4),
+                'loudness': round(d['loudness'], 4),
+                'mode': round(d['mode'], 4),
+                'speechiness': round(d['speechiness'], 4),
+                'tempo': round(d['tempo'], 4),
+                'valence': round(d['valence'], 4),
                 'country': 'JP',
             }
 
-    # DBに追加
-    add_db(not_in_db_data)
+        # データベースに追加
+        add_db(not_in_db_data)
+        
+        ret.update(not_in_db_data)
 
-    
-    ret |= not_in_db_data
-
-  
     return ret
+
 
 def add_db(content):
     music_status_list = [
@@ -130,14 +92,24 @@ def user_music_status(content):
     }
     for key in content:
         for status in content[key]:
-            if status != 'country':
+            if status != 'country' and status != 'music_id':
                 average_status[status] += content[key][status]
     for status in average_status:
         average_status[status] /= len(content)
         average_status[status] = float(f'{average_status[status]:.4f}')
     
-
     return average_status
+
+def user_music_status_median(content):
+    status_values = {status: [] for status in content[next(iter(content))].keys() if status not in ['country', 'music_id']}
+
+    for key in content:
+        for status in status_values:
+            status_values[status].append(content[key][status])
+
+    median_status = {status: np.median(status_values[status]) for status in status_values}
+    return {status: round(median_status[status], 4) for status in median_status}
+
 
 # spotifyからdbに曲のステータスを追加する。 db保有量を増やすためのdev用
 def add_db_from_spotify():
@@ -318,4 +290,3 @@ def add_db_melotus_data(user_uid, new_history_id):
         history_id = history.objects.get(history_id=new_history_id),
     )
 
-    print(test.date)

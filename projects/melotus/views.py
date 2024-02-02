@@ -25,7 +25,6 @@ def search(request):
 def login(request):
     user_name = request.user
     add_db_spotify_data(user_name)
-    print('ログイン完了')
     return redirect('/songs/')
 
 
@@ -38,7 +37,6 @@ def songs(request):
     context = {}
     
     if request.user.is_authenticated:
-        print('ログイン済み')
         requested_user_id = request.user.id
         token_check(requested_user_id)
         
@@ -61,7 +59,6 @@ def status(request):
     context = {}
 
     if request.user.is_authenticated:
-        print('ログイン済み')
         requested_user_id = request.user.id
         token_check(requested_user_id)
         
@@ -79,7 +76,6 @@ def help(request):
     context = {}
 
     if request.user.is_authenticated:
-        print('ログイン済み')
         requested_user_id = request.user.id
         token_check(requested_user_id)
         
@@ -95,7 +91,6 @@ def help(request):
 
 def playlist(request):
     if request.user.is_authenticated:
-        print('ログイン済み')
         requested_user_id = request.user.id
         token_check(requested_user_id)
         
@@ -179,14 +174,12 @@ def js_py(request):
         new_history_id = add_db_history(user_status)
 
         # melotus_dataに追加
-        print(request.user)
         add_db_melotus_data(request.user, new_history_id)
 
         # チャートに書くためのステータス
         weighted_user_status = for_chart_weight(user_status)
 
         # ここで配列を使用した処理を行う
-        print('成功')
         
         json_text = {
             "uris": selected_uris,
@@ -195,7 +188,6 @@ def js_py(request):
         return JsonResponse(json_text)
 
     else:
-        print('失敗')
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
 
@@ -222,7 +214,6 @@ def js_py_playlist(request):
         weighted_user_status = for_chart_weight(user_status)
 
         # ここで配列を使用した処理を行う
-        print('成功')
         
         json_text = {
             "uris": selected_playlist,
@@ -231,7 +222,6 @@ def js_py_playlist(request):
         return JsonResponse(json_text)
 
     else:
-        print('失敗')
         return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
 
     

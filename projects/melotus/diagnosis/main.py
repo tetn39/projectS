@@ -245,7 +245,6 @@ def get_playlist_status(content):
     header_params = {
         'Authorization': 'Bearer ' + token,
     }
-    print(content)
     END_POINT = f'https://api.spotify.com/v1/playlists/{content["playlist_id"]}/tracks?limit=50'
 
     res = requests.get(END_POINT, headers=header_params)
@@ -264,9 +263,8 @@ def get_playlist_status(content):
 
 # 履歴をdbに追加する
 def add_db_history(content):
-    history_list = [
-        history(
-            acousticness = content['acousticness'],
+    history_instance = history.objects.create(
+    acousticness = content['acousticness'],
             danceability = content['danceability'],
             energy = content['energy'],
             instrumentalness = content['instrumentalness'],
@@ -277,9 +275,9 @@ def add_db_history(content):
             tempo = content['tempo'],
             valence = content['valence'],
         )
-    ]
-    
-    history.objects.bulk_create(history_list)
+
+    new_history_id = history_instance.history_id
+    print(new_history_id) # これで取得できる TODO: 
 
 # spotifyデータをdbに追加する
 def add_db_spotify_data(user_uid):
@@ -287,7 +285,6 @@ def add_db_spotify_data(user_uid):
     if spotify_data.objects.filter(user_name=user_uid).exists():
         return
     else:
-        print(user_uid)
         token = UserSocialAuth.objects.get(uid=user_uid).extra_data['access_token']
         header_params = {
             'Authorization': 'Bearer ' + token,
@@ -310,3 +307,16 @@ def add_db_spotify_data(user_uid):
         ]
 
         spotify_data.objects.bulk_create(spotify_data_list)
+
+
+def add_db_melotus_data(user_uid, history_id):
+    user_data = spotify_data.objects.get(user_name=user_uid)
+    history_data = history.objects.get(history_id=history_id)
+    melotus_data_list = [
+        melotus_data(
+            spotify_id = user_data,
+            history_id = history_data,
+        )
+    ]
+
+    melotus_data.objects.bulk_create(melotus_data_list)

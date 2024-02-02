@@ -154,6 +154,8 @@ function removeTrackFromList(index) {
   console.log("Selected URIs:", selectedUris);
 }
 
+let searchTimeout;
+
 // 初期化処理を行う関数
 async function initializeSearch() {
   const accessToken = await getAccessToken();
@@ -167,10 +169,15 @@ async function initializeSearch() {
   diagnosisButtonWrap.style.display = "none";
 
   searchInput.addEventListener("input", async (event) => {
+    clearTimeout(searchTimeout); // 前回のタイマーをクリア
+
     const query = event.target.value;
     if (query.length > 0) {
-      const result = await searchSpotify(accessToken.access_token, query);
-      displayResults(result.tracks.items);
+      // 一定時間入力がない場合にAPIを呼び出す
+      searchTimeout = setTimeout(async () => {
+        const result = await searchSpotify(accessToken.access_token, query);
+        displayResults(result.tracks.items);
+      }, 500); // 例: 500ミリ秒待機してからAPI呼び出し
     } else {
       searchResults.innerHTML = "";
     }

@@ -159,7 +159,7 @@ def js_py(request):
         csrf_token = request.headers.get("X-CSRFToken")
         if not request.COOKIES.get("csrftoken") == csrf_token:
             return JsonResponse({'status': 'error', 'message': 'CSRF Token Validation Failed'})
-
+        
         data = json.loads(request.body.decode('utf-8'))
         selected_uris = {"uris": data.get('selectedUris', [])}
         
@@ -170,11 +170,12 @@ def js_py(request):
         # user_status = user_music_status(selected_music_data)
         user_status = user_music_status_median(selected_music_data)
 
-        # historyに追加してhistory_id取得
-        new_history_id = add_db_history(user_status)
+        if request.user.is_authenticated:
+            # historyに追加してhistory_id取得
+            new_history_id = add_db_history(user_status)
 
-        # melotus_dataに追加
-        add_db_melotus_data(request.user, new_history_id)
+            # melotus_dataに追加
+            add_db_melotus_data(request.user, new_history_id)
 
         # おすすめの曲を選ぶ
         recommended_music = choose_music(user_status)
@@ -204,7 +205,7 @@ def js_py_playlist(request):
 
         data = json.loads(request.body.decode('utf-8'))
         selected_playlist = {"playlist_id": data.get('selectedPlaylist', [])} #selectedPlaylist として名前つけてほしい
-        token_check(request.user.id)
+        token_check(1)
         # playlistからすべて?の曲のIDを取得し、get_statusに渡す。
         # その後、get_statusの返り値をuser_music_statusに渡す。
         # その後、user_music_statusの返り値をfor_chart_weightに渡す。

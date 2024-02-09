@@ -158,7 +158,6 @@ def add_db_from_spotify():
 
 # ユーザーのステータスにあった曲をdbから探す。
 def choose_music(content):
-    
     ret = []
     user_acousticness = content['acousticness']
     user_danceability = content['danceability']
@@ -171,7 +170,7 @@ def choose_music(content):
     user_tempo = content['tempo']
     user_valence = content['valence']
 
-    status_range = 0.1
+    status_range = 0.2
 
     # データベースから取得
     rows = music_status.objects.filter(
@@ -190,6 +189,41 @@ def choose_music(content):
     for row in rows:
         ret.append(row.music_id)
     
+    # if len(ret) < 10:
+    #     # 10個未満だったらAPIから取得する
+    #     # 参考: 'https://api.spotify.com/v1/recommendations?limit=10&seed_tracks=6PQWajEem6mZSIazA8hFhe&target_acousticness=0.1&target_danceability=0.2&target_energy=0.3&target_instrumentalness=0.4
+
+    #     token_check(1)
+    #     token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
+    #     header_params = {'Authorization': 'Bearer ' + token}
+    #     # seedだけどうにかする
+        
+    #     END_POINT = f'https://api.spotify.com/v1/recommendations?limit=10&seed_tracks={",".join(ret)}&target_acousticness={user_acousticness}&target_danceability={user_danceability}&target_energy={user_energy}&target_instrumentalness={user_instrumentalness}&target_liveness={user_liveness}&target_speechiness={user_speechiness}&target_valence={user_valence}'
+        
+    #     res = requests.get(END_POINT, headers=header_params)
+    #     data = res.json()
+
+    #     for d in data['tracks']:
+    #         ret.append(d['id'])
+    #         # DBにも格納する
+    #         # bulk_createでまとめて追加する
+    #         add_db_data = {}
+    #         for d in data['audio_features']:
+    #             add_db_data[d['id']] = {
+    #                 'acousticness': round(d['acousticness'], 4),
+    #                 'danceability': round(d['danceability'], 4),
+    #                 'energy': round(d['energy'], 4),
+    #                 'instrumentalness': round(d['instrumentalness'], 4),
+    #                 'liveness': round(d['liveness'], 4),
+    #                 'loudness': round(d['loudness'], 4),
+    #                 'mode': round(d['mode'], 4),
+    #                 'speechiness': round(d['speechiness'], 4),
+    #                 'tempo': round(d['tempo'], 4),
+    #                 'valence': round(d['valence'], 4),
+    #                 'country': 'JP',
+    #             }
+    #         add_db(add_db_data)
+
     return ret
 
 

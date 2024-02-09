@@ -4,7 +4,7 @@ import json
 from social_django.models import UserSocialAuth
 from .models import spotify_data
 import requests
-from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight, get_playlist_status, add_db_history, add_db_spotify_data, add_db_melotus_data, user_music_status_median
+from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight, get_playlist_status, add_db_history, add_db_spotify_data, add_db_melotus_data, user_music_status_median, choose_music
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.urls import reverse
@@ -176,14 +176,17 @@ def js_py(request):
         # melotus_dataに追加
         add_db_melotus_data(request.user, new_history_id)
 
+        # おすすめの曲を選ぶ
+        recommended_music = choose_music(user_status)
+        print(recommended_music)
+        
         # チャートに書くためのステータス
         weighted_user_status = for_chart_weight(user_status)
-
-        # ここで配列を使用した処理を行う
         
         json_text = {
             "uris": selected_uris,
             "user_status": weighted_user_status,
+            "recommended_music": recommended_music,
         }
         return JsonResponse(json_text)
 
@@ -241,3 +244,7 @@ def add_db(request):
     }
     return render(request, 'add_db.html', content)
 
+
+def test(request):
+    choose_music({'acousticness': 0.0142, 'danceability': 0.584, 'energy': 0.822, 'instrumentalness': 0.0, 'liveness': 0.105, 'loudness': -3.397, 'mode': 1.0, 'speechiness': 0.0468, 'tempo': 142.514, 'valence': 0.677})
+    return HttpResponse('test')

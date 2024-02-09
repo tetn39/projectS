@@ -231,6 +231,7 @@ function send() {
     .then((data) => {
       console.log("jsから:", data.uris);
       console.log("pyから:", data.user_status);
+      console.log("pyから:", data.recommended_music);
 
       // status.htmlに遷移する
       window.location.href =

@@ -121,6 +121,7 @@ def add_db_from_spotify():
     sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
     playlist_id = "37i9dQZEVXbKXQ4mDTEBXq" # top50 japan　ここをいつもいい感じに変えられるといいかも。
+    playlist_id = "37i9dQZF1EIXsMLyhPhOLR"
     playlist_tracks = sp.playlist_tracks(playlist_id)
 
     # トラックごとにステータスを取得
@@ -157,7 +158,41 @@ def add_db_from_spotify():
 
 # ユーザーのステータスにあった曲をdbから探す。
 def choose_music(content):
-    pass
+    
+    ret = []
+    user_acousticness = content['acousticness']
+    user_danceability = content['danceability']
+    user_energy = content['energy']
+    user_instrumentalness = content['instrumentalness']
+    user_liveness = content['liveness']
+    user_loudness = content['loudness']
+    user_mode = content['mode']
+    user_speechiness = content['speechiness']
+    user_tempo = content['tempo']
+    user_valence = content['valence']
+
+    status_range = 0.1
+
+    # データベースから取得
+    rows = music_status.objects.filter(
+            acousticness__gte = user_acousticness-status_range, acousticness__lte = user_acousticness+status_range,
+            danceability__gte = user_danceability-status_range, danceability__lte = user_danceability+status_range,
+            energy__gte = user_energy-status_range, energy__lte = user_energy+status_range,
+            instrumentalness__gte = user_instrumentalness-status_range, instrumentalness__lte = user_instrumentalness+status_range,
+            liveness__gte = user_liveness-status_range, liveness__lte = user_liveness+status_range,
+            # loudness__gte = user_loudness-status_range, loudness__lte = user_loudness+status_range,
+            # mode__gte = user_mode-status_range, mode__lte = user_mode+status_range,
+            speechiness__gte = user_speechiness-status_range, speechiness__lte = user_speechiness+status_range,
+            # tempo__gte = user_tempo-status_range, tempo__lte = user_tempo+status_range,
+            valence__gte = user_valence-status_range, valence__lte = user_valence+status_range,
+        )
+
+    for row in rows:
+        ret.append(row.music_id)
+    
+    return ret
+
+
 
 # tokenが有効かどうかを調べる
 def token_check(user_data):
@@ -195,21 +230,21 @@ def token_check(user_data):
         UserSocialAuth.objects.filter(user_id=user_data).update(extra_data=extra_data)
 
 # チャート用にデータを調整する
-def for_chart_weight(user_status):
-    for status in user_status:
+def for_chart_weight(ret_user_status):
+    for status in ret_user_status:
             if status != 'tempo' and status != 'loudness':
-                user_status[status] *= 100
-                user_status[status] += 20
+                ret_user_status[status] *= 100
+                ret_user_status[status] += 20
             
             if status == 'loudness':
-                user_status[status] += 80.0
+                ret_user_status[status] += 80.0
             
             if status == 'tempo':
-                user_status[status] /= 2.0
+                ret_user_status[status] /= 2.0
             
-            user_status[status] = float(f'{user_status[status]:.4f}')
+            ret_user_status[status] = float(f'{ret_user_status[status]:.4f}')
     
-    return user_status
+    return ret_user_status
 
 # プレイリストからステータスを取得する
 def get_playlist_status(content):

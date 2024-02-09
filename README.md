@@ -66,6 +66,7 @@
 `pages`
 `python-dotenv`
 `spotipy`
+`numpy`
 
 
 ## ssh接続やりかた

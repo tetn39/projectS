@@ -196,37 +196,40 @@ def js_py(request):
 
 @ensure_csrf_cookie
 def js_py_playlist(request):
-    if request.method == 'POST':
-        # POSTリクエストの場合、CSRFトークンを確認
-        csrf_token = request.headers.get("X-CSRFToken")
-        if not request.COOKIES.get("csrftoken") == csrf_token:
-            return JsonResponse({'status': 'error', 'message': 'CSRF Token Validation Failed'})
+    try:
+        if request.method == 'POST':
+            # POSTリクエストの場合、CSRFトークンを確認
+            csrf_token = request.headers.get("X-CSRFToken")
+            if not request.COOKIES.get("csrftoken") == csrf_token:
+                return JsonResponse({'status': 'error', 'message': 'CSRF Token Validation Failed'})
 
-        data = json.loads(request.body.decode('utf-8'))
-        selected_playlist = {"playlist_id": data.get('selectedPlaylist', [])} #selectedPlaylist として名前つけてほしい
-        token_check(1)
-        # playlistからすべて?の曲のIDを取得し、get_statusに渡す。
-        # その後、get_statusの返り値をuser_music_statusに渡す。
-        # その後、user_music_statusの返り値をfor_chart_weightに渡す。
-        # その後、for_chart_weightの返り値をjsonにして返す。
+            data = json.loads(request.body.decode('utf-8'))
+            selected_playlist = {"playlist_id": data.get('selectedPlaylist', [])} #selectedPlaylist として名前つけてほしい
+            token_check(1)
+            # playlistからすべて?の曲のIDを取得し、get_statusに渡す。
+            # その後、get_statusの返り値をuser_music_statusに渡す。
+            # その後、user_music_statusの返り値をfor_chart_weightに渡す。
+            # その後、for_chart_weightの返り値をjsonにして返す。
 
 
-        selected_music_data = get_playlist_status(selected_playlist)
-        # user_status = user_music_status(selected_music_data)
-        user_status = user_music_status_median(selected_music_data)
-        
-        weighted_user_status = for_chart_weight(user_status)
+            selected_music_data = get_playlist_status(selected_playlist)
+            # user_status = user_music_status(selected_music_data)
+            user_status = user_music_status_median(selected_music_data)
+            
+            weighted_user_status = for_chart_weight(user_status)
 
-        # ここで配列を使用した処理を行う
-        
-        json_text = {
-            "uris": selected_playlist,
-            "user_status": weighted_user_status,
-        }
-        return JsonResponse(json_text)
+            # ここで配列を使用した処理を行う
+            
+            json_text = {
+                "uris": selected_playlist,
+                "user_status": weighted_user_status,
+            }
+            return JsonResponse(json_text)
 
-    else:
-        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+        else:
+            return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+    except Exception as e:
+        return JsonResponse({'status': 'error', 'message': str(e)})
 
     
 @ensure_csrf_cookie

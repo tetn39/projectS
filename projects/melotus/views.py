@@ -179,7 +179,6 @@ def js_py(request):
 
         # おすすめの曲を選ぶ
         recommended_music = choose_music(user_status)
-        print(recommended_music)
         
         # チャートに書くためのステータス
         weighted_user_status = for_chart_weight(user_status)

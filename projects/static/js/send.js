@@ -23,6 +23,17 @@ function send() {
     })
     .catch((error) => {
       console.error("Error:", error);
+      // エラーメッセージを取得
+      var errorMessage = error.message;
+      // エラーが発生した箇所を取得
+      var errorStack = error.stack;
+      // 送信データを取得
+      var sendData = JSON.stringify({ selectedPlaylist: testId });
+
+      // コンソールに出力
+      console.log("errorMessage:", errorMessage);
+      console.log("errorStack:", errorStack);
+      console.log("sendData:", sendData);
     });
 }
 

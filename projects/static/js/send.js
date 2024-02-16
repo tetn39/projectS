@@ -11,6 +11,7 @@ function send() {
     
     body: JSON.stringify({ selectedPlaylist: testId }),
   })
+
     .then((response) => response.json())
     .then((data) => {
       console.log("jsから:", data.uris);

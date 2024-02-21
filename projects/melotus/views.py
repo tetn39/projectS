@@ -68,6 +68,11 @@ def status(request):
         }
     else:
         context = {}
+    
+    context |= {
+        'song_img': "",
+        'song_name': "test",
+    }
 
     return render(request, 'status.html', context)
 
@@ -87,6 +92,22 @@ def help(request):
         context = {}
 
     return render(request, 'help.html', context)
+
+def howto(request):
+    context = {}
+
+    if request.user.is_authenticated:
+        requested_user_id = request.user.id
+        token_check(requested_user_id)
+        
+        user_data = spotify_data.objects.get(user_name=request.user)
+        context = {
+            'user_image': user_data.image_url,
+        }
+    else:
+        context = {}
+
+    return render(request, 'howto.html', context)
 
 
 def playlist(request):
@@ -111,7 +132,7 @@ def playlist(request):
         for playlist in data['items']:
             playlist_name = playlist['name']
             playlist_url = playlist['external_urls']['spotify']
-            largest_image_url = playlist['images'][0]['url'] if playlist['images'] else "{% static 'images/icons/no-icon.png' %}"
+            largest_image_url = playlist['images'][0]['url'] if playlist['images'] else "/static/images/icons/no-icon.png"
             playlist_id = playlist['id']
             
             playlist_data = {

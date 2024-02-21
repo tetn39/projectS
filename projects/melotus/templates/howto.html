@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+	<meta charset="utf-8">
+	<title>メロタス</title>
+	<meta name="description" content="サイトキャプションを入力">
+	<meta name="keywords" content="サイトキーワードを,で区切って入力">
+	{% load static %}
+	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" href="{% static 'css/main.css' %}">
+	<link rel="stylesheet" href="{% static 'css/pagesCSS/status.css' %}">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@300;400;500;700;900&display=swap"
+		rel="stylesheet">
+	<link rel="icon" href="{% static 'images/logos/favicon.ico' %}">
+	<!-- <script src="{% static 'js/songs.js' %}"></script> -->
+</head>
+
+<body class="body-wrap">
+	<!----- ヘッダー ----->
+	<header>
+		<div class="header__logo"><a href="/"><img src="{% static 'images/logos/logo.svg' %}" alt=""></a></div>
+		<nav>
+			<ul>
+				<div class="nav__background nav__top">
+					<div class="nav__diagnosis"><img src="{% static 'images/icons/music-note-svgrepo-com.svg' %}"
+							alt="">
+						<h2>楽曲診断</h2>
+					</div>
+					<li>
+						<a href="/songs/"><img src="{% static 'images/icons/list-svgrepo-com.svg' %}" alt="">
+							<p>曲一覧</p>
+						</a>
+					</li>
+					<li>
+						<a href="/playlist/"><img
+								src="{% static 'images/icons/playlist-minimalistic-2-svgrepo-com.svg' %}" alt="">
+							<p>プレイリスト</p>
+						</a>
+					</li>
+				</div>
+				<div class="nav__background nav__bottom">
+					<li>
+						<a href="/status/"><img src="{% static 'images/icons/user-svgrepo-com.svg' %}" alt="">
+							<p>ステータス</p>
+						</a>
+					</li>
+				</div>
+				<div class="nav__background nav__bottom">
+					<li>
+						<a href="/help/"><img src="{% static 'images/icons/help-2-svgrepo-com.svg' %}" alt="">
+							<p>ヘルプ</p>
+						</a>
+					</li>
+				</div>
+			</ul>
+		</nav>
+	</header>
+	<!----- ヘッダー END ----->
+	<!----- メインコンテンツ ----->
+	<main>
+		<div class="main__header">
+			{% if user.is_authenticated %}
+			<!-- TODO: ここ、アイコン押したときにログアウトしてるようにしてるからいらなくなったら直す -->
+			<div class="header__icon"><a href="{% url 'logout' %}"><img src="{{ user_image }}" alt=""></a></div>
+			{% else %}
+			<a href="/">
+				<div class="header__icon"><img src="{% static 'images/logos/favicon.png' %}" alt=""></div>
+			</a>
+			{% endif %}
+		</div>
+		<div class="main__content">
+			<div class="status__title">
+				<div>
+					<h2>How TO</h2>
+				</div>
+
+			</div>
+			<!----- メインコンテンツ END ----->
+			<!----- フッター ----->
+			<footer>フッター</footer>
+		</div>
+		<!----- フッター END ----->
+	</main>
+
+</body>
+
+</html>

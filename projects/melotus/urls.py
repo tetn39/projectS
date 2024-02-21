@@ -14,6 +14,7 @@ urlpatterns = [
     path('js_py_playlist/', views.js_py_playlist, name='js_py_playlist'),
     path('get_token/', views.get_token, name='get_token'),
     path('help/', views.help, name='help'),
+    path('howto/', views.howto, name='howto'),
     path('search/', views.search, name='search'),
     path('add_db/', views.add_db, name='add_db'),
     path('logout/', views.logout_view, name='logout'),

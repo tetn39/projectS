@@ -67,6 +67,8 @@
 `python-dotenv`
 `spotipy`
 `numpy`
+`pymysql`
+
 
 
 ## ssh接続やりかた

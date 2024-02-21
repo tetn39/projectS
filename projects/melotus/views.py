@@ -22,6 +22,7 @@ def search(request):
 
 # ログインしたときだけ実行
 def login(request):
+    print('Testtt')
     user_name = request.user
     add_db_spotify_data(user_name)
     return redirect('/songs/')
@@ -216,6 +217,8 @@ def js_py_playlist(request):
             # user_status = user_music_status(selected_music_data)
             user_status = user_music_status_median(selected_music_data)
             
+            recommended_music = choose_music(user_status)   
+
             weighted_user_status = for_chart_weight(user_status)
 
             # ここで配列を使用した処理を行う
@@ -223,6 +226,7 @@ def js_py_playlist(request):
             json_text = {
                 "uris": selected_playlist,
                 "user_status": weighted_user_status,
+                "recommended_music": recommended_music,
             }
             return JsonResponse(json_text)
 

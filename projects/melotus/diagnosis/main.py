@@ -57,6 +57,11 @@ def get_status(json):
 
 
 def add_db(content):
+    # もしデータベースにあれば除外
+    in_db = music_status.objects.filter(music_id__in=content.keys())
+    in_db_ids = [row.music_id for row in in_db]
+    content = {key: content[key] for key in content if key not in in_db_ids}
+    
     music_status_list = [
         music_status(
             music_id = key,
@@ -158,7 +163,14 @@ def add_db_from_spotify():
 
 # ユーザーのステータスにあった曲をdbから探す。
 def choose_music(content):
+    load_dotenv(os.path.join(BASE_DIR, 'auth/.env'))
+    client_id = os.environ.get('SPOTIFY_KEY')
+    client_secret = os.environ.get('SPOTIFY_SECRET')
+    client_credentials_manager = SpotifyClientCredentials(client_id=client_id, client_secret=client_secret)
+    sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
     ret = []
+    genres = ["acoustic", "afrobeat", "alt-rock", "alternative", "ambient", "anime", "black-metal", "bluegrass", "blues", "bossanova", "brazil", "breakbeat", "british", "cantopop", "chicago-house", "children", "chill", "classical", "club", "comedy", "country", "dance", "dancehall", "death-metal", "deep-house", "detroit-techno", "disco", "disney", "drum-and-bass", "dub", "dubstep", "edm", "electro", "electronic", "emo", "folk", "forro", "french", "funk", "garage", "german", "gospel", "goth", "grindcore", "groove", "grunge", "guitar", "happy", "hard-rock", "hardcore", "hardstyle", "heavy-metal", "hip-hop", "holidays", "honky-tonk", "house", "idm", "indian", "indie", "indie-pop", "industrial", "iranian", "j-dance", "j-idol", "j-pop", "j-rock", "jazz", "k-pop", "kids", "latin", "latino", "malay", "mandopop", "metal", "metal-misc", "metalcore", "minimal-techno", "movies", "mpb", "new-age", "new-release", "opera", "pagode", "party", "philippines-opm", "piano", "pop", "pop-film", "post-dubstep", "power-pop", "progressive-house", "psych-rock", "punk", "punk-rock", "r-n-b", "rainy-day", "reggae", "reggaeton", "road-trip", "rock", "rock-n-roll", "rockabilly", "romance", "sad", "salsa", "samba", "sertanejo", "show-tunes", "singer-songwriter", "ska", "sleep", "songwriter", "soul", "soundtracks", "spanish", "study", "summer", "swedish", "synth-pop", "tango", "techno", "trance", "trip-hop", "turkish", "work-out", "world-music"]
     user_acousticness = content['acousticness']
     user_danceability = content['danceability']
     user_energy = content['energy']
@@ -185,44 +197,51 @@ def choose_music(content):
             # tempo__gte = user_tempo-status_range, tempo__lte = user_tempo+status_range,
             valence__gte = user_valence-status_range, valence__lte = user_valence+status_range,
         )
-
+    
     for row in rows:
         ret.append(row.music_id)
-    
-    # if len(ret) < 10:
-    #     # 10個未満だったらAPIから取得する
-    #     # 参考: 'https://api.spotify.com/v1/recommendations?limit=10&seed_tracks=6PQWajEem6mZSIazA8hFhe&target_acousticness=0.1&target_danceability=0.2&target_energy=0.3&target_instrumentalness=0.4
 
-    #     token_check(1)
-    #     token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
-    #     header_params = {'Authorization': 'Bearer ' + token}
-    #     # seedだけどうにかする
-        
-    #     END_POINT = f'https://api.spotify.com/v1/recommendations?limit=10&seed_tracks={",".join(ret)}&target_acousticness={user_acousticness}&target_danceability={user_danceability}&target_energy={user_energy}&target_instrumentalness={user_instrumentalness}&target_liveness={user_liveness}&target_speechiness={user_speechiness}&target_valence={user_valence}'
-        
-    #     res = requests.get(END_POINT, headers=header_params)
-    #     data = res.json()
+    if len(ret) < 10:
+        # 10個未満だったらAPIから取得する
+        # 参考: 'https://api.spotify.com/v1/recommendations?limit=10&seed_tracks=6PQWajEem6mZSIazA8hFhe&target_acousticness=0.1&target_danceability=0.2&target_energy=0.3&target_instrumentalness=0.4
 
-    #     for d in data['tracks']:
-    #         ret.append(d['id'])
-    #         # DBにも格納する
-    #         # bulk_createでまとめて追加する
-    #         add_db_data = {}
-    #         for d in data['audio_features']:
-    #             add_db_data[d['id']] = {
-    #                 'acousticness': round(d['acousticness'], 4),
-    #                 'danceability': round(d['danceability'], 4),
-    #                 'energy': round(d['energy'], 4),
-    #                 'instrumentalness': round(d['instrumentalness'], 4),
-    #                 'liveness': round(d['liveness'], 4),
-    #                 'loudness': round(d['loudness'], 4),
-    #                 'mode': round(d['mode'], 4),
-    #                 'speechiness': round(d['speechiness'], 4),
-    #                 'tempo': round(d['tempo'], 4),
-    #                 'valence': round(d['valence'], 4),
-    #                 'country': 'JP',
-    #             }
-    #         add_db(add_db_data)
+        token_check(1)
+        token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
+        header_params = {'Authorization': 'Bearer ' + token}
+        # seedはrandomな5つのジャンルを指定して取得
+
+        seed_genres = np.random.choice(genres, 5, replace=False)
+        seed_genres = ','.join(seed_genres)
+        END_POINT = f'https://api.spotify.com/v1/recommendations?limit=10&seed_genres={seed_genres}&target_acousticness={user_acousticness}&target_danceability={user_danceability}&target_energy={user_energy}&target_instrumentalness={user_instrumentalness}&target_liveness={user_liveness}&target_speechiness={user_speechiness}&target_valence={user_valence}'
+        
+        
+        res = requests.get(END_POINT, headers=header_params)
+        data = res.json()
+
+        add_db_data = {}
+        for d in data['tracks']:
+            ret.append(d['id'])
+            
+            # APIで取得する
+            audio_features = sp.audio_features(d['id'])[0]
+            add_db_data |= {
+                d['id']: {
+                    'acousticness': float(f'{audio_features["acousticness"]:.4f}'),
+                    'danceability': float(f'{audio_features["danceability"]:.4f}'),
+                    'energy': float(f'{audio_features["energy"]:.4f}'),
+                    'instrumentalness': float(f'{audio_features["instrumentalness"]:.4f}'),
+                    'liveness': float(f'{audio_features["liveness"]:.4f}'),
+                    'loudness': float(f'{audio_features["loudness"]:.4f}'),
+                    'mode': float(f'{audio_features["mode"]:.4f}'),
+                    'speechiness': float(f'{audio_features["speechiness"]:.4f}'),
+                    'tempo': float(f'{audio_features["tempo"]:.4f}'),
+                    'valence': float(f'{audio_features["valence"]:.4f}'),
+                    'country': 'JP',
+                }
+            }
+            # bulk_createでまとめて追加する
+            add_db(add_db_data)
+
 
     return ret
 

@@ -23,3 +23,5 @@ jobs:
             rm projects/db/db.sqlite3
             rm projects/manage.py
             \cp -rfa /home/melotus6/melodystatus.com/forgit/projectS/projects/* /home/melotus6/melodystatus.com/public_html 
+            cd /home/melotus6/melodystatus.com/public_html
+            chmod 755 index.cgi

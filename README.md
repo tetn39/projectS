@@ -99,8 +99,13 @@
 ## パスワード系
 
 ## MySQL
-password: `projectMelotus`
 xserver上でのMySQL-ID: `melotus6_admin`
+password: `2023projects`
+`mysql -u root -p`
+`create database melotus6_musics;` 
+`CREATE USER 'melotus6_admin'@'localhost' IDENTIFIED BY '2023projects';`
+`GRANT ALL PRIVILEGES ON * . * TO 'melotus6_admin'@'localhost';`
+`FLUSH PRIVILEGES;`
 
 
 ### django-admin

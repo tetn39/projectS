@@ -72,18 +72,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'projects.wsgi.application'
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'django.db.backends.sqlite3',
-    #     'NAME': BASE_DIR / 'db' / 'db.sqlite3',
-    # },
-
-    'default': { # database2
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'melotus6_musics',
-        'USER': 'melotus6_admin',
-        'PASSWORD': '2023projects',
-        'HOST': 'localhost',
-        'PORT': '3306',
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db' / 'db.sqlite3',
     }
 }
 
@@ -102,8 +93,6 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-# DATABASE_ROUTERS = ['melotus.router.music_router']
 
 
 LANGUAGE_CODE = 'ja'

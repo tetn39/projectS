@@ -1,5 +1,5 @@
-function send() {
-  var testId = "0CT1IgDYBnVSGFTA4pff7H"; // ここのIDを選択されたplaylistのIDにしたい。助けて @とくざわ byふかまち
+function send(testId) {
+  // var testId = "0CT1IgDYBnVSGFTA4pff7H";
   console.log("実行");
   var csrftoken = getCookie("csrftoken");
   fetch("/js_py_playlist/", {
@@ -18,7 +18,7 @@ function send() {
       console.log("pyから:", data.user_status);
       console.log("pyから:", data.recommended_music);
 
-      // status.htmlに遷移する この下コメント外したらちゃんと遷移する。
+      // status.htmlに遷移する
       window.location.href =
         "/status/?user_status=" +
         encodeURIComponent(JSON.stringify(data.user_status));

@@ -22,7 +22,6 @@ def search(request):
 
 # ログインしたときだけ実行
 def login(request):
-    print('Testtt')
     user_name = request.user
     add_db_spotify_data(user_name)
     return redirect('/songs/')

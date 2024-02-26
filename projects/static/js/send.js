@@ -1,5 +1,5 @@
-function send(testId) {
-  // var testId = "0CT1IgDYBnVSGFTA4pff7H";
+function send(selectedId) {
+  // var selectedId = "0CT1IgDYBnVSGFTA4pff7H";
   console.log("実行");
   var csrftoken = getCookie("csrftoken");
   fetch("/js_py_playlist/", {
@@ -9,7 +9,7 @@ function send(testId) {
       "X-CSRFToken": csrftoken,
     },
     
-    body: JSON.stringify({ selectedPlaylist: testId }),
+    body: JSON.stringify({ selectedPlaylist: selectedId }),
   })
 
     .then((response) => response.json())
@@ -30,7 +30,7 @@ function send(testId) {
       // エラーが発生した箇所を取得
       var errorStack = error.stack;
       // 送信データを取得
-      var sendData = JSON.stringify({ selectedPlaylist: testId });
+      var sendData = JSON.stringify({ selectedPlaylist: selectedId });
 
       // コンソールに出力
       console.log("errorMessage:", errorMessage);

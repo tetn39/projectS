@@ -182,9 +182,9 @@ def choose_music(content):
     user_tempo = content['tempo']
     user_valence = content['valence']
 
-    status_range = 0.2
+    status_range = 0.1
 
-    # データベースから取得
+    # データベースから取得(10個まで)
     rows = music_status.objects.filter(
             acousticness__gte = user_acousticness-status_range, acousticness__lte = user_acousticness+status_range,
             danceability__gte = user_danceability-status_range, danceability__lte = user_danceability+status_range,
@@ -196,23 +196,24 @@ def choose_music(content):
             speechiness__gte = user_speechiness-status_range, speechiness__lte = user_speechiness+status_range,
             # tempo__gte = user_tempo-status_range, tempo__lte = user_tempo+status_range,
             valence__gte = user_valence-status_range, valence__lte = user_valence+status_range,
-        )
+        ).order_by('?')[:10]
     
     for row in rows:
         ret.append(row.music_id)
 
     if len(ret) < 10:
         # 10個未満だったらAPIから取得する
+        # 日本で聞ける曲を指定する
         # 参考: 'https://api.spotify.com/v1/recommendations?limit=10&seed_tracks=6PQWajEem6mZSIazA8hFhe&target_acousticness=0.1&target_danceability=0.2&target_energy=0.3&target_instrumentalness=0.4
 
         token_check(1)
         token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
         header_params = {'Authorization': 'Bearer ' + token}
         # seedはrandomな5つのジャンルを指定して取得
-
+        print(f'個数{10-len(ret)}')
         seed_genres = np.random.choice(genres, 5, replace=False)
         seed_genres = ','.join(seed_genres)
-        END_POINT = f'https://api.spotify.com/v1/recommendations?limit=10&seed_genres={seed_genres}&target_acousticness={user_acousticness}&target_danceability={user_danceability}&target_energy={user_energy}&target_instrumentalness={user_instrumentalness}&target_liveness={user_liveness}&target_speechiness={user_speechiness}&target_valence={user_valence}'
+        END_POINT = f'https://api.spotify.com/v1/recommendations?market=JP&limit={10-len(ret)}&seed_genres={seed_genres}&target_acousticness={user_acousticness}&target_danceability={user_danceability}&target_energy={user_energy}&target_instrumentalness={user_instrumentalness}&target_liveness={user_liveness}&target_speechiness={user_speechiness}&target_valence={user_valence}'
         
         
         res = requests.get(END_POINT, headers=header_params)
@@ -378,3 +379,19 @@ def add_db_melotus_data(user_uid, new_history_id):
         history_id = history.objects.get(history_id=new_history_id),
     )
 
+def get_history_data(history_id):
+    history_instance = history.objects.get(history_id=history_id)
+    ret = {
+        'acousticness': history_instance.acousticness,
+        'danceability': history_instance.danceability,
+        'energy': history_instance.energy,
+        'instrumentalness': history_instance.instrumentalness,
+        'liveness': history_instance.liveness,
+        'loudness': history_instance.loudness,
+        'mode': history_instance.mode,
+        'speechiness': history_instance.speechiness,
+        'tempo': history_instance.tempo,
+        'valence': history_instance.valence,
+    }
+
+    return ret

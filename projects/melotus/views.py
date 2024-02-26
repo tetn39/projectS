@@ -4,7 +4,7 @@ import json
 from social_django.models import UserSocialAuth
 from .models import spotify_data
 import requests
-from .diagnosis.main import get_status, add_db_from_spotify, user_music_status, token_check, for_chart_weight, get_playlist_status, add_db_history, add_db_spotify_data, add_db_melotus_data, user_music_status_median, choose_music
+from .diagnosis.main import *
 from django.http import JsonResponse
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.urls import reverse
@@ -191,10 +191,9 @@ def js_py(request):
         # user_status = user_music_status(selected_music_data)
         user_status = user_music_status_median(selected_music_data)
 
+        # historyに追加してhistory_id取得
+        new_history_id = add_db_history(user_status)
         if request.user.is_authenticated:
-            # historyに追加してhistory_id取得
-            new_history_id = add_db_history(user_status)
-
             # melotus_dataに追加
             add_db_melotus_data(request.user, new_history_id)
 
@@ -208,6 +207,7 @@ def js_py(request):
             "uris": selected_uris,
             "user_status": weighted_user_status,
             "recommended_music": recommended_music,
+            "diagnosis_id": new_history_id,
         }
         return JsonResponse(json_text)
 
@@ -256,6 +256,40 @@ def js_py_playlist(request):
         return JsonResponse({'status': 'error', 'message': str(e)})
 
     
+@ensure_csrf_cookie
+def js_py_diagnosis_id(request):
+    if request.method == 'POST':
+        # POSTリクエストの場合、CSRFトークンを確認
+        csrf_token = request.headers.get("X-CSRFToken")
+        if not request.COOKIES.get("csrftoken") == csrf_token:
+            return JsonResponse({'status': 'error', 'message': 'CSRF Token Validation Failed'})
+        
+        data = json.loads(request.body.decode('utf-8'))
+        diagnosis_id = data.get('DiagnosisId', None)
+        print(diagnosis_id)
+        if diagnosis_id is None:
+            return JsonResponse({'status': 'error', 'message': 'Invalid diagnosis_id'})
+        
+        # diagnosis_idをもとに、history_dataからデータを取得
+        history_status = get_history_data(diagnosis_id)
+
+        # おすすめの曲を選ぶ
+        recommended_music = choose_music(history_status)
+        
+        # チャートに書くためのステータス
+        weighted_user_status = for_chart_weight(history_status)
+        
+        json_text = {
+            "user_status": weighted_user_status,
+            "recommended_music": recommended_music,
+        }
+        return JsonResponse(json_text)
+
+
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+
+
 @ensure_csrf_cookie
 def get_token(request):
     token_check(1)

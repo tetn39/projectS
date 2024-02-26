@@ -153,26 +153,6 @@ def playlist(request):
     return render(request, 'playlist.html', context)
 
 
-def jikken(request):
-
-    json_text = {
-        "uris": [
-            "7IQiZVGgfW927fImwKJDOq",
-            "0MyTMrPTh0GgtuyhYRdl3P",
-            "1Sy41HCCozDBL73orZpW5Y",
-            "2ChSAhdQmJpHgos2DQP6cI"
-            ] 
-    }
-    get_status(json_text)
-
-    context = {
-        'songs': "test",
-    }
-
-
-    return render(request, 'old/jikken.html', context)
-
-
 @ensure_csrf_cookie
 def js_py(request):
     if request.method == 'POST':
@@ -304,8 +284,3 @@ def add_db(request):
         'ret': ret,
     }
     return render(request, 'add_db.html', content)
-
-
-def test(request):
-    choose_music({'acousticness': 0.0142, 'danceability': 0.584, 'energy': 0.822, 'instrumentalness': 0.0, 'liveness': 0.105, 'loudness': -3.397, 'mode': 1.0, 'speechiness': 0.0468, 'tempo': 142.514, 'valence': 0.677})
-    return HttpResponse('test')

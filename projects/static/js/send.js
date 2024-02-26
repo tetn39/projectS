@@ -1,5 +1,4 @@
 function send(selectedId) {
-  // var selectedId = "0CT1IgDYBnVSGFTA4pff7H";
   console.log("実行");
   var csrftoken = getCookie("csrftoken");
   fetch("/js_py_playlist/", {

@@ -9,7 +9,6 @@ urlpatterns = [
     path('songs/', views.songs, name='songs'),
     path('status/', views.status, name='status'),
     path('playlist/', views.playlist, name='playlist'),
-    path('jikken/', views.jikken, name='jikken'),
     path('js_py/', views.js_py, name='js_py'),
     path('js_py_playlist/', views.js_py_playlist, name='js_py_playlist'),
     path('js_py_diagnosis_id/', views.js_py_diagnosis_id, name='js_py_diagnosis_id'),
@@ -22,5 +21,4 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('social/', include('social_django.urls')),
     path('', include('django.contrib.auth.urls')),
-    path('test/', views.test, name='test'),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

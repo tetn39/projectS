@@ -6,6 +6,3 @@ __pycache__
 
 # envを除外
 auth/
-
-# dbを除外
-# db/

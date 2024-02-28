@@ -165,3 +165,24 @@
   font-weight: bold;
   margin-bottom: 5%;
 }
+
+@media only screen and (max-width: 768px) {
+
+  /* スマートフォンの場合のみ適用されるスタイル */
+  .album-image{
+    height: auto;
+    width: 50px;
+  }
+  .album-name{
+    display: none;
+  }
+  .add-button{
+    width: auto;
+    white-space: nowrap;
+  }
+  .track-info{
+  }
+  .search_title{
+    display: none;
+  }
+}

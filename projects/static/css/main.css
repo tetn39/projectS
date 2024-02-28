@@ -169,6 +169,8 @@ a:hover,button:hover{
   }
 
   .burger {
+    top: 2%;
+    left: 3%;
     display: block;
     position: absolute;
     z-index: 100;

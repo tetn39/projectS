@@ -73,6 +73,9 @@ main {
       line-height: 50px;
       font-weight: bold;
   }
+  & .nav__now p {
+    color: var(--primary-color);
+  }
 }
 
 /* トップナビゲーション */

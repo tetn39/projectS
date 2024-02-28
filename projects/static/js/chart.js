@@ -36,7 +36,7 @@ async function getAccessToken() {
 function createTrackDiv(track) {
   const trackDiv = document.createElement("div");
 
-  trackDiv.classList.add("test-class");
+  trackDiv.classList.add("reccomend__musics__wrap");
 
   trackDiv.classList.add("track-div");
 
@@ -61,11 +61,6 @@ function createTrackDiv(track) {
   trackNameDiv.textContent = track.name;
   trackNameDiv.classList.add("track-name");
 
-  // アルバム名を表示する要素を作成
-  const albumNameDiv = document.createElement("div");
-  albumNameDiv.textContent = track.album.name;
-  albumNameDiv.classList.add("album-name");
-
   // アーティスト名を表示する要素を作成
   const artistNameDiv = document.createElement("div");
   artistNameDiv.textContent = track.artists[0].name;
@@ -73,7 +68,6 @@ function createTrackDiv(track) {
 
   // トラック情報を追加
   trackInfo.appendChild(trackNameDiv);
-  trackInfo.appendChild(albumNameDiv);
   trackInfo.appendChild(artistNameDiv);
 
   // 作成した要素を trackDiv に追加

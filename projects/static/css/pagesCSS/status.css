@@ -9,7 +9,7 @@
 
 .status__title{
   background-color: #2589d0;
-  margin-bottom: 2%;
+  margin: 20px 0;
 }
 .status__title h2{padding: 20px;}
 
@@ -79,3 +79,24 @@
   & img{
   }
 }
+
+.reccomend__musics__wrap {
+  width: 7vw;
+}
+
+.track-name {
+  color: var(--txt-color);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.artist-name {
+  color: var(--txt-color);
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+

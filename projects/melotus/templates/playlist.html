@@ -69,10 +69,12 @@
 				<ul>
 					{% for item in playlist_data %}
 					<li id="{{ item.playlist_id }}">
+						<div class="playlist__box">
 						<a href="{{ item.playlist_url }}" target="_blank">
 							<img src="{{ item.playlist_image_url }}" alt="{{ item.playlist_name }}">
 						</a>
 						<p>{{ item.playlist_name }}</p>
+					</div>
 						<button onclick="send('{{ item.playlist_id }}')">診断</button>
 					</li>
 					{% endfor %}

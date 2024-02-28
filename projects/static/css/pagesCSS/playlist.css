@@ -11,24 +11,35 @@
 
 .playlist{
   background-color: var(--bg-secondary-color);
-  height: 250px;
+  height: 350px;
   margin: 10px 20px;
   padding: 20px;
   border-radius: 30px;
-}
 
-.playlist img{
-  width: 150px;
-  margin: 20px;
-}
-
-.playlist ul {
-  display: flex;
-  flex-wrap: nowrap;
-}
-
-.playlist li {
-  width: 190px;
-  height: auto;
+  ul {
+    height: 350px;
+    display: flex;
+    flex-wrap: nowrap;
   
+    li {
+      width: 190px;
+      height: auto;
+      margin: 0 20px;
+
+
+      .playlist__box {
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+      img{
+        width: 150px;
+        margin: 20px;
+      }
+
+    }
+  }
+
+
 }

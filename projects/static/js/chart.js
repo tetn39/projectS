@@ -33,17 +33,10 @@ async function getAccessToken() {
   return data;
 }
 
-function createTrackDiv(track, index = 0) {
+function createTrackDiv(track) {
   const trackDiv = document.createElement("div");
 
-  // indexが偶数の場合はevenクラスを、奇数の場合はoddクラスを追加
-  console.log("Index value:", index);
-
-  if (index % 2 === 0) {
-    trackDiv.classList.add("even");
-  } else {
-    trackDiv.classList.add("odd");
-  }
+  trackDiv.classList.add("test-class");
 
   trackDiv.classList.add("track-div");
 

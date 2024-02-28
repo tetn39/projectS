@@ -16,11 +16,13 @@ function send(selectedId) {
       console.log("jsから:", data.uris);
       console.log("pyから:", data.user_status);
       console.log("pyから:", data.recommended_music);
+      console.log("pyから:", data.diagnosis_id);
 
       // status.htmlに遷移する
       window.location.href =
         "/status/?user_status=" +
-        encodeURIComponent(JSON.stringify(data.user_status));
+        encodeURIComponent(JSON.stringify(data.user_status))
+        + "&diagnosis_id=" + encodeURIComponent(JSON.stringify(data.diagnosis_id)); // ここを診断IDにする
     })
     .catch((error) => {
       console.error("Error:", error);

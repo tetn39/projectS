@@ -217,6 +217,12 @@ def js_py_playlist(request):
             # user_status = user_music_status(selected_music_data)
             user_status = user_music_status_median(selected_music_data)
             
+            # historyに追加してhistory_id取得
+            new_history_id = add_db_history(user_status)
+            if request.user.is_authenticated:
+                # melotus_dataに追加
+                add_db_melotus_data(request.user, new_history_id)
+
             recommended_music = choose_music(user_status)   
 
             weighted_user_status = for_chart_weight(user_status)
@@ -227,6 +233,7 @@ def js_py_playlist(request):
                 "uris": selected_playlist,
                 "user_status": weighted_user_status,
                 "recommended_music": recommended_music,
+                "diagnosis_id": new_history_id,
             }
             return JsonResponse(json_text)
 

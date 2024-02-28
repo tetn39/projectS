@@ -10,6 +10,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
+import random
 
 
 def index(request):
@@ -183,11 +184,18 @@ def js_py(request):
         # チャートに書くためのステータス
         weighted_user_status = for_chart_weight(user_status)
         
+        hex_id = str(new_history_id).encode().hex()
+        diagnosis_id = ''
+        for i in hex_id:
+            diagnosis_id += i
+            diagnosis_id += random.choice('1234567890ABCDEFabcdef')
+        
+        print(diagnosis_id)
         json_text = {
             "uris": selected_uris,
             "user_status": weighted_user_status,
             "recommended_music": recommended_music,
-            "diagnosis_id": new_history_id,
+            "diagnosis_id": diagnosis_id,
         }
         return JsonResponse(json_text)
 
@@ -227,13 +235,17 @@ def js_py_playlist(request):
 
             weighted_user_status = for_chart_weight(user_status)
 
-            # ここで配列を使用した処理を行う
+            hex_id = str(new_history_id).encode().hex()
+            diagnosis_id = ''
+            for i in hex_id:
+                diagnosis_id += i
+                diagnosis_id += random.choice('1234567890ABCDEFabcdef')
             
             json_text = {
                 "uris": selected_playlist,
                 "user_status": weighted_user_status,
                 "recommended_music": recommended_music,
-                "diagnosis_id": new_history_id,
+                "diagnosis_id": diagnosis_id, 
             }
             return JsonResponse(json_text)
 
@@ -253,12 +265,14 @@ def js_py_diagnosis_id(request):
         
         data = json.loads(request.body.decode('utf-8'))
         diagnosis_id = data.get('DiagnosisId', None)
-        print(diagnosis_id)
+        hex_diagnosis_id = diagnosis_id[::2]
+        print(hex_diagnosis_id)
+        history_id = bytes.fromhex(hex_diagnosis_id).decode()
         if diagnosis_id is None:
             return JsonResponse({'status': 'error', 'message': 'Invalid diagnosis_id'})
         
         # diagnosis_idをもとに、history_dataからデータを取得
-        history_status = get_history_data(diagnosis_id)
+        history_status = get_history_data(history_id)
 
         # おすすめの曲を選ぶ
         recommended_music = choose_music(history_status)

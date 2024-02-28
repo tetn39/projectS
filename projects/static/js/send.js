@@ -21,8 +21,8 @@ function send(selectedId) {
       // status.htmlに遷移する
       window.location.href =
         "/status/?user_status=" +
-        encodeURIComponent(JSON.stringify(data.user_status))
-        + "&diagnosis_id=" + encodeURIComponent(JSON.stringify(data.diagnosis_id)); // ここを診断IDにする
+        encodeURIComponent(JSON.stringify(data.user_status)) +
+        "&diagnosis_id=" + data.diagnosis_id; 
     })
     .catch((error) => {
       console.error("Error:", error);

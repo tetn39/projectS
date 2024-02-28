@@ -177,7 +177,7 @@ async function initializeSearch() {
       searchTimeout = setTimeout(async () => {
         const result = await searchSpotify(accessToken.access_token, query);
         displayResults(result.tracks.items);
-      }, 500); // 例: 500ミリ秒待機してからAPI呼び出し
+      }, 500); //500ミリ秒待機してからAPI呼び出し
     } else {
       searchResults.innerHTML = "";
     }
@@ -195,6 +195,22 @@ async function initializeSearch() {
 
     // 選択された曲がある場合、初期状態で表示にする
     renderSelectedTracks();
+    createSearchTitle();
+  }
+
+  // 検索結果のタイトルを生成する関数
+  function createSearchTitle() {
+    const searchTitleDiv = document.createElement("div");
+    searchTitleDiv.classList.add("search_title");
+
+    const titleText = ["タイトル", "アルバム", "アーティスト"];
+    titleText.forEach((text) => {
+      const paragraph = document.createElement("p");
+      paragraph.textContent = text;
+      searchTitleDiv.appendChild(paragraph);
+    });
+
+    searchResults.insertBefore(searchTitleDiv, searchResults.firstChild);
   }
 
   // トラックを選択するボタンを作成する関数
@@ -237,9 +253,9 @@ function send() {
       // status.htmlに遷移する
       window.location.href =
         "/status/?user_status=" +
-        encodeURIComponent(JSON.stringify(data.user_status))
-        + "&diagnosis_id=" + encodeURIComponent(JSON.stringify(data.diagnosis_id)) // ここを診断IDにする
-        ;
+        encodeURIComponent(JSON.stringify(data.user_status)) +
+        "&diagnosis_id=" +
+        encodeURIComponent(JSON.stringify(data.diagnosis_id)); // ここを診断IDにする
     })
     .catch((error) => {
       console.error("Error:", error);

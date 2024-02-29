@@ -69,6 +69,7 @@
   margin-top: 10px;
   width: 80%;
   margin: 0 auto;
+  align-items: center;
 }
 
 .track-div.odd{}
@@ -112,20 +113,13 @@
   margin-left: 2%;
 }
 
-/* 削除ボタン */
-.delete-button {
-  cursor: pointer;
-  width: 7%;
-  margin: 3% 1%;
-  border-radius: 5px;
-}
-
 /* 追加ボタン */
-.add-button {
+/* 削除ボタン */
+.delete-button, .add-button {
   cursor: pointer;
   width: 7%;
-  margin: 3% 1%;
   border-radius:5px;
+  margin: 0 auto;
 }
 
 /* 検索入力欄 */
@@ -169,6 +163,18 @@
 @media only screen and (max-width: 768px) {
 
   /* スマートフォンの場合のみ適用されるスタイル */
+  main{
+    margin-left: 0;
+  }
+  header{
+    margin-left: 0;
+  }
+  .header__logo{
+    display: none;
+  }
+  .nav-links{
+    margin-top: 25%;
+  }
   .album-image{
     height: auto;
     width: 50px;
@@ -176,13 +182,21 @@
   .album-name{
     display: none;
   }
-  .add-button{
+  .add-button, .delete-button{
     width: auto;
     white-space: nowrap;
+    height: 50%;
   }
   .track-info{
+    color: #fff;
   }
   .search_title{
     display: none;
+  }
+  .main__title{
+    padding: 7%;
+    border-radius: 20px;
+  }
+  .main__title h2{
   }
 }

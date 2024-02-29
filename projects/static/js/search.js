@@ -21,7 +21,7 @@ async function getAccessToken() {
 // Spotifyでトラックを検索する関数
 async function searchSpotify(access_token, query) {
   const response = await fetch(
-    `https://api.spotify.com/v1/search?q=${query}&type=track&limit=9`,
+    `https://api.spotify.com/v1/search?q=${query}&type=track&limit=5`,
     {
       method: "GET",
       headers: { Authorization: "Bearer " + access_token },
@@ -254,7 +254,8 @@ function send() {
       window.location.href =
         "/status/?user_status=" +
         encodeURIComponent(JSON.stringify(data.user_status)) +
-        "&diagnosis_id=" + data.diagnosis_id; 
+        "&diagnosis_id=" +
+        data.diagnosis_id;
     })
     .catch((error) => {
       console.error("Error:", error);

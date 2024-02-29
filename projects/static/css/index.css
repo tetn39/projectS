@@ -61,3 +61,17 @@
     font-weight: bold;
     font-size: 24px;
 }
+
+
+@media only screen and (max-width: 768px) {
+
+    /* スマートフォンの場合のみ適用されるスタイル */
+    .top__logo {
+        & img {
+            width: 95vw;
+        }
+    }
+    .top__btn__spotify__wrap, .top__btn__guest__wrap {
+        width: 80vw;
+    }
+  }

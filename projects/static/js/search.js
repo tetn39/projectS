@@ -137,13 +137,23 @@ function createTrackDiv(track, index = 0) {
 
 // 選択されたトラックを削除するボタンを作成する関数
 function createDeleteButton(index) {
-  const deleteButton = document.createElement("button");
-  deleteButton.textContent = "削除";
+  // 外側にdivを追加
+  const deleteButtonWrap = document.createElement("div");
+  deleteButtonWrap.classList.add("delete-button-wrap");
+
+  const deleteButton = document.createElement("span");
   deleteButton.classList.add("delete-button");
-  deleteButton.addEventListener("click", () => {
+
+  const deleteButtonIcon = document.createElement("span");
+  deleteButtonIcon.classList.add("delete-icon");
+  deleteButtonIcon.addEventListener("click", () => {
     removeTrackFromList(index);
   });
-  return deleteButton;
+
+  deleteButton.appendChild(deleteButtonIcon);
+  deleteButtonWrap.appendChild(deleteButton);
+
+  return deleteButtonWrap;
 }
 
 // 選択されたトラックをリストから削除する関数
@@ -215,20 +225,23 @@ async function initializeSearch() {
 
   // トラックを選択するボタンを作成する関数
   function createAddButton(track) {
-    const addButton = document.createElement("button");
-    addButton.textContent = "選択";
+    // 外側にdivを追加
+    const addButtonWrap = document.createElement("div");
+    addButtonWrap.classList.add("add-button-wrap");
+
+    const addButton = document.createElement("span");
     addButton.classList.add("add-button");
-    addButton.addEventListener("click", () => {
+
+    const addButtonIcon = document.createElement("span");
+    addButtonIcon.classList.add("add-icon");
+    addButtonIcon.addEventListener("click", () => {
       addTrackToList(track);
     });
 
-    // 既に選択されている曲ならボタンを無効にする todo
-    if (selectedUris.includes(track.uri)) {
-      addButton.disabled = true;
-      addButton.textContent = "選択済み";
-    }
+    addButton.appendChild(addButtonIcon);
+    addButtonWrap.appendChild(addButton);
 
-    return addButton;
+    return addButtonWrap;
   }
 }
 

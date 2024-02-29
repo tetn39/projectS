@@ -42,15 +42,16 @@
 }
 .search_box{
   background-color: var(--bg-tertiary-color);
-  border-radius: 5px;
+  border-radius: 30px;
   border: none;
   width: 80%;
-  padding: 2%;
+  padding: 2% 6%;
+  color: #fff;
 }
 .main__search input{
-  width: 80%;
+  width: 85%;
   height: 50px;
-  margin: 2% auto;
+  margin: 5% auto;
   border: 1px solid var(--standby-color);  /* 枠線 */
 }
 
@@ -68,23 +69,27 @@
   /* 横に並べる */
   margin-top: 10px;
   width: 90%;
-  margin: 0 auto;
+  margin: 2% auto;
   align-items: center;
+  background-color: #282828;
+  border-radius: 10px;
 }
 
-.track-div.odd{}
+
+.track-div.odd{
+}
 
 .track-div.even {
-  background-color: var(--bg-tertiary-color);
-  border-radius: 10px;
+  /* background-color: var(--bg-tertiary-color);
+  border-radius: 10px; */
 }
 
 /* 画像を表示するための <img> 要素 */
 .album-image {
   width: 5%;
   display: block;
+  border-radius: 10px 0 0 10px;
   /* 画像の幅を調整（必要に応じて変更） */
-  margin: 2%;
 }
 
 
@@ -111,21 +116,13 @@
   justify-content: center;
   align-items: center;
   margin-left: 2%;
-}
-
-/* 追加ボタン */
-/* 削除ボタン */
-.delete-button, .add-button {
-  cursor: pointer;
-  width: 7%;
-  border-radius:5px;
-  margin: 0 auto;
-  margin-right: 2%;
+  display: none;
 }
 
 /* 検索入力欄 */
 #searchInput {
   margin-bottom: 10px;
+  color: #fff;
 }
 
 /* 検索結果のリスト */
@@ -142,7 +139,7 @@
 /* 診断ボタン */
 
 #diagnosisButtonWrap {
-  width: 80%;
+  width: 90%;
   display: flex;
   justify-content: flex-end;
   margin: 2% auto;
@@ -178,18 +175,33 @@
   }
   .album-image{
     height: auto;
-    width: 50px;
+    width: 17%;
   }
   .album-name{
     display: none;
   }
   .add-button, .delete-button{
-    width: auto;
+    /* width: auto;
     white-space: nowrap;
-    height: 50%;
+    height: 50%; */
   }
+  .track-div{}
   .track-info{
+    display: block;
     color: #fff;
+    margin-left: 4%;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .track-name{
+    width: 100%;
+    text-align: left;
+  }
+  .artist-name{
+    width: 100%;
+    text-align: left;
+    color: var(--txt-secondary-color);
+    font-size: 14px;
   }
   .search_title{
     display: none;
@@ -200,4 +212,73 @@
   }
   .main__title h2{
   }
+}
+
+.add-button-wrap, .delete-button-wrap{
+  margin-right: 3%;
+}
+
+.add-button {
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+  line-height: 1;
+  position: relative;
+  width: 1em;
+  height: 1em;
+  border: 0.1em solid currentColor;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+
+.add-button>span {
+  width: 52%;
+  height: 0.1em;
+  background: currentColor;
+  border-radius: 0.1em;
+  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
+}
+
+.add-button>span::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: inherit;
+  border-radius: inherit;
+  transform: rotate(90deg);
+}
+
+.delete-button {
+  display: inline-block;
+  vertical-align: middle;
+  color: #fff;
+  line-height: 1;
+  position: relative;
+  width: 1em;
+  height: 1em;
+  border: 0.1em solid currentColor;
+  border-radius: 50%;
+  box-sizing: content-box;
+}
+
+.delete-button>span {
+  width: 52%;
+  height: 0.1em;
+  background: currentColor;
+  border-radius: 0.1em;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: auto;
 }

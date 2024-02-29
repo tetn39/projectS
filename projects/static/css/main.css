@@ -129,6 +129,10 @@ a:hover,button:hover{
   opacity: 50%;
 }
 
+.responsive__logo{
+  display: none;
+}
+
 /* ハンバーガーメニュー用のスタイル */
 .burger {
   display: none;
@@ -150,7 +154,7 @@ a:hover,button:hover{
 /* main.css */
 
 .nav-active{
-  transform: translateX(-5%) !important;
+  transform: translateX(0%) !important;
 }
 
 @media only screen and (max-width: 768px) {
@@ -177,6 +181,20 @@ a:hover,button:hover{
     display: block;
     position: absolute;
     z-index: 100;
+  }
+
+  .main__header{
+    display: flex;
+    width: auto;
+    height: 10vh;
+  }
+  .responsive__logo {
+    display: block;
+    margin-left: 35%;
+    width: 30%;
+  }
+  .responsive__img{
+    height: 100%;
   }
 }
 

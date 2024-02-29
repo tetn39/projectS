@@ -8,7 +8,7 @@
 /* 項目名 */
 .main__title {
   background-color: var(--bg-secondary-color);
-  margin: 20px;
+  margin: 5%;
   padding: 75px;
   border-radius: 30px;
   text-align: center;
@@ -67,8 +67,9 @@
   display: flex;
   /* 横に並べる */
   margin-top: 10px;
-  width: 80%;
+  width: 90%;
   margin: 0 auto;
+  align-items: center;
 }
 
 .track-div.odd{}
@@ -89,7 +90,7 @@
 
 /* トラック情報を表示する <div> 要素 */
 .track-info {
-  margin-right: 10px;
+  margin-right: 3%;
   display: flex;
   width: 100%;
   align-items: center;
@@ -112,20 +113,14 @@
   margin-left: 2%;
 }
 
-/* 削除ボタン */
-.delete-button {
-  cursor: pointer;
-  width: 7%;
-  margin: 3% 1%;
-  border-radius: 5px;
-}
-
 /* 追加ボタン */
-.add-button {
+/* 削除ボタン */
+.delete-button, .add-button {
   cursor: pointer;
   width: 7%;
-  margin: 3% 1%;
   border-radius:5px;
+  margin: 0 auto;
+  margin-right: 2%;
 }
 
 /* 検索入力欄 */
@@ -169,6 +164,18 @@
 @media only screen and (max-width: 768px) {
 
   /* スマートフォンの場合のみ適用されるスタイル */
+  main{
+    margin-left: 0;
+  }
+  header{
+    margin-left: 0;
+  }
+  .header__logo{
+    display: none;
+  }
+  .nav-links{
+    margin-top: 25%;
+  }
   .album-image{
     height: auto;
     width: 50px;
@@ -176,13 +183,21 @@
   .album-name{
     display: none;
   }
-  .add-button{
+  .add-button, .delete-button{
     width: auto;
     white-space: nowrap;
+    height: 50%;
   }
   .track-info{
+    color: #fff;
   }
   .search_title{
     display: none;
+  }
+  .main__title{
+    padding: 7%;
+    border-radius: 10px;
+  }
+  .main__title h2{
   }
 }

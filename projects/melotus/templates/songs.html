@@ -67,6 +67,7 @@
 
 		<main id="main-content">
 			<div class="main__header">
+				<div class="responsive__logo"><a href="/"><img class="responsive__img" src="{% static 'images/logos/logo.svg' %}" alt=""></a></div>
 				{% if user.is_authenticated %}
 				<!-- TODO: ここ、アイコン押したときにログアウトしてるようにしてるからいらなくなったら直す -->
 				<div class="header__icon"><a href="{% url 'logout' %}"><img src="{{ user_image }}" alt=""></a></div>

@@ -100,3 +100,50 @@
   -webkit-line-clamp: 2;
 }
 
+
+
+
+@media only screen and (max-width: 768px) {
+
+  /* スマートフォンの場合のみ適用されるスタイル */
+
+  .chart__text__wrap {
+    display: block;
+    padding: 2%;
+  }
+  .chart__wrap {
+    width: 100%;
+    margin: 10px 0 30px 0;
+    height: auto;
+
+  }
+  .chart__text {
+    width: 100%;
+    margin: 0;
+  }
+  .recommend__images__wrap {
+    display: block;
+    padding: 5%;
+  }
+  .reccomend__musics__wrap {
+
+    width: 100%;
+    margin-bottom: 2vh;
+    
+    & img {
+      width: 25vw;
+    }
+    & a {
+      display: flex;
+    }
+    .track-info {
+      width: 60%;
+      margin-left: 10px;
+    }
+
+    .track-name, .artist-name {
+      margin-top: 1vh;
+      font-size: 16px;
+    }
+  }
+}

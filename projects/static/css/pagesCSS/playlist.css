@@ -16,24 +16,24 @@
   padding: 20px;
   border-radius: 30px;
 
-  ul {
+  & ul {
     height: 350px;
     display: flex;
     flex-wrap: nowrap;
   
-    li {
+    & li {
       width: 190px;
       height: auto;
       margin: 0 20px;
 
 
-      .playlist__box {
+      & .playlist__box {
         overflow: hidden;
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
       }
-      img{
+      & img{
         width: 150px;
         margin: 20px;
       }

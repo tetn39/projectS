@@ -75,15 +75,6 @@
   border-radius: 10px;
 }
 
-
-.track-div.odd{
-}
-
-.track-div.even {
-  /* background-color: var(--bg-tertiary-color);
-  border-radius: 10px; */
-}
-
 /* 画像を表示するための <img> 要素 */
 .album-image {
   width: 5%;
@@ -180,12 +171,7 @@
   .album-name{
     display: none;
   }
-  .add-button, .delete-button{
-    /* width: auto;
-    white-space: nowrap;
-    height: 50%; */
-  }
-  .track-div{}
+  .track-div
   .track-info{
     display: block;
     color: #fff;
@@ -209,8 +195,6 @@
   .main__title{
     padding: 7%;
     border-radius: 10px;
-  }
-  .main__title h2{
   }
 }
 

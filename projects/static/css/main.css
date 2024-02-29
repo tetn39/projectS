@@ -160,13 +160,14 @@ a:hover,button:hover{
 @media only screen and (max-width: 768px) {
   /* スマートフォンの場合のみ適用されるスタイル */
   header {
-    position: absolute;
+    position: fixed;
     left: 0;
     background-color: var(--bg-secondary-color);
     height: 100vh;
     width: 50%;
     transform: translateX(-110%);
     z-index: 0;
+    margin-left: 0;
   }
 
   main {
@@ -179,7 +180,7 @@ a:hover,button:hover{
     top: 2%;
     left: 3%;
     display: block;
-    position: absolute;
+    position: fixed;
     z-index: 100;
   }
 

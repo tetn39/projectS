@@ -11,20 +11,22 @@
 
 .playlist{
   background-color: var(--bg-secondary-color);
-  height: 350px;
+  height: 375px;
   margin: 10px 20px;
   padding: 20px;
   border-radius: 30px;
 
   & ul {
-    height: 350px;
+    height: auto;
     display: flex;
     flex-wrap: nowrap;
+    margin-top: 2vh;
+    
+    
   
     & li {
-      width: 190px;
-      height: auto;
-      margin: 0 20px;
+      width: 200px;
+      margin-right: 2vw;
 
 
       & .playlist__box {
@@ -34,12 +36,30 @@
         -webkit-line-clamp: 2;
       }
       & img{
-        width: 150px;
-        margin: 20px;
+        width: 25vw
       }
 
     }
   }
 
+  button {
+    width: 50px;
+    border-radius: 5px;
+    margin: 10px auto 0 50%;
+  }
+
+}
+
+.playlist__box {
+  & p{
+    margin-left: 5px;
+  }
+
+}
+
+
+@media only screen and (max-width: 768px) {
+
+  /* スマートフォンの場合のみ適用されるスタイル */
 
 }

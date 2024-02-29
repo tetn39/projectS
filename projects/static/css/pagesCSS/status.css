@@ -1,11 +1,5 @@
 /* カラーバリエーション */
-:root {
-  --bg-primary-color: #121212;
-  --bg-secondary-color: #242424;
-  --bg-tertiary-color: #1A1A1A;
-  --primary-color: #00FF5C;
-  --txt-color: #fff;
-}
+
 
 .status__title{
   background-color: #2589d0;
@@ -73,15 +67,19 @@
 }
 
 .recommend__images__wrap{
+  margin: auto;
   display: flex;
-  justify-content: space-around;
+  width: 90%;
   padding-bottom: 3%;
+  flex-wrap: wrap;
   & img{
   }
 }
 
 .reccomend__musics__wrap {
-  width: 7vw;
+  width: 200px;
+  margin: 10px 2vw auto auto;
+
 }
 
 .track-name {
@@ -93,11 +91,12 @@
 }
 
 .artist-name {
-  color: var(--txt-color);
+  color: var(--txt-secondary-color);
   overflow: hidden;
   display: -webkit-box;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 2;
+  font-size: 14px;
 }
 
 
@@ -143,7 +142,6 @@
 
     .track-name, .artist-name {
       margin-top: 1vh;
-      font-size: 16px;
     }
   }
 }

@@ -31,12 +31,6 @@
       position: relative;
 
 
-      & .playlist__box {
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-      }
       & img{
         width: 25vw
       }
@@ -46,6 +40,10 @@
     & p{
       margin-top: 1vh;
       margin-left: 5px;
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
     }
   }
 
@@ -70,4 +68,38 @@
 
   /* スマートフォンの場合のみ適用されるスタイル */
 
+  .playlist{
+    button {
+      position: static;
+      width: 50%;
+      height: 40px;
+
+    }
+    & ul {
+      height: auto;
+      display: block;
+      margin-top: 2vh;
+      
+      & li {
+        width: 100%;
+        margin: 2vh 0;
+        display: flex;
+        align-items: center;
+        position: static; 
+        & img{
+          width: 40vw;
+        }
+      }
+      & p{
+        height: auto;
+        width: 100%;
+        margin-top: 0;
+        margin-left: 8px;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+      }
+    }
+  }
 }

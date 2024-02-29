@@ -7,17 +7,18 @@
       text-align: center;
       line-height: 140px;
   }
+
 }
 
 .playlist{
   background-color: var(--bg-secondary-color);
-  height: 375px;
+  height: calc(auto + 100px);
   margin: 10px 20px;
   padding: 20px;
   border-radius: 30px;
 
   & ul {
-    height: auto;
+    height: 320px;
     display: flex;
     flex-wrap: nowrap;
     margin-top: 2vh;
@@ -27,6 +28,7 @@
     & li {
       width: 200px;
       margin-right: 2vw;
+      position: relative;
 
 
       & .playlist__box {
@@ -40,20 +42,26 @@
       }
 
     }
+
+    & p{
+      margin-top: 1vh;
+      margin-left: 5px;
+    }
   }
 
   button {
-    width: 50px;
-    border-radius: 5px;
-    margin: 10px auto 0 50%;
-  }
-
+    width: 100px;
+    height: 50px;
+    border-radius: 30px;
+    border: 2px solid var(--primary-color);
+    background-color: var(--primary-color);
+    color: #000;
+    text-align: center;
+    font-weight: bold;
+    position: absolute;
+    bottom: 0px;
+    right: 0;
 }
-
-.playlist__box {
-  & p{
-    margin-left: 5px;
-  }
 
 }
 

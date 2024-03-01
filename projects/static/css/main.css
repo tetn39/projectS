@@ -205,6 +205,7 @@ a:hover,button:hover{
   .responsive__logo {
     display: block;
     width: 25%;
+    height: auto;
     margin: 0 auto;
   }
   .responsive__img{

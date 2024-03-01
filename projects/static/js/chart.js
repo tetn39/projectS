@@ -275,13 +275,12 @@ document.addEventListener("DOMContentLoaded", function () {
   const diagnosisIdParam = params.get("diagnosis_id");
 
   // user_statusが存在する場合はJSONパースしてチャートを更新
-  if (userStatusParam) {
-    const userStatus = JSON.parse(userStatusParam);
-    updateChartData(userStatus);
 
-  } 
   if(diagnosisIdParam){ //diagnosisIdが存在する場合
     fromDiagnosisId(diagnosisIdParam);
+  } else if (userStatusParam) {
+    const userStatus = JSON.parse(userStatusParam);
+    updateChartData(userStatus);
   } 
 });
 

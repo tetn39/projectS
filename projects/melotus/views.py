@@ -190,7 +190,7 @@ def js_py(request):
             diagnosis_id += i
             diagnosis_id += random.choice('1234567890ABCDEFabcdef')
         
-        print(diagnosis_id)
+
         json_text = {
             "uris": selected_uris,
             "user_status": weighted_user_status,
@@ -266,7 +266,6 @@ def js_py_diagnosis_id(request):
         data = json.loads(request.body.decode('utf-8'))
         diagnosis_id = data.get('DiagnosisId', None)
         hex_diagnosis_id = diagnosis_id[::2]
-        print(hex_diagnosis_id)
         history_id = bytes.fromhex(hex_diagnosis_id).decode()
         if diagnosis_id is None:
             return JsonResponse({'status': 'error', 'message': 'Invalid diagnosis_id'})

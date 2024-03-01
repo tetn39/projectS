@@ -121,7 +121,7 @@ def user_music_status_median(content):
         median_status[status] = np.median(status_values[status])
 
 
-    print(median_status)
+
     return {status: round(median_status[status], 4) for status in median_status}
 
 
@@ -219,7 +219,7 @@ def choose_music(content):
         token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
         header_params = {'Authorization': 'Bearer ' + token}
         # seedはrandomな5つのジャンルを指定して取得
-        print(f'個数{10-len(ret)}')
+
         seed_genres = np.random.choice(genres, 5, replace=False)
         seed_genres = ','.join(seed_genres)
         END_POINT = f'https://api.spotify.com/v1/recommendations?market=JP&limit={10-len(ret)}&seed_genres={seed_genres}&target_acousticness={user_acousticness}&target_danceability={user_danceability}&target_energy={user_energy}&target_instrumentalness={user_instrumentalness}&target_liveness={user_liveness}&target_speechiness={user_speechiness}&target_valence={user_valence}'

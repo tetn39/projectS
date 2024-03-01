@@ -278,10 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if(diagnosisIdParam){ //diagnosisIdが存在する場合
     fromDiagnosisId(diagnosisIdParam);
-  } else if (userStatusParam) {
-    const userStatus = JSON.parse(userStatusParam);
-    updateChartData(userStatus);
-  } 
+  }
 });
 
 

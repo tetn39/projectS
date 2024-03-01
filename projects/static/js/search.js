@@ -268,9 +268,7 @@ function send() {
 
       // status.htmlに遷移する
       window.location.href =
-        "/status/?user_status=" +
-        encodeURIComponent(JSON.stringify(data.user_status)) +
-        "&diagnosis_id=" +
+        "/status/?diagnosis_id=" +
         data.diagnosis_id;
     })
     .catch((error) => {

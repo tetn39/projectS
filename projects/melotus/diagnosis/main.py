@@ -300,7 +300,7 @@ def for_chart_weight(ret_user_status):
                 ret_user_status[status] += 20
             
             if status == 'loudness':
-                ret_user_status[status] += 80.0
+                ret_user_status[status] += 90.0
             
             if status == 'tempo':
                 ret_user_status[status] /= 2.0

@@ -111,8 +111,17 @@ def user_music_status_median(content):
     for key in content:
         for status in status_values:
             status_values[status].append(content[key][status])
+    #     print(status_values["mode"])
+    # print(np.mean(status_values["mode"]))
+    median_status = {}
+    for status in status_values:
+        if status == 'mode':
+            median_status[status] = np.mean(status_values[status])
+        
+        median_status[status] = np.median(status_values[status])
 
-    median_status = {status: np.median(status_values[status]) for status in status_values}
+
+    print(median_status)
     return {status: round(median_status[status], 4) for status in median_status}
 
 
@@ -286,7 +295,7 @@ def token_check(user_data):
 # チャート用にデータを調整する
 def for_chart_weight(ret_user_status):
     for status in ret_user_status:
-            if status != 'tempo' and status != 'loudness':
+            if status != 'tempo' and status != 'loudness' and status != 'mode':
                 ret_user_status[status] *= 100
                 ret_user_status[status] += 20
             
@@ -295,7 +304,7 @@ def for_chart_weight(ret_user_status):
             
             if status == 'tempo':
                 ret_user_status[status] /= 2.0
-            
+
             ret_user_status[status] = float(f'{ret_user_status[status]:.4f}')
     
     return ret_user_status

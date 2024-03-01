@@ -69,6 +69,8 @@
   /* スマートフォンの場合のみ適用されるスタイル */
 
   .playlist{
+    border-radius: 10px;
+
     button {
       position: static;
       width: 50%;

@@ -92,7 +92,7 @@ async function getTrackInfo(trackId, accessToken) {
 async function displayRecommendedMusicWithInfo(recommendedMusic) {
   // recommendedMusic を表示する要素の親要素を取得
   const recommendedMusicContainer = document.getElementById("recommend__images__wrap");
-  
+
   // recommendedMusic をクリアする
   recommendedMusicContainer.innerHTML = "";
   const accessToken = await getAccessToken(); // アクセストークンを取得する関数を呼び出す
@@ -127,29 +127,29 @@ function send(diaId) {
     },
     body: JSON.stringify({ DiagnosisId: diaId }),
   })
-  .then((response) => response.json())
-  .then((data) => {
-    console.log(data);
-    console.log("jsから:", diaId);
-    console.log("pyから:", data.user_status);
-    console.log("pyから:", data.recommended_music);
-    return [data.user_status, data.recommended_music];
-  })
-  .catch((error) => {
-    console.error("Error:", error);
-    // エラーメッセージを取得
-    var errorMessage = error.message;
-    // エラーが発生した箇所を取得
-    var errorStack = error.stack;
-    // 送信データを取得
-    var sendData = JSON.stringify({ DiagnosisId: diaId });
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      console.log("jsから:", diaId);
+      console.log("pyから:", data.user_status);
+      console.log("pyから:", data.recommended_music);
+      return [data.user_status, data.recommended_music];
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+      // エラーメッセージを取得
+      var errorMessage = error.message;
+      // エラーが発生した箇所を取得
+      var errorStack = error.stack;
+      // 送信データを取得
+      var sendData = JSON.stringify({ DiagnosisId: diaId });
 
-    // コンソールに出力
-    console.log("errorMessage:", errorMessage);
-    console.log("errorStack:", errorStack);
-    console.log("sendData:", sendData);
-    throw error; // エラーを再スローして呼び出し元に伝播させる
-  });
+      // コンソールに出力
+      console.log("errorMessage:", errorMessage);
+      console.log("errorStack:", errorStack);
+      console.log("sendData:", sendData);
+      throw error; // エラーを再スローして呼び出し元に伝播させる
+    });
 }
 
 const data = {
@@ -199,7 +199,7 @@ const config = {
         pointLabels: {
           color: "#fff",
           font: fontSpec,
-        
+
         },
         angleLines: {
           color: "#fff",
@@ -254,17 +254,150 @@ function updateChartData(userStatus) {
   myRadarChart.update();
 }
 
-function fromDiagnosisId(diaId){
-  send(diaId)
-  .then(([userStatus, recommendedMusic]) => {
-    displayRecommendedMusicWithInfo(recommendedMusic);
+async function yourTypeIs(userStatus) {
+  // 数値をもとにもどす
+  // foreach使ってuserStatusの値を取り出す
+  const userStatusArray = Object.entries(userStatus);
+  userStatusArray.forEach(([key, value]) => {
+    if (key !== "tempo" && key !== "loudness" && key !== "mode") {
+      userStatus[key] = parseFloat(((value - 20) / 100).toFixed(4));
+    } else if (key === "tempo") {
+      userStatus[key] = value * 2;
+    } else if (key === "loudness") {
+      userStatus[key] = parseFloat((value - 90).toFixed(4));
+    }
+  }
+  );
+  console.log(userStatus);
 
-    updateChartData(userStatus);
-  })
-  .catch((error) => {
-    // エラー処理
-    console.error("An error occurred:", error);
-  });
+  // 参考
+  /*
+const preferences = [];
+
+  // Acousticness
+  if (userStatus.acousticness >= 0 && userStatus.acousticness < 0.3) {
+    preferences.push("電子音が好き");
+  } else if (userStatus.acousticness >= 0.7 && userStatus.acousticness <= 1) {
+    preferences.push("生楽器の音が好き");
+  }
+
+  // Danceability
+  if (userStatus.danceability >= 0.7 && userStatus.danceability <= 1) {
+    preferences.push("ダンスしやすい曲が好き");
+  }
+
+
+
+
+  ### Acousticness
+- 0から0.3: 電子音が好き
+- 0.7から1: 生楽器の音が好き
+
+### Danceability
+- 0.7から1: ダンスしやすい曲が好き
+
+### Energy
+- 0から0.3: ゆったりした曲が好き
+- 0.7から1: 激しい曲が好き
+
+### Instrumentalness
+- 0から0.3: 歌ものが好き
+- 0.7から1: インストゥルメンタルが好き
+
+### Liveness
+- 0.8から1: ライブ音源が好き
+
+### Loudness
+- -60.0dBまで: 静かな曲が好き
+- 0.0dB以上: 音圧が強い曲が好き
+
+### Speechiness
+- ボーカルが話している感じの強さ。ラップ曲などで0.33から0.66の範囲。
+
+### Valence
+- 0から0.3: 暗い曲が好き
+- 0.7から1: 明るい曲が好き
+
+### Mode
+- 0から0.3: メジャーコードが好き
+- 0.7から1: マイナーコードが好き
+
+  */
+
+  const preferences = []
+
+  // Acousticness
+  if (userStatus.acousticness < 0.3) {
+    preferences.push("電子音が好き");
+  } else if (userStatus.acousticness >= 0.7) {
+    preferences.push("生楽器の音が好き");
+  }
+
+  // Danceability
+  if (userStatus.danceability >= 0.7) {
+    preferences.push("ダンスしやすい曲が好き");
+  }
+
+  // Energy
+  if (userStatus.energy < 0.3) {
+    preferences.push("ゆったりした曲が好き");
+  } else if (userStatus.energy >= 0.7) {
+    preferences.push("激しい曲が好き");
+  }
+
+  // Instrumentalness
+  if (userStatus.instrumentalness < 0.3) {
+    preferences.push("歌ものが好き");
+  } else if (userStatus.instrumentalness >= 0.7) {
+    preferences.push("インストゥルメンタルが好き");
+  }
+
+  // Liveness
+  if (userStatus.liveness >= 0.8) {
+    preferences.push("ライブ音源が好き");
+  }
+
+  // Loudness
+  if (userStatus.loudness <= -60) {
+    preferences.push("静かな曲が好き");
+  } else if (userStatus.loudness >= 0) {
+    preferences.push("音圧が強い曲が好き");
+  }
+
+  // Speechiness
+  if (userStatus.speechiness >= 0.33 && userStatus.speechiness < 0.66) {
+    preferences.push("ボーカルが話している感じの強さ");
+  }
+
+  // Valence
+  if (userStatus.valence < 0.3) {
+    preferences.push("暗い曲が好き");
+  } else if (userStatus.valence >= 0.7) {
+    preferences.push("明るい曲が好き");
+  }
+
+  // Mode
+  if (userStatus.mode < 0.3) {
+    preferences.push("メジャーコードが好き");
+  } else if (userStatus.mode >= 0.7) {
+    preferences.push("マイナーコードが好き");
+  }
+
+  console.log(preferences);
+}
+
+
+function fromDiagnosisId(diaId) {
+  send(diaId)
+    .then(([userStatus, recommendedMusic]) => {
+      displayRecommendedMusicWithInfo(recommendedMusic);
+      updateChartData(userStatus);
+      yourTypeIs(userStatus);
+    })
+    .catch((error) => {
+      // エラー処理
+      console.error("An error occurred:", error);
+    });
 }
 
 // ページが読み込まれたときに実行されるコード
@@ -276,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // user_statusが存在する場合はJSONパースしてチャートを更新
 
-  if(diagnosisIdParam){ //diagnosisIdが存在する場合
+  if (diagnosisIdParam) { //diagnosisIdが存在する場合
     fromDiagnosisId(diagnosisIdParam);
   }
 });

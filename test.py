@@ -1,21 +1,15 @@
-import random
+def for_chart_weight(ret_user_status):
+    for status in ret_user_status:
+            if status != 'tempo' and status != 'loudness' and status != 'mode':
+                ret_user_status[status] *= 100
+                ret_user_status[status] += 20
+            
+            if status == 'loudness':
+                ret_user_status[status] += 90.0
+            
+            if status == 'tempo':
+                ret_user_status[status] /= 2.0
 
-id = '1123'
-
-hex_id = id.encode().hex()
-
-ans = ''
-for i in hex_id:
-    ans += i
-    ans += random.choice('1234567890ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz')
-print(ans)
-
-
-print(hex_id)
-
-
-hexed_id = ans[::2]
-print(hexed_id)
-
-decode_id = bytes.fromhex(hexed_id).decode()
-print(decode_id)
+            ret_user_status[status] = float(f'{ret_user_status[status]:.4f}')
+    
+    return ret_user_status

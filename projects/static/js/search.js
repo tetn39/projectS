@@ -77,7 +77,11 @@ function renderSelectedTracksWithIndex() {
     trackDiv.insertBefore(indexLabel, trackDiv.firstChild);
     const deleteButton = createDeleteButton(index);
     trackDiv.appendChild(deleteButton);
+    if (listContainer.innerHTML === "") {
     listContainer.appendChild(trackDiv);
+    } else {
+    listContainer.insertBefore(trackDiv, listContainer.firstChild);
+    }
   });
 }
 
@@ -146,7 +150,7 @@ function createDeleteButton(index) {
 
   const deleteButtonIcon = document.createElement("span");
   deleteButtonIcon.classList.add("delete-icon");
-  deleteButtonIcon.addEventListener("click", () => {
+  deleteButton.addEventListener("click", () => {
     removeTrackFromList(index);
   });
 

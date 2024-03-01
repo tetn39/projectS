@@ -152,18 +152,6 @@
 @media only screen and (max-width: 768px) {
 
   /* スマートフォンの場合のみ適用されるスタイル */
-  main{
-    margin-left: 0;
-  }
-  header{
-    margin-left: 0;
-  }
-  .header__logo{
-    display: none;
-  }
-  .nav-links{
-    margin-top: 25%;
-  }
   .album-image{
     height: auto;
     width: 17%;

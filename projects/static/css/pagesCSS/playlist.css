@@ -13,7 +13,7 @@
 .playlist{
   background-color: var(--bg-secondary-color);
   height: calc(auto + 100px);
-  margin: 10px 20px;
+  margin: 2% 5%;
   padding: 20px;
   border-radius: 30px;
 

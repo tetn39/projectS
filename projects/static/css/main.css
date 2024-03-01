@@ -11,7 +11,7 @@
   --txt-secondary-color: #A7A7A7;
   --standby-color: #AFAFAF;
 }
-h1,h2,h3,h4,p{color: var(--txt-color);}
+h1,h2,h3,h4,p,div{color: var(--txt-color);}
 
 /* ヘッダー */
 header {

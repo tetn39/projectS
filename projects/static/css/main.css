@@ -201,15 +201,13 @@ a:hover,button:hover{
 
   .main__header{
     width: auto;
-    height: auto;
   }
   .responsive__logo {
     display: block;
     width: 25%;
-    height: 100px;
+    height: auto;
     margin: 0 auto;
   }
-  .responsive__img
   .main__title{
     margin-top: 3%;
     padding: 5%;

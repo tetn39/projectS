@@ -233,8 +233,7 @@ async function initializeSearch() {
     addButton.classList.add("add-button");
 
     const addButtonIcon = document.createElement("span");
-    addButtonIcon.classList.add("add-icon");
-    addButtonIcon.addEventListener("click", () => {
+    addButton.addEventListener("click", () => {
       addTrackToList(track);
     });
 

@@ -185,14 +185,12 @@ a:hover,button:hover{
   }
 
   .main__header{
-    display: flex;
     width: auto;
-    height: 10vh;
   }
   .responsive__logo {
     display: block;
-    margin-left: 35%;
-    width: 30%;
+    width: 25%;
+    margin: 0 auto;
   }
   .responsive__img{
     height: 100%;

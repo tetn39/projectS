@@ -384,6 +384,24 @@ async function yourTypeIs(userStatus) {
   }
 
   console.log(preferences);
+
+  // yourTypeTitle　タイトルを付ける
+  const yourTypeTitle = document.getElementById('yourTypeTitle');
+  yourTypeTitle.innerHTML = "あなたは<br>";
+  const maxPrefer = preferStatus.indexOf(maxPreferenceKey);
+  const minPrefer = preferStatus.indexOf(minPreferenceKey);
+
+  if (maxPrefer !== -1) {
+    yourTypeTitle.innerHTML += "<span>" + preferences[maxPrefer];
+  } else if (minPrefer !== -1) {
+    yourTypeTitle.innerHTML += "<span>" + preferences[minPrefer];
+  } else {
+    yourTypeTitle.innerHTML += "どれも平均的な曲";
+  }
+  yourTypeTitle.innerHTML += "</span>" + "が<br>好きなタイプです";
+
+
+
   // chart__text__typeに表示
   const container = document.getElementById('yourType');
   const list = document.createElement('ul'); // リスト要素を作成
@@ -398,26 +416,19 @@ async function yourTypeIs(userStatus) {
   container.appendChild(list); // コンテナにリストを追加
 
 
-  // yourTypeDescription に詳細を書く
+
+  // // yourTypeDescription に詳細を書く
   const yourTypeDescription = document.getElementById('yourTypeDescription');
   const description = document.createElement('p');
-  description.textContent = "そしてとくに、";
-  console.log(preferStatus);
 
-  const maxPrefer = preferStatus.indexOf(maxPreferenceKey);
-  const minPrefer = preferStatus.indexOf(minPreferenceKey);
+  description.textContent = "あなたは";
+  preferences.forEach(preference => {
+    description.textContent += preference; // テキストを設定
+    description.textContent += "が好き、";
 
-  if (maxPrefer !== -1) {
-    description.textContent += preferences[maxPrefer];
-  }
-  if (minPrefer !== -1) {
-    if (maxPrefer !== -1) {
-      description.textContent += "で、";
-    }
-    description.textContent += preferences[minPrefer];
-  }
+  });
 
-  description.textContent += "が好きなようです。";
+  description.textContent += "という特徴があります";
   
 
 

@@ -45,36 +45,48 @@
 .chart__text {
   width: 50%;
   margin: 2%;
+  padding: 2vw;
   font-weight: bold;
 
   & h2 {
     font-size: 48px;
-    margin-bottom: 5%;
+    margin-bottom: 1em;
   }
 
   & p {
     font-size: 16px;
     line-height: 200%;
+  }
 
-    & span {
-      color: var(--primary-color);
-      font-size: 20px;
-    }
+  & span {
+    color: var(--primary-color);
+    font-size: 60px;
   }
 }
 
 .chart__text__type {
-  margin-left: 2vw;
   /* liの見た目をよくする */
   font-size: 20px;
   line-height: 2lh;
   color: var(--txt-color);
   
+  & ul {
+    margin-left: 2em;
+  }
+
   & li {
     list-style: circle;
   
   }
+
 }
+
+.chart__text__description {
+  color: --var(--txt-color);
+  margin: 1em;
+  /* margin-top: 2em; */
+}
+
 
 .recommend__wrap {
   width: 90%;

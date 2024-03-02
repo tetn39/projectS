@@ -437,7 +437,7 @@ async function yourTypeIs(userStatus) {
 
 
 function fromDiagnosisId(diaId) {
-  setOgUrl(diaId);
+  // setOgUrl(diaId);
   send(diaId)
     .then(([userStatus, recommendedMusic]) => {
       displayRecommendedMusicWithInfo(recommendedMusic);

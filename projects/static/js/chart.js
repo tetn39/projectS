@@ -337,6 +337,18 @@ async function yourTypeIs(userStatus) {
   }
 
   console.log(preferences);
+  // chart__text__typeに表示
+  const container = document.getElementById('chart__text__type');
+  const list = document.createElement('ul'); // リスト要素を作成
+
+  preferences.forEach(preference => {
+    const listItem = document.createElement('li'); // リストアイテム要素を作成
+    listItem.textContent = preference; // テキストを設定
+    list.appendChild(listItem); // リストにアイテムを追加
+  });
+
+  container.appendChild(list); // コンテナにリストを追加
+
 }
 
 

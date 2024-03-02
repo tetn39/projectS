@@ -126,8 +126,8 @@ main {
 
 .main__title {
   background-color: var(--bg-secondary-color);
-  margin: 5%;
-  padding: 75px;
+  margin: 2vh;
+  padding: 7vh;
   border-radius: 30px;
   text-align: center;
 }

@@ -6,13 +6,7 @@
 
 
 /* 項目名 */
-.main__title {
-  background-color: var(--bg-secondary-color);
-  margin: 2vh;
-  padding: 7vh;
-  border-radius: 30px;
-  text-align: center;
-}
+
 .main__title h2 {
   color: var(--txt-color);
 }

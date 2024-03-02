@@ -37,7 +37,7 @@ img {
 
 /* メインコンテナ */
 main {
-  width: calc(100% - 250px);
+  width: auto;
   /* ヘッダーの幅を考慮して main の幅を調整 */
   min-width: 600px;
   margin-left: 266px;

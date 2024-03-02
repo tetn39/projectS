@@ -259,70 +259,21 @@ async function yourTypeIs(userStatus) {
   // foreach使ってuserStatusの値を取り出す
   const userStatusArray = Object.entries(userStatus);
   userStatusArray.forEach(([key, value]) => {
-    if (key !== "tempo" && key !== "loudness" && key !== "mode") {
+    if (key !== "tempo" && key !== "loudness" && key !== "mode" && key !== "danceability") {
       userStatus[key] = parseFloat(((value - 20) / 100).toFixed(4));
     } else if (key === "tempo") {
       userStatus[key] = value * 2;
     } else if (key === "loudness") {
       userStatus[key] = parseFloat((value - 90).toFixed(4));
+    } else if (key === "danceability") {
+      if (value > 100) {
+        value -= 20;
+      }
+      userStatus[key] = parseFloat((value / 100).toFixed(4));
     }
   }
   );
   console.log(userStatus);
-
-  // 参考
-  /*
-const preferences = [];
-
-  // Acousticness
-  if (userStatus.acousticness >= 0 && userStatus.acousticness < 0.3) {
-    preferences.push("電子音が好き");
-  } else if (userStatus.acousticness >= 0.7 && userStatus.acousticness <= 1) {
-    preferences.push("生楽器の音が好き");
-  }
-
-  // Danceability
-  if (userStatus.danceability >= 0.7 && userStatus.danceability <= 1) {
-    preferences.push("ダンスしやすい曲が好き");
-  }
-
-
-
-
-  ### Acousticness
-- 0から0.3: 電子音が好き
-- 0.7から1: 生楽器の音が好き
-
-### Danceability
-- 0.7から1: ダンスしやすい曲が好き
-
-### Energy
-- 0から0.3: ゆったりした曲が好き
-- 0.7から1: 激しい曲が好き
-
-### Instrumentalness
-- 0から0.3: 歌ものが好き
-- 0.7から1: インストゥルメンタルが好き
-
-### Liveness
-- 0.8から1: ライブ音源が好き
-
-### Loudness
-- -60.0dBまで: 静かな曲が好き
-- 0.0dB以上: 音圧が強い曲が好き
-
-### Speechiness
-- ボーカルが話している感じの強さ。ラップ曲などで0.33から0.66の範囲。
-
-### Valence
-- 0から0.3: 暗い曲が好き
-- 0.7から1: 明るい曲が好き
-
-### Mode
-- 0から0.3: メジャーコードが好き
-- 0.7から1: マイナーコードが好き
-
-  */
 
   const preferences = []
 
@@ -334,8 +285,10 @@ const preferences = [];
   }
 
   // Danceability
-  if (userStatus.danceability >= 0.7) {
-    preferences.push("ダンスしやすい曲が好き");
+  if (userStatus.danceability >= 0.8) {
+    preferences.push("踊りやすい曲が好き");
+  } else if (userStatus.danceability < 0.4) {
+    preferences.push("しっとりした曲が好き");
   }
 
   // Energy
@@ -377,9 +330,9 @@ const preferences = [];
   }
 
   // Mode
-  if (userStatus.mode < 0.3) {
+  if (userStatus.mode < 0.2) {
     preferences.push("メジャーコードが好き");
-  } else if (userStatus.mode >= 0.7) {
+  } else if (userStatus.mode >= 0.8) {
     preferences.push("マイナーコードが好き");
   }
 

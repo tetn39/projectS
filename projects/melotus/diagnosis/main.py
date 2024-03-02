@@ -295,15 +295,20 @@ def token_check(user_data):
 # チャート用にデータを調整する
 def for_chart_weight(ret_user_status):
     for status in ret_user_status:
-            if status != 'tempo' and status != 'loudness' and status != 'mode':
+            if status != 'tempo' and status != 'loudness' and status != 'mode' and status != 'danceability':
                 ret_user_status[status] *= 100
                 ret_user_status[status] += 20
             
-            if status == 'loudness':
+            elif status == 'loudness':
                 ret_user_status[status] += 90.0
             
-            if status == 'tempo':
+            elif status == 'tempo':
                 ret_user_status[status] /= 2.0
+
+            elif status == 'danceability':
+                ret_user_status[status] *= 100
+                if ret_user_status[status] > 80:
+                    ret_user_status[status] += 20
 
             ret_user_status[status] = float(f'{ret_user_status[status]:.4f}')
     

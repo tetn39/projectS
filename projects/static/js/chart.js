@@ -437,6 +437,7 @@ async function yourTypeIs(userStatus) {
 
 
 function fromDiagnosisId(diaId) {
+  setOgUrl(diaId);
   send(diaId)
     .then(([userStatus, recommendedMusic]) => {
       displayRecommendedMusicWithInfo(recommendedMusic);
@@ -447,6 +448,16 @@ function fromDiagnosisId(diaId) {
       // エラー処理
       console.error("An error occurred:", error);
     });
+}
+
+// metaタグのurlを診断ごと、動的にする
+function setOgUrl(diaId) {
+  const baseUrl = "https://melodystatus.com/status/";
+  const urlParams = new URLSearchParams({ diagnosis_id: diaId });
+  const ogUrl = baseUrl + "?" + urlParams.toString();
+  
+  document.querySelector('meta[property="og:url"]').setAttribute("content", ogUrl);
+  console.log("URL", ogUrl);
 }
 
 // ページが読み込まれたときに実行されるコード
@@ -462,5 +473,3 @@ document.addEventListener("DOMContentLoaded", function () {
     fromDiagnosisId(diagnosisIdParam);
   }
 });
-
-

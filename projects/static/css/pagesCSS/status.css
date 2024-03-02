@@ -63,6 +63,19 @@
   }
 }
 
+.chart__text__type {
+  margin-left: 2vw;
+  /* liの見た目をよくする */
+  font-size: 20px;
+  line-height: 2lh;
+  color: var(--txt-color);
+  
+  & li {
+    list-style: circle;
+  
+  }
+}
+
 .recommend__wrap {
   width: 90%;
   background-color: #242424;
@@ -83,7 +96,7 @@
   padding-bottom: 3%;
   flex-wrap: wrap;
 
-  & img {}
+
 }
 
 .reccomend__musics__wrap {

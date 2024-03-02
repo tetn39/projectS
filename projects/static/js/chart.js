@@ -255,6 +255,36 @@ function updateChartData(userStatus) {
 }
 
 async function yourTypeIs(userStatus) {
+    
+    // const maxPreference = Math.max(...Object.values(userStatus));
+
+    // const filteredValues = Object.entries(userStatus)
+    //   .filter(([key, value]) => key !== 'mode') // 'mode'を除外
+    //   .map(([key, value]) => value); // 値だけを取り出す
+
+    // const minPreference = Math.min(...filteredValues);
+
+
+    // console.log(maxPreference);
+    // console.log(minPreference);
+  // status内で一番高い値と一番低い値のkeyを取得する
+  const maxPreference = Math.max(...Object.values(userStatus));
+  const filteredValues = Object.entries(userStatus)
+  .filter(([key, value]) => key !== 'mode') // 'mode'を除外
+  .map(([key, value]) => value); // 値だけを取り出す
+
+  const minPreference = Math.min(...filteredValues);
+  console.log(maxPreference);
+  console.log(minPreference);
+  const maxPreferenceKey = Object.keys(userStatus).find(key => userStatus[key] === maxPreference);
+  const minPreferenceKey = Object.keys(userStatus).find(key => userStatus[key] === minPreference);
+  console.log(maxPreferenceKey);
+  console.log(minPreferenceKey);
+
+  // TODO: ここでuserStatusの値をもとにもどす
+
+
+
   // 数値をもとにもどす
   // foreach使ってuserStatusの値を取り出す
   const userStatusArray = Object.entries(userStatus);
@@ -275,80 +305,123 @@ async function yourTypeIs(userStatus) {
   );
   console.log(userStatus);
 
-  const preferences = []
-
+  const preferences = [];
+  const preferStatus = [];
+  const topPreference = "";
   // Acousticness
   if (userStatus.acousticness < 0.3) {
-    preferences.push("電子音が好き");
+    preferences.push("電子音の多い曲");
+    preferStatus.push("acousticness");
   } else if (userStatus.acousticness >= 0.7) {
-    preferences.push("生楽器の音が好き");
+    preferences.push("生楽器の多い曲");
+    preferStatus.push("acousticness");
   }
 
   // Danceability
   if (userStatus.danceability >= 0.8) {
-    preferences.push("踊りやすい曲が好き");
+    preferences.push("踊りやすい曲");
+    preferStatus.push("danceability");
   } else if (userStatus.danceability < 0.4) {
-    preferences.push("しっとりした曲が好き");
+    preferences.push("しっとりした曲");
+    preferStatus.push("danceability");
   }
 
   // Energy
   if (userStatus.energy < 0.3) {
-    preferences.push("ゆったりした曲が好き");
+    preferences.push("ゆったりした曲");
+    preferStatus.push("energy");
   } else if (userStatus.energy >= 0.7) {
-    preferences.push("激しい曲が好き");
+    preferences.push("激しい曲");
+    preferStatus.push("energy");
   }
 
   // Instrumentalness
   if (userStatus.instrumentalness < 0.3) {
-    preferences.push("歌ものが好き");
+    preferences.push("歌ものの曲");
+    preferStatus.push("instrumentalness");
   } else if (userStatus.instrumentalness >= 0.7) {
-    preferences.push("インストゥルメンタルが好き");
+    preferences.push("楽器系の曲");
+    preferStatus.push("instrumentalness");
   }
 
   // Liveness
   if (userStatus.liveness >= 0.8) {
-    preferences.push("ライブ音源が好き");
+    preferences.push("ライブ感のある曲");
+    preferStatus.push("liveness");
   }
 
   // Loudness
   if (userStatus.loudness <= -60) {
-    preferences.push("静かな曲が好き");
+    preferences.push("静かな曲");
+    preferStatus.push("loudness");
   } else if (userStatus.loudness >= 0) {
-    preferences.push("音圧が強い曲が好き");
+    preferences.push("音圧が強い曲");
+    preferStatus.push("loudness");
   }
 
   // Speechiness
   if (userStatus.speechiness >= 0.33 && userStatus.speechiness < 0.66) {
     preferences.push("ボーカルが話している感じの強さ");
+    preferStatus.push("speechiness");
   }
 
   // Valence
   if (userStatus.valence < 0.3) {
-    preferences.push("暗い曲が好き");
+    preferences.push("暗い曲");
+    preferStatus.push("valence");
   } else if (userStatus.valence >= 0.7) {
-    preferences.push("明るい曲が好き");
+    preferences.push("明るい曲");
+    preferStatus.push("valence");
   }
 
   // Mode
   if (userStatus.mode < 0.2) {
-    preferences.push("メジャーコードが好き");
+    preferences.push("メジャーコード");
+    preferStatus.push("mode");
   } else if (userStatus.mode >= 0.8) {
-    preferences.push("マイナーコードが好き");
+    preferences.push("マイナーコード");
+    preferStatus.push("mode");
   }
 
   console.log(preferences);
   // chart__text__typeに表示
-  const container = document.getElementById('chart__text__type');
+  const container = document.getElementById('yourType');
   const list = document.createElement('ul'); // リスト要素を作成
 
   preferences.forEach(preference => {
     const listItem = document.createElement('li'); // リストアイテム要素を作成
     listItem.textContent = preference; // テキストを設定
+    listItem.textContent += "が好き"
     list.appendChild(listItem); // リストにアイテムを追加
   });
 
   container.appendChild(list); // コンテナにリストを追加
 
+
+  // yourTypeDescription に詳細を書く
+  const yourTypeDescription = document.getElementById('yourTypeDescription');
+  const description = document.createElement('p');
+  description.textContent = "そしてとくに、";
+  console.log(preferStatus);
+
+  const maxPrefer = preferStatus.indexOf(maxPreferenceKey);
+  const minPrefer = preferStatus.indexOf(minPreferenceKey);
+
+  if (maxPrefer !== -1) {
+    description.textContent += preferences[maxPrefer];
+  }
+  if (minPrefer !== -1) {
+    if (maxPrefer !== -1) {
+      description.textContent += "で、";
+    }
+    description.textContent += preferences[minPrefer];
+  }
+
+  description.textContent += "が好きなようです。";
+  
+
+
+  yourTypeDescription.appendChild(description);
 }
 
 

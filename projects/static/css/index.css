@@ -3,6 +3,10 @@
     font-family: 'Zen Kaku Gothic New', sans-serif;
 }
 
+html {
+    position: relative;
+}
+
 /* カラーバリエーション */
 :root {
     --bg-primary-color: #121212;
@@ -62,6 +66,17 @@
     font-size: 24px;
 }
 
+
+footer {
+    width: 100%;
+    position: absolute;
+    height: 2em;
+    bottom: 2px;
+    & p {
+      width: fit-content;
+      margin: auto;
+    }
+  }
 
 @media only screen and (max-width: 768px) {
 

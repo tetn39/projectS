@@ -1,6 +1,8 @@
 /* 全体のフォント設定 */
 * {font-family: 'Zen Kaku Gothic New', sans-serif;}
 
+
+
 /* カラーバリエーション */
 :root {
   --bg-primary-color: #121212;
@@ -37,6 +39,8 @@ img {
 
 /* メインコンテナ */
 main {
+  min-height: 100vh;
+  height: fit-content;
   width: auto;
   /* ヘッダーの幅を考慮して main の幅を調整 */
   min-width: 600px;
@@ -120,7 +124,7 @@ main {
 }
 .main__header {
   width: 100%;
-  margin-top: 10px;
+  padding-top: 10px;
   background-color: var(--bg-primary-color);
 }
 
@@ -163,6 +167,22 @@ a:hover,button:hover{
 
 .nav-active{
   transform: translateX(0%) !important;
+}
+
+
+footer {
+  width: 100%;
+  height: 4em;
+  
+  & div {
+    height: 4em;
+  }
+  & p {
+    line-height: 4em;
+    vertical-align: middle;
+    width: fit-content;
+    margin: auto;
+  }
 }
 
 @media only screen and (max-width: 768px) {

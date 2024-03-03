@@ -433,6 +433,7 @@ async function yourTypeIs(userStatus) {
 
 
   yourTypeDescription.appendChild(description);
+  changeTweetText();
 }
 
 
@@ -458,6 +459,37 @@ function setOgUrl(diaId) {
   
   document.querySelector('meta[property="og:url"]').setAttribute("content", ogUrl);
   console.log("URL", ogUrl);
+}
+
+// ツイッター共有のボタン
+function changeTweetText() {
+  // 現在のページのURLを取得
+  const dynamicUrl = window.location.href;
+
+  // yourTypeの内容を取得
+  const yourTypeTitleText = yourTypeTitle.querySelector('span').innerText.trim();
+  const yourTypeTextTitle = "診断結果は..." + yourTypeTitleText + "が好きなタイプでした！";
+
+  // yourTypeTextの内容を取得
+  let yourTypeText = "また、\n";
+  const yourTypeList = document.getElementById('yourType').querySelectorAll('ul li');
+  Array.from(yourTypeList).forEach((li) => {
+    const liText = li.textContent.trim();
+    if (liText !== yourTypeTitleText + "が好き") {
+      yourTypeText += liText + "\n";
+    }
+  });
+  yourTypeText += "という特徴もありました！";
+
+  // hashtagの内容
+  const hashTags = "\n\n" + "#メロタス" + "\n" + "#あなたの好きな曲からおすすめの曲やタイプを診断";
+
+  // ツイートのテキストを生成
+  const tweetText = yourTypeTextTitle + "\n\n" + yourTypeText + "\n\n" + dynamicUrl + hashTags;
+
+  // Twitter共有ボタンのhref属性を更新
+  const twitterShareBtn = document.getElementById("twitter__share");
+  twitterShareBtn.href = "https://twitter.com/intent/tweet?url=" + "&text=" + encodeURIComponent(tweetText);
 }
 
 // ページが読み込まれたときに実行されるコード

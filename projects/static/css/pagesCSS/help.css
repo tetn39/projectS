@@ -12,10 +12,9 @@
 
 .helptext_box{
     background-color: var(--standby-color);
-    height: 500px;
-    margin: 50px 200px 0 200px;
     padding: 30px 60px 50px 60px;
     border-radius: 30px;
+    margin: 2% 5%;
     & h2{
         margin-bottom: 60px;
         color: black;
@@ -23,6 +22,10 @@
     & p{
         margin-bottom: 30px;
         color: black;
+    }
+
+    .answer{
+        margin-left: 1em;
     }
 }
 

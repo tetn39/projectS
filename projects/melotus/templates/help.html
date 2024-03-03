@@ -20,29 +20,34 @@
 	</head>
 
 	<body class="body-wrap">
+		<div class="burger">
+			<div class="line1"></div>
+			<div class="line2"></div>
+			<div class="line3"></div>
+		</div>
 		<!----- ヘッダー ----->
-		<header>
-			<div class="header__logo"><a href="/"><img src="{% static 'images/logos/logo.svg' %}" alt=""></a></div>
+		<header class="header">
+			<div class="header__logo"><a href=""><img src="{% static './images/logos/logo.svg' %}" alt=""></a></div>
 			<nav>
-				<ul>
+				<ul class="nav-links">
 					<div class="nav__background nav__top">
-						<div class="nav__diagnosis"><img src="{% static 'images/icons/music-note-svgrepo-com.svg' %}" alt="">
+						<div class="nav__diagnosis"><img src="{% static './images/icons/music-note-svgrepo-com.svg' %}" alt="">
 							<h2>楽曲診断</h2>
 						</div>
-						<li><a href="/songs/"><img src="{% static 'images/icons/list-svgrepo-com.svg' %}" alt="">
+						<li><a href="/songs/"><img src="{% static './images/icons/list-svgrepo-com.svg' %}" alt="">
 								<p>曲一覧</p>
 							</a></li>
-						<li><a href="/playlist/"><img src="{% static 'images/icons/playlist-minimalistic-2-svgrepo-com.svg' %}" alt="">
+						<li><a href="/playlist/"><img src="{% static './images/icons/playlist-minimalistic-2-svgrepo-com.svg' %}" alt="">
 								<p>プレイリスト</p>
 							</a></li>
 					</div>
 					<div class="nav__background nav__bottom">
-						<li><a href="/status/"><img src="{% static 'images/icons/user-svgrepo-com.svg' %}" alt="">
+						<li><a href="/status/"><img src="{% static './images/icons/user-svgrepo-com.svg' %}" alt="">
 								<p>ステータス</p>
 							</a></li>
 					</div>
 					<div class="nav__background nav__bottom">
-						<li class="nav__now"><a href="/help/"><img src="{% static 'images/icons/help-2-svgrepo-com.svg' %}" alt="">
+						<li class="nav__now"><a href="/help/"><img src="{% static './images/icons/help-2-svgrepo-com.svg' %}" alt="">
 								<p>ヘルプ</p>
 							</a></li>
 					</div>
@@ -68,19 +73,19 @@
 						<h2>ヘルプ</h2>
 					</div>
 					<section class="helptext_box">
-						<h2>ヘルプテキスト</h2>
+						<h2>お困りごと</h2>
 						<div>
-							<p>Q.xxxxxxxxxxxxxxxxxxxxx</p>
+							<p>Q.診断ボタン押しても動かない</p>
 					
-							<p>text</p>
+							<p class="answer">サーバーが重くなってるのかもしれない、もう一回押してみて</p>
 
-							<p>Q.xxxxxxxxxxxxxxxxxxxxx</p>
+							<p>Q.どういう仕組みなの？</p>
 
-							<p>text</p>
+							<p class="answer">spotifyがそれぞれの曲のステータスを提供してて、そこからその人のタイプ出したり曲をおすすめしてるよ</p>
 
-							<p>Q.xxxxxxxxxxxxxxxxxxxxx</p>
+							<p>Q.なに診断しても502エラーが出ておかしいよ</p>
 
-							<p>text</p>
+							<p class="answer">それやばいかも、そうなったら連絡して</p>
 
 
 
@@ -92,5 +97,5 @@
 			</div>
 		</main>
 	</body>
-
+	<script src="{% static 'js/hamburger.js' %}"></script>
 </html>

@@ -138,7 +138,8 @@
 /* shareボタン */
 .share__button__wrap{
   width: 90%;
-  margin: 5% auto;
+  height: auto;
+  margin: 5% auto;;
 }
 .share__button {
   width: 100%;
@@ -147,6 +148,7 @@
   background-color: #1da1f2;
   text-align: center;
   font-weight: bold;
+  margin-bottom: 10%;
 }
 #twitter__share{
   color: #fff;

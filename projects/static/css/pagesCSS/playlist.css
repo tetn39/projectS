@@ -19,7 +19,7 @@
   width: fit-content;
   font-weight: bold;
   cursor: pointer;
-  background-color: var(--bg-primary-color);
+  background-color: var(--bg-secondary-color);
   color: var(--txt-secondary-color);
   border-radius: 30px;
   padding: 1em 2em;

@@ -18,15 +18,17 @@
   border-radius: 30px;
 
   & ul {
-    height: 320px;
+    
     display: flex;
-    flex-wrap: nowrap;
-    margin-top: 2vh;
+    flex-wrap: wrap;
+
     
     
   
     & li {
+      height: 320px;
       width: 200px;
+      margin-top: 4vh;
       margin-right: 2vw;
       position: relative;
 
@@ -83,6 +85,7 @@
       margin-top: 2vh;
       
       & li {
+        height: auto;
         width: 100%;
         margin: 2vh 0;
         display: flex;

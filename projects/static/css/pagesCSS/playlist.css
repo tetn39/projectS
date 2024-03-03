@@ -13,6 +13,26 @@
 .hidden {
   display: none;
 }
+
+.open-btn {
+  margin: 3em auto 2em auto;
+  width: fit-content;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: var(--bg-primary-color);
+  color: var(--txt-secondary-color);
+  border-radius: 30px;
+  padding: 1em 2em;
+  border: 1px solid var(--txt-secondary-color);
+
+  &:hover {
+    color: var(--txt-color);
+    border: 1px solid var(--txt-color);
+  }
+}
+
+
+
 .playlist{
   background-color: var(--bg-secondary-color);
   height: calc(auto + 100px);

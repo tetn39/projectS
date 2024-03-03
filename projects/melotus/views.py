@@ -6,7 +6,7 @@ from .models import spotify_data
 import requests
 from .diagnosis.main import *
 from django.http import JsonResponse
-from django.views.decorators.csrf import ensure_csrf_cookie
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_exempt
 from django.urls import reverse
 from django.http import HttpResponseRedirect
 from django.contrib.auth import logout
@@ -251,8 +251,8 @@ def js_py_playlist(request):
             for i in hex_id:
                 diagnosis_id += i
                 diagnosis_id += random.choice('1234567890ABCDEFabcdef')
-            
-            json_text = {
+
+            json_text = {   
                 "uris": selected_playlist,
                 "user_status": weighted_user_status,
                 "recommended_music": recommended_music,
@@ -263,16 +263,17 @@ def js_py_playlist(request):
         else:
             return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
     except Exception as e:
+        print(e)
         return JsonResponse({'status': 'error', 'message': str(e)})
 
     
-@ensure_csrf_cookie
+@csrf_exempt
 def js_py_diagnosis_id(request):
     if request.method == 'POST':
         # POSTリクエストの場合、CSRFトークンを確認
-        csrf_token = request.headers.get("X-CSRFToken")
-        if not request.COOKIES.get("csrftoken") == csrf_token:
-            return JsonResponse({'status': 'error', 'message': 'CSRF Token Validation Failed'})
+        # csrf_token = request.headers.get("X-CSRFToken")
+        # if not request.COOKIES.get("csrftoken") == csrf_token:
+        #     return JsonResponse({'status': 'error', 'message': 'CSRF Token Validation Failed'})
         
         data = json.loads(request.body.decode('utf-8'))
         diagnosis_id = data.get('DiagnosisId', None)
@@ -315,3 +316,5 @@ def add_db(request):
         'ret': ret,
     }
     return render(request, 'add_db.html', content)
+
+

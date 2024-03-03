@@ -26,6 +26,7 @@
   border: 1px solid var(--txt-secondary-color);
 
   &:hover {
+    transition: ease 0.3s;
     color: var(--txt-color);
     border: 1px solid var(--txt-color);
   }

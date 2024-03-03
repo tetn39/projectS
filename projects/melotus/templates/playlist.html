@@ -74,7 +74,7 @@
 				<h2>自分のプレイリスト</h2>
 				<ul>
 					{% for item in playlist_data %}
-					<li id="{{ item.playlist_id }}">
+					<li id="{{ item.playlist_id }}" class="item-list">
 						<a href="{{ item.playlist_url }}" target="_blank">
 							<img src="{{ item.playlist_image_url }}" alt="{{ item.playlist_name }}">
 						</a>
@@ -82,7 +82,9 @@
 						<button onclick="send('{{ item.playlist_id }}')">診断</button>
 					</li>
 					{% endfor %}
+					
 				</ul>
+				<p class="open-btn">もっと表示</p>
 			</div>
 			{% endif %}
 				

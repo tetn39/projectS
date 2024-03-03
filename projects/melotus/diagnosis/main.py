@@ -316,7 +316,8 @@ def for_chart_weight(ret_user_status):
 
 # プレイリストからステータスを取得する
 def get_playlist_status(content):
-    token = UserSocialAuth.objects.get(user_id=1).extra_data['access_token']
+
+    token = UserSocialAuth.objects.get(user_id=content['user_id']).extra_data['access_token']
     header_params = {
         'Authorization': 'Bearer ' + token,
     }
@@ -325,7 +326,6 @@ def get_playlist_status(content):
     res = requests.get(END_POINT, headers=header_params)
 
     data = res.json()
-    
     music_ids = []
     for d in data['items']:
         music_ids.append(d['track']['id'])

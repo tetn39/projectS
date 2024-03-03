@@ -10,6 +10,9 @@
 
 }
 
+.hidden {
+  display: none;
+}
 .playlist{
   background-color: var(--bg-secondary-color);
   height: calc(auto + 100px);
@@ -32,7 +35,7 @@
       margin-right: 2vw;
       position: relative;
 
-
+      
       & img{
         width: 25vw
       }
@@ -84,7 +87,7 @@
       display: block;
       margin-top: 2vh;
       
-      & li {
+      & li:not(.hidden) {
         height: auto;
         width: 100%;
         margin: 2vh 0;

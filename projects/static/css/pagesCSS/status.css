@@ -164,15 +164,25 @@
   margin: 5%;
 }
 
-#twitter__share{
+/* img src="{% static 'images/logos/x_logo.svg' %}" */
+
+#twitter__share {
   color: #fff;
   display: flex;
   justify-content: center;
-
-  & img{
-    width: 1rem;
-  }
+  align-items: center;
 }
+
+#twitter__share::before {
+  content: "";
+  display: inline-block;
+  width: 12px; /* スマホで見た時の幅 */
+  height: 12px; /* スマホで見た時の高さ */
+  background: url(/static/images/logos/x_logo.svg) no-repeat;
+  background-size: contain;
+  margin-right: 3px;
+}
+
 #url__copy{
   color: #fff;
   display: block;

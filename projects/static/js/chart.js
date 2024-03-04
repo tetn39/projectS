@@ -534,55 +534,55 @@ function changeTweetText() {
     let typeImagePath = "";
     switch (yourTypeTitleText) {
         case "電子音の多い曲":
-            typeImagePath = "/images/fts/1.png";
+            typeImagePath = "static/images/fts/1.png";
             break;
         case "生楽器の多い曲":
-            typeImagePath = "/images/fts/2.png";
+            typeImagePath = "static/images/fts/2.png";
             break;
         case "踊りやすい曲":
-            typeImagePath = "/images/fts/3.png";
+            typeImagePath = "static/images/fts/3.png";
             break;
         case "しっとりした曲":
-            typeImagePath = "/images/fts/4.png";
+            typeImagePath = "static/images/fts/4.png";
             break;
         case "ゆったりした曲":
-            typeImagePath = "/images/fts/5.png";
+            typeImagePath = "static/images/fts/5.png";
             break;
         case "激しい曲":
-            typeImagePath = "/images/fts/6.png";
+            typeImagePath = "static/images/fts/6.png";
             break;
         case "歌ものの曲":
-            typeImagePath = "/images/fts/7.png";
+            typeImagePath = "static/images/fts/7.png";
             break;
         case "楽器系の曲":
-            typeImagePath = "/images/fts/8.png";
+            typeImagePath = "static/images/fts/8.png";
             break;
         case "ライブ感のある曲":
-            typeImagePath = "/images/fts/9.png";
+            typeImagePath = "static/images/fts/9.png";
             break;
         case "静かな曲":
-            typeImagePath = "/images/fts/10.png";
+            typeImagePath = "static/images/fts/10.png";
             break;
         case "音圧が強い曲":
-            typeImagePath = "/images/fts/11.png";
+            typeImagePath = "static/images/fts/11.png";
             break;
         case "ラップみたいな曲":
-            typeImagePath = "/images/fts/12.png";
+            typeImagePath = "static/images/fts/12.png";
             break;
         case "暗い曲":
-            typeImagePath = "/images/fts/13.png";
+            typeImagePath = "static/images/fts/13.png";
             break;
         case "明るい曲":
-            typeImagePath = "/images/fts/14.png";
+            typeImagePath = "static/images/fts/14.png";
             break;
         case "メジャーコード":
-            typeImagePath = "/images/fts/15.png";
+            typeImagePath = "static/images/fts/15.png";
             break;
         case "マイナーコード":
-            typeImagePath = "/images/fts/16.png";
+            typeImagePath = "static/images/fts/16.png";
             break;
         default:
-            typeImagePath = "/images/logos/IT42-104.jpg";
+            typeImagePath = "static/images/logos/IT42-104.jpg";
             break;
     }
     // デバッグログ

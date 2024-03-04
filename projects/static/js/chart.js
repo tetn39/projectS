@@ -361,7 +361,7 @@ async function yourTypeIs(userStatus) {
 
   // Speechiness
   if (userStatus.speechiness >= 0.33 && userStatus.speechiness < 0.66) {
-    preferences.push("ボーカルが話している感じの強さ");
+    preferences.push("ラップみたいな曲");
     preferStatus.push("speechiness");
   }
 
@@ -461,65 +461,99 @@ function setOgUrl(diaId) {
   console.log("URL", ogUrl);
 }
 
+// クリップボードにテキストをコピーする関数
+function copyTextToClipboard(text) {
+    // 一時的なinput要素を作成してテキストをセット
+    var tempInput = document.createElement('input');
+    tempInput.value = text;
+
+    // input要素をDOMに追加
+    document.body.appendChild(tempInput);
+
+    // input要素内のテキストを選択
+    tempInput.select();
+
+    // テキストをクリップボードにコピー
+    document.execCommand('copy');
+
+    // 一時的なinput要素を削除
+    document.body.removeChild(tempInput);
+}
+
+// ツイートのテキストを生成してTwitter共有ボタンのhref属性を更新する関数
 function changeTweetText() {
-  // 現在のページのURLを取得
-  const dynamicUrl = window.location.href;
+    // 現在のページのURL
+    const dynamicUrl = window.location.href;
 
-  // yourTypeの内容を取得
-  const yourTypeTitleText = yourTypeTitle.querySelector('span').innerText.trim();
-  const yourTypeTextTitle = "診断結果は...「" + yourTypeTitleText + "が好きなタイプ」でした！";
+    // yourTypeTitleのテキスト
+    const yourTypeTitleText = yourTypeTitle.querySelector('span').innerText.trim();
 
-  // yourTypeTextの内容を取得
-  let yourTypeText = "特徴：\n";
-  const yourTypeList = document.getElementById('yourType').querySelectorAll('ul li');
-  Array.from(yourTypeList).forEach((li) => {
-    const liText = li.textContent.trim();
-    if (liText !== yourTypeTitleText + "が好き") {
-      yourTypeText += liText + "\n";
-    }
-  });
+    // ツイートのタイトル
+    const yourTypeTextTitle = "診断結果は...「" + yourTypeTitleText + "が好きなタイプ」でした！🤘";
 
-  // 絵文字の追加
-  yourTypeText = yourTypeText.replace(/電子音の多い曲/g, "🎛️ 電子音の多い曲");
-  yourTypeText = yourTypeText.replace(/生楽器の多い曲/g, "🎻 生楽器の多い曲");
-  yourTypeText = yourTypeText.replace(/踊りやすい曲/g, "💃 踊りやすい曲");
-  yourTypeText = yourTypeText.replace(/しっとりした曲/g, "🌙 しっとりした曲");
-  yourTypeText = yourTypeText.replace(/ゆったりした曲/g, "😌 ゆったりした曲");
-  yourTypeText = yourTypeText.replace(/激しい曲/g, "🔥 激しい曲");
-  yourTypeText = yourTypeText.replace(/歌ものの曲/g, "🎤 歌ものの曲");
-  yourTypeText = yourTypeText.replace(/楽器系の曲/g, "🎸 楽器系の曲");
-  yourTypeText = yourTypeText.replace(/ライブ感のある曲/g, "🎉 ライブ感のある曲");
-  yourTypeText = yourTypeText.replace(/静かな曲/g, "🤫 静かな曲");
-  yourTypeText = yourTypeText.replace(/音圧が強い曲/g, "💥 音圧が強い曲");
-  yourTypeText = yourTypeText.replace(/ボーカルが話している感じの強さ/g, "🗣️ ボーカルが話している感じの強さ");
-  yourTypeText = yourTypeText.replace(/暗い曲/g, "🌑 暗い曲");
-  yourTypeText = yourTypeText.replace(/明るい曲/g, "☀️ 明るい曲");
-  yourTypeText = yourTypeText.replace(/メジャーコード/g, "🎹 メジャーコード");
-  yourTypeText = yourTypeText.replace(/マイナーコード/g, "🎹 マイナーコード");
+    // 特徴のテキストを取得
+    let yourTypeText = "特徴：\n";
+    const yourTypeList = document.getElementById('yourType').querySelectorAll('ul li');
+    Array.from(yourTypeList).forEach((li) => {
+        const liText = li.textContent.trim();
+        if (liText !== yourTypeTitleText + "が好き") {
+            yourTypeText += liText + "\n";
+        }
+    });
 
-  // hashtagの内容
-  const hashTags = "\n" + "#好きな曲診断" + " #メロタス";
+    // 絵文字のマッピング
+    const emojis = {
+        "電子音の多い曲": "🎛️ 電子音の多い曲",
+        "生楽器の多い曲": "🎻 生楽器の多い曲",
+        "踊りやすい曲": "💃 踊りやすい曲",
+        "しっとりした曲": "🌙 しっとりした曲",
+        "ゆったりした曲": "😌 ゆったりした曲",
+        "激しい曲": "🔥 激しい曲",
+        "歌ものの曲": "🎤 歌ものの曲",
+        "楽器系の曲": "🎸 楽器系の曲",
+        "ライブ感のある曲": "🎉 ライブ感のある曲",
+        "静かな曲": "🤫 静かな曲",
+        "音圧が強い曲": "💥 音圧が強い曲",
+        "ラップみたいな曲": "🔫 ラップみたいな曲",
+        "暗い曲": "🌑 暗い曲",
+        "明るい曲": "☀️ 明るい曲",
+        "メジャーコード": "🎹 メジャーコード",
+        "マイナーコード": "🎹 マイナーコード",
+    };
 
-  // ツイートのテキストを生成
-  const tweetText = yourTypeTextTitle + "\n\n" + yourTypeText + hashTags + "\n" + dynamicUrl;
+    // 絵文字を適用
+    Object.keys(emojis).forEach(key => yourTypeText = yourTypeText.replace(new RegExp(key, 'g'), emojis[key]));
 
-  // Twitter共有ボタンのhref属性を更新
-  const twitterShareBtn = document.getElementById("twitter__share");
-  twitterShareBtn.href = "https://twitter.com/intent/tweet?url=" + "&text=" + encodeURIComponent(tweetText);
+    // ハッシュタグ
+    const hashTags = "\n" + "#好きな曲診断" + " #メロタス";
+
+    // ツイートの本文
+    const tweetText = yourTypeTextTitle + "\n\n" + yourTypeText + hashTags + "\n" + dynamicUrl;
+
+    // Twitter共有ボタンのhref属性を更新
+    const twitterShareBtn = document.getElementById("twitter__share");
+    twitterShareBtn.href = "https://twitter.com/intent/tweet?url=" + "&text=" + encodeURIComponent(tweetText);
 }
 
 
-
 // ページが読み込まれたときに実行されるコード
-document.addEventListener("DOMContentLoaded", function () {
-  // パラメータからuser_statusを取得
-  const params = new URLSearchParams(window.location.search);
-  const userStatusParam = params.get("user_status");
-  const diagnosisIdParam = params.get("diagnosis_id");
+document.addEventListener('DOMContentLoaded', function () {
+    const urlButton = document.getElementById('url__copy');
 
-  // user_statusが存在する場合はJSONパースしてチャートを更新
+    if (urlButton) {
+        urlButton.addEventListener('click', function (event) {
+            event.preventDefault();
+            copyTextToClipboard(window.location.href);
+        });
+    }
 
-  if (diagnosisIdParam) { //diagnosisIdが存在する場合
-    fromDiagnosisId(diagnosisIdParam);
-  }
+    // パラメータからuser_statusを取得
+    const params = new URLSearchParams(window.location.search);
+    const userStatusParam = params.get("user_status");
+    const diagnosisIdParam = params.get("diagnosis_id");
+
+    // user_statusが存在する場合はJSONパースしてチャートを更新
+    if (diagnosisIdParam) {
+        fromDiagnosisId(diagnosisIdParam);
+    }
 });

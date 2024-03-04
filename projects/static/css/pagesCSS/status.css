@@ -138,19 +138,42 @@
 /* shareボタン */
 .share__button__wrap{
   width: 90%;
-  height: auto;
+  height: 50px;
   margin: 5% auto;
+  display: flex;
+  align-items: center;
 }
+
 .share__button {
-  width: 100%;
+  width: 50%;
   padding: 3%;
-  border-radius: 20px;
+  border-radius: 100vh;
   background-color: #1da1f2;
   text-align: center;
   font-weight: bold;
-  margin-bottom: 10%;
+  margin: 5%;
 }
+
+.url__button{
+  width: 50%;
+  padding: 3%;
+  border-radius: 100vh;
+  background-color: #000;
+  text-align: center;
+  font-weight: bold;
+  margin: 5%;
+}
+
 #twitter__share{
+  color: #fff;
+  display: flex;
+  justify-content: center;
+
+  & img{
+    width: 1rem;
+  }
+}
+#url__copy{
   color: #fff;
   display: block;
 }

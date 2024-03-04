@@ -157,8 +157,8 @@
     color: #fff;
     margin-left: 4%;
     text-overflow: ellipsis;
-    white-space: nowrap;
   }
+  
   .track-name{
     width: 100%;
     text-align: left;
@@ -186,7 +186,7 @@
 .add-button {
   display: inline-block;
   vertical-align: middle;
-  color: #fff;
+  color: var(--txt-secondary-color);
   line-height: 1;
   position: relative;
   width: 1em;
@@ -194,6 +194,12 @@
   border: 0.1em solid currentColor;
   border-radius: 50%;
   box-sizing: content-box;
+  cursor: pointer;
+}
+
+.add-button:hover {
+  transition: 0.3s ease;
+  color: var(--txt-color);
 }
 
 .add-button>span {
@@ -225,7 +231,7 @@
 .delete-button {
   display: inline-block;
   vertical-align: middle;
-  color: #fff;
+  color: var(--txt-secondary-color);
   line-height: 1;
   position: relative;
   width: 1em;
@@ -233,6 +239,12 @@
   border: 0.1em solid currentColor;
   border-radius: 50%;
   box-sizing: content-box;
+  cursor: pointer;
+}
+
+.delete-button:hover {
+  transition: 0.3s ease;
+  color: var(--txt-color);
 }
 
 .delete-button>span {

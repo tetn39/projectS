@@ -139,7 +139,7 @@
 .share__button__wrap{
   width: 90%;
   height: auto;
-  margin: 5% auto;;
+  margin: 5% auto;
 }
 .share__button {
   width: 100%;
@@ -152,6 +152,7 @@
 }
 #twitter__share{
   color: #fff;
+  display: block;
 }
 
 

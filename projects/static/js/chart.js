@@ -461,17 +461,16 @@ function setOgUrl(diaId) {
   console.log("URL", ogUrl);
 }
 
-// ツイッター共有のボタン
 function changeTweetText() {
   // 現在のページのURLを取得
   const dynamicUrl = window.location.href;
 
   // yourTypeの内容を取得
   const yourTypeTitleText = yourTypeTitle.querySelector('span').innerText.trim();
-  const yourTypeTextTitle = "診断結果は..." + yourTypeTitleText + "が好きなタイプでした！";
+  const yourTypeTextTitle = "診断結果は...「" + yourTypeTitleText + "が好きなタイプ」でした！";
 
   // yourTypeTextの内容を取得
-  let yourTypeText = "また、\n";
+  let yourTypeText = "特徴：\n";
   const yourTypeList = document.getElementById('yourType').querySelectorAll('ul li');
   Array.from(yourTypeList).forEach((li) => {
     const liText = li.textContent.trim();
@@ -479,18 +478,37 @@ function changeTweetText() {
       yourTypeText += liText + "\n";
     }
   });
-  yourTypeText += "という特徴もありました！";
+
+  // 絵文字の追加
+  yourTypeText = yourTypeText.replace(/電子音の多い曲/g, "🎛️ 電子音の多い曲");
+  yourTypeText = yourTypeText.replace(/生楽器の多い曲/g, "🎻 生楽器の多い曲");
+  yourTypeText = yourTypeText.replace(/踊りやすい曲/g, "💃 踊りやすい曲");
+  yourTypeText = yourTypeText.replace(/しっとりした曲/g, "🌙 しっとりした曲");
+  yourTypeText = yourTypeText.replace(/ゆったりした曲/g, "😌 ゆったりした曲");
+  yourTypeText = yourTypeText.replace(/激しい曲/g, "🔥 激しい曲");
+  yourTypeText = yourTypeText.replace(/歌ものの曲/g, "🎤 歌ものの曲");
+  yourTypeText = yourTypeText.replace(/楽器系の曲/g, "🎸 楽器系の曲");
+  yourTypeText = yourTypeText.replace(/ライブ感のある曲/g, "🎉 ライブ感のある曲");
+  yourTypeText = yourTypeText.replace(/静かな曲/g, "🤫 静かな曲");
+  yourTypeText = yourTypeText.replace(/音圧が強い曲/g, "💥 音圧が強い曲");
+  yourTypeText = yourTypeText.replace(/ボーカルが話している感じの強さ/g, "🗣️ ボーカルが話している感じの強さ");
+  yourTypeText = yourTypeText.replace(/暗い曲/g, "🌑 暗い曲");
+  yourTypeText = yourTypeText.replace(/明るい曲/g, "☀️ 明るい曲");
+  yourTypeText = yourTypeText.replace(/メジャーコード/g, "🎹 メジャーコード");
+  yourTypeText = yourTypeText.replace(/マイナーコード/g, "🎹 マイナーコード");
 
   // hashtagの内容
-  const hashTags = "\n\n" + "#メロタス" + "\n" + "#あなたの好きな曲からおすすめの曲やタイプを診断";
+  const hashTags = "\n" + "#好きな曲診断" + " #メロタス";
 
   // ツイートのテキストを生成
-  const tweetText = yourTypeTextTitle + "\n\n" + yourTypeText + "\n\n" + dynamicUrl + hashTags;
+  const tweetText = yourTypeTextTitle + "\n\n" + yourTypeText + hashTags + "\n" + dynamicUrl;
 
   // Twitter共有ボタンのhref属性を更新
   const twitterShareBtn = document.getElementById("twitter__share");
   twitterShareBtn.href = "https://twitter.com/intent/tweet?url=" + "&text=" + encodeURIComponent(tweetText);
 }
+
+
 
 // ページが読み込まれたときに実行されるコード
 document.addEventListener("DOMContentLoaded", function () {

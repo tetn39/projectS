@@ -530,10 +530,81 @@ function changeTweetText() {
     // ツイートの本文
     const tweetText = yourTypeTextTitle + "\n\n" + yourTypeText + hashTags + "\n" + dynamicUrl;
 
+    // 各診断タイプに対応する画像のパスを取得
+    let typeImagePath = "";
+    switch (yourTypeTitleText) {
+        case "電子音の多い曲":
+            typeImagePath = "/images/fts/1.png";
+            break;
+        case "生楽器の多い曲":
+            typeImagePath = "/images/fts/2.png";
+            break;
+        case "踊りやすい曲":
+            typeImagePath = "/images/fts/3.png";
+            break;
+        case "しっとりした曲":
+            typeImagePath = "/images/fts/4.png";
+            break;
+        case "ゆったりした曲":
+            typeImagePath = "/images/fts/5.png";
+            break;
+        case "激しい曲":
+            typeImagePath = "/images/fts/6.png";
+            break;
+        case "歌ものの曲":
+            typeImagePath = "/images/fts/7.png";
+            break;
+        case "楽器系の曲":
+            typeImagePath = "/images/fts/8.png";
+            break;
+        case "ライブ感のある曲":
+            typeImagePath = "/images/fts/9.png";
+            break;
+        case "静かな曲":
+            typeImagePath = "/images/fts/10.png";
+            break;
+        case "音圧が強い曲":
+            typeImagePath = "/images/fts/11.png";
+            break;
+        case "ラップみたいな曲":
+            typeImagePath = "/images/fts/12.png";
+            break;
+        case "暗い曲":
+            typeImagePath = "/images/fts/13.png";
+            break;
+        case "明るい曲":
+            typeImagePath = "/images/fts/14.png";
+            break;
+        case "メジャーコード":
+            typeImagePath = "/images/fts/15.png";
+            break;
+        case "マイナーコード":
+            typeImagePath = "/images/fts/16.png";
+            break;
+        default:
+            typeImagePath = "/images/logos/IT42-104.jpg";
+            break;
+    }
+    // デバッグログ
+    console.log("Type Image Path: ", typeImagePath)
+
+    // ベースURLを取得
+    const baseURL = window.location.origin;
+
+    // 完全な画像のURLを構築
+    const typeImageURL = baseURL + typeImagePath;
+
+    // 画像のURLを設定
+    const ogImageMetaTag = document.querySelector('meta[property="og:image"]');
+    if (ogImageMetaTag) {
+        ogImageMetaTag.setAttribute("content", typeImageURL);
+    }
+
     // Twitter共有ボタンのhref属性を更新
     const twitterShareBtn = document.getElementById("twitter__share");
     twitterShareBtn.href = "https://twitter.com/intent/tweet?url=" + "&text=" + encodeURIComponent(tweetText);
 }
+
 
 
 // ページが読み込まれたときに実行されるコード

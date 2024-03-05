@@ -138,16 +138,14 @@
 /* shareボタン */
 .share__button__wrap{
   width: 90%;
-  height: 50px;
-  margin: 5% auto;
+  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: space-evenly;
 }
 
 .share__button {
-  width: 25%;
-  /* padding: 3%; */
+  width: 25vw;
   border-radius: 100vh;
   background-color: #1da1f2;
   text-align: center;
@@ -156,8 +154,7 @@
 }
 
 .url__button{
-  width: 25%;
-  /* padding: 3%; */
+  width: 25vw;
   border-radius: 100vh;
   background-color: #000;
   text-align: center;
@@ -167,7 +164,7 @@
 
 .dioagnosis__button__wrap {
   width: 25vw;
-  margin: 5% auto;
+  margin: 0 auto;
   color: var(--txt-color);
 }
 
@@ -190,7 +187,8 @@
 
 .dioagnosis__login__button {
   margin-top: 20px;
-  background-color: #1da1f2;
+  background-color: var(--primary-color);
+  color: #000;
 }
 
 
@@ -201,7 +199,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 2vw 3vw;
+  padding: 3%;
 }
 
 #twitter__share::before {
@@ -217,7 +215,7 @@
 #url__copy{
   color: #fff;
   display: block;
-  padding: 2vw 3vw;
+  padding: 3%;
 }
 
 

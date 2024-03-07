@@ -76,11 +76,17 @@ function renderSelectedTracksWithIndex() {
     const indexLabel = createIndexLabel(index);
     trackDiv.insertBefore(indexLabel, trackDiv.firstChild);
     const deleteButton = createDeleteButton(index);
+
+    // deleteButtonのクリックイベントをtrackDivに適用
+    trackDiv.addEventListener("click", () => {
+      removeTrackFromList(index);
+    });
+
     trackDiv.appendChild(deleteButton);
     if (listContainer.innerHTML === "") {
-    listContainer.appendChild(trackDiv);
+      listContainer.appendChild(trackDiv);
     } else {
-    listContainer.insertBefore(trackDiv, listContainer.firstChild);
+      listContainer.insertBefore(trackDiv, listContainer.firstChild);
     }
   });
 }
@@ -203,6 +209,12 @@ async function initializeSearch() {
     tracks.forEach((track, index) => {
       const trackDiv = createTrackDiv(track, index);
       const addButton = createAddButton(track);
+
+      // addButtonのクリックイベントをtrackDivに適用
+      trackDiv.addEventListener("click", () => {
+        addTrackToList(track);
+      });
+
       trackDiv.appendChild(addButton);
       searchResults.appendChild(trackDiv);
     });
@@ -237,9 +249,6 @@ async function initializeSearch() {
     addButton.classList.add("add-button");
 
     const addButtonIcon = document.createElement("span");
-    addButton.addEventListener("click", () => {
-      addTrackToList(track);
-    });
 
     addButton.appendChild(addButtonIcon);
     addButtonWrap.appendChild(addButton);
@@ -267,9 +276,7 @@ function send() {
       console.log("pyから:", data.diagnosis_id);
 
       // status.htmlに遷移する
-      window.location.href =
-        "/status/?diagnosis_id=" +
-        data.diagnosis_id;
+      window.location.href = "/status/?diagnosis_id=" + data.diagnosis_id;
     })
     .catch((error) => {
       console.error("Error:", error);

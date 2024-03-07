@@ -6,3 +6,6 @@ __pycache__
 
 # envを除外
 auth/
+
+# cacheを除外
+.cache
